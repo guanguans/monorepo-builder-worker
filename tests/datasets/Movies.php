@@ -10,7 +10,7 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\MonorepoBuilderWorkerTests\Datasets;
+namespace Guanguans\MonorepoBuilderWorkerTests\datasets;
 
 dataset('movies', [
     '肖申克的救赎',
