@@ -28,6 +28,7 @@ class CreateGithubReleaseWorker implements ReleaseWorkerInterface
 
     public function work(Version $version): void
     {
+        $this->processRunner->run(sprintf('gh release create %s --generate-notes', $version->getVersionString()));
     }
 
     public function getDescription(Version $version): string
