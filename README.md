@@ -2,7 +2,7 @@
 
 [简体中文](README-zh_CN.md) | [ENGLISH](README.md)
 
-> A PHP package template repository. - 一个 PHP 软件包模板存储库。
+> List of release worker collections for [symplify/monorepo-builder](https://github.com/symplify/monorepo-builder).
 
 [![tests](https://github.com/guanguans/monorepo-builder-worker/workflows/tests/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions)
 [![check & fix styling](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions)
@@ -15,52 +15,21 @@
 [![Total Downloads](https://poser.pugx.org/guanguans/monorepo-builder-worker/downloads)](https://packagist.org/packages/guanguans/monorepo-builder-worker)
 [![License](https://poser.pugx.org/guanguans/monorepo-builder-worker/license)](https://packagist.org/packages/guanguans/monorepo-builder-worker)
 
-## Features
-
-* Integrated [brainmaestro/composer-git-hooks](https://github.com/BrainMaestro/composer-git-hooks) - Git hooks
-* Integrated [brianium/paratest](https://github.com/paratestphp/paratest) - Parallel testing for PHPUnit
-* Integrated [codedungeon/phpunit-result-printer](https://github.com/mikeerickson/phpunit-pretty-result-printer) - PHPUnit Pretty Result Printer
-* Integrated [dg/bypass-finals](https://github.com/rdohms/dg/bypass-finals) - Unit test assistant package
-* Integrated [dms/phpunit-arraysubset-asserts](https://github.com/rdohms/phpunit-arraysubset-asserts) - Unit test assistant package
-* Integrated [sebastianbergmann/phpunit](https://github.com/sebastianbergmann/phpunit) - Unit test
-* Integrated [bovigo/vfsStream](https://github.com/bovigo/vfsStream) - Unit test assistant package
-* Integrated [mockery/mockery](https://github.com/mockery/mockery) - Mock
-* Integrated [Nyholm/NSA](https://github.com/Nyholm/NSA) - Unit test assistant package
-* Integrated [phpbench/phpbench](https://github.com/phpbench/phpbench) - Benchmarks  
-* Integrated [FriendsOfPHP/PHP-CS-Fixer](https://github.com/FriendsOfPHP/PHP-CS-Fixer) - Coding standard check
-* Integrated [johnkary/phpunit-speedtrap](https://github.com/johnkary/phpunit-speedtrap) - Reports on slow-running tests in your PHPUnit test suite
-* Integrated [overtrue/phplint](https://github.com/overtrue/phplint) - Grammar check
-* Integrated [symplify/monorepo-builder](https://github.com/symplify/monorepo-builder) - Monorepo
-* Integrated [vimeo/psalm](https://github.com/vimeo/psalm) - Static check
-* Integrated [lint-md/lint-md](https://github.com/lint-md/lint-md) - Markdown grammar check
-* Integrated [povils/phpmnd](https://github.com/povils/phpmnd) - PHP Magic Number Detector
-* Integrated ...
-* With IDE helper file
-* With `github/pages` docsify [documentation site](https://guanguans.github.io/monorepo-builder-worker/)
-* With common badge icons
-* With Chinese and English `README.md` file
-
 ## Requirement
 
-* PHP >= 7.2
+* PHP >= 7.3
 
 ## Installation
 
 ```bash
-composer require guanguans/monorepo-builder-worker --prefer-dist -vvv
+composer require guanguans/monorepo-builder-worker --prefer-dist --dev -v
 ```
 
 ## Usage
 
-1. execute `$ git clone https://github.com/guanguans/monorepo-builder-worker.git`
-2. replace `guanguans/monorepo-builder-worker` -> `vendorName/package-name`
-3. replace `Guanguans\\MonorepoBuilderWorker` -> `VendorName\\PackageName`
-4. replace `Guanguans\MonorepoBuilderWorker` -> `VendorName\PackageName`
-5. replace `GuanguansPackageSkeletonUpdateHelper` -> `VendorNamePackageNameUpdateHelper`
-6. replace `monorepo-builder-worker` -> `your repository name`
-7. replace `ityaozm@gmail.com` -> `your email`
-8. execute `$ composer install && composer dumpautoload`  
-9. execute `$ rm .git/ && git init && git add . && git commit -m 'Build the basic skeleton'`
+```php
+// todo
+```
 
 ## Testing
 
