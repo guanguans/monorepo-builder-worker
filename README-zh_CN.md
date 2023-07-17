@@ -1,19 +1,19 @@
-# package-skeleton
+# monorepo-builder-worker
 
 [简体中文](README-zh_CN.md) | [ENGLISH](README.md)
 
 > 一个 PHP 软件包模板存储库。- A PHP package template repository.
 
-[![tests](https://github.com/guanguans/package-skeleton/workflows/tests/badge.svg)](https://github.com/guanguans/package-skeleton/actions)
-[![check & fix styling](https://github.com/guanguans/package-skeleton/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/package-skeleton/actions)
-[![psalm](https://github.com/guanguans/package-skeleton/actions/workflows/psalm.yml/badge.svg)](https://github.com/guanguans/package-skeleton/actions/workflows/psalm.yml)
-[![rector](https://github.com/guanguans/package-skeleton/actions/workflows/rector.yml/badge.svg)](https://github.com/guanguans/package-skeleton/actions/workflows/rector.yml)
-[![codecov](https://codecov.io/gh/guanguans/package-skeleton/branch/main/graph/badge.svg?token=URGFAWS6S4)](https://codecov.io/gh/guanguans/package-skeleton)
-[![Latest Stable Version](https://poser.pugx.org/guanguans/package-skeleton/v)](https://packagist.org/packages/guanguans/package-skeleton)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/guanguans/package-skeleton)
-![GitHub repo size](https://img.shields.io/github/repo-size/guanguans/package-skeleton)
-[![Total Downloads](https://poser.pugx.org/guanguans/package-skeleton/downloads)](https://packagist.org/packages/guanguans/package-skeleton)
-[![License](https://poser.pugx.org/guanguans/package-skeleton/license)](https://packagist.org/packages/guanguans/package-skeleton)
+[![tests](https://github.com/guanguans/monorepo-builder-worker/workflows/tests/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions)
+[![check & fix styling](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions)
+[![psalm](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/psalm.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/psalm.yml)
+[![rector](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/rector.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/rector.yml)
+[![codecov](https://codecov.io/gh/guanguans/monorepo-builder-worker/branch/main/graph/badge.svg?token=URGFAWS6S4)](https://codecov.io/gh/guanguans/monorepo-builder-worker)
+[![Latest Stable Version](https://poser.pugx.org/guanguans/monorepo-builder-worker/v)](https://packagist.org/packages/guanguans/monorepo-builder-worker)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/guanguans/monorepo-builder-worker)
+![GitHub repo size](https://img.shields.io/github/repo-size/guanguans/monorepo-builder-worker)
+[![Total Downloads](https://poser.pugx.org/guanguans/monorepo-builder-worker/downloads)](https://packagist.org/packages/guanguans/monorepo-builder-worker)
+[![License](https://poser.pugx.org/guanguans/monorepo-builder-worker/license)](https://packagist.org/packages/guanguans/monorepo-builder-worker)
 
 ## 功能
 
@@ -36,7 +36,7 @@
 * 集成了 [povils/phpmnd](https://github.com/povils/phpmnd) - PHP 幻数检测器
 * 集成了 ...
 * 自带 IDE 帮助文件
-* 自带 `github/pages` docsify [文档网站](https://guanguans.github.io/package-skeleton/)
+* 自带 `github/pages` docsify [文档网站](https://guanguans.github.io/monorepo-builder-worker/)
 * 自带常用徽章图标
 * 自带中英文 `README.md` 文件
 
@@ -47,17 +47,17 @@
 ## 安装
 
 ```bash
-composer require guanguans/package-skeleton --prefer-dist -vvv
+composer require guanguans/monorepo-builder-worker --prefer-dist -vvv
 ```
 
 ## 使用
 
-1. 执行 `$ git clone https://github.com/guanguans/package-skeleton.git`
-2. 替换 `guanguans/package-skeleton` -> `vendorName/package-name`
-3. 替换 `Guanguans\\PackageSkeleton` -> `VendorName\\PackageName`
-4. 替换 `Guanguans\PackageSkeleton` -> `VendorName\PackageName`
+1. 执行 `$ git clone https://github.com/guanguans/monorepo-builder-worker.git`
+2. 替换 `guanguans/monorepo-builder-worker` -> `vendorName/package-name`
+3. 替换 `Guanguans\\MonorepoBuilderWorker` -> `VendorName\\PackageName`
+4. 替换 `Guanguans\MonorepoBuilderWorker` -> `VendorName\PackageName`
 5. 替换 `GuanguansPackageSkeletonUpdateHelper` -> `VendorNamePackageNameUpdateHelper`
-6. 替换 `package-skeleton` -> `your repository name`
+6. 替换 `monorepo-builder-worker` -> `your repository name`
 7. 替换 `ityaozm@gmail.com` -> `your email`
 8. 执行 `$ composer install && composer dumpautoload`
 9. 执行 `$ rm .git/ && git init && git add . && git commit -m 'Build the basic skeleton'`

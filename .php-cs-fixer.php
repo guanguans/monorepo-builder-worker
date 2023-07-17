@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/package-skeleton.
+ * This file is part of the guanguans/monorepo-builder-worker.
  *
  * (c) guanguans <ityaozm@gmail.com>
  *
@@ -13,29 +13,28 @@ declare(strict_types=1);
 use Ergebnis\License;
 
 $header = <<<'header'
-    This file is part of the guanguans/package-skeleton.
+    This file is part of the guanguans/monorepo-builder-worker.
 
     (c) guanguans <ityaozm@gmail.com>
 
     This source file is subject to the MIT license that is bundled.
     header;
 
-$license = License\Type\MIT::text(
-    __DIR__.'/LICENSE',
-    License\Range::since(
-        License\Year::fromString('2018'),
-        new DateTimeZone('Asia/Shanghai'),
-    ),
-    License\Holder::fromString('guanguans'),
-    License\Url::fromString('https://github.com/guanguans/package-skeleton'),
-);
+// $license = License\Type\MIT::text(
+//     __DIR__.'/LICENSE',
+//     License\Range::since(
+//         License\Year::fromString('2018'),
+//         new DateTimeZone('Asia/Shanghai'),
+//     ),
+//     License\Holder::fromString('guanguans'),
+//     License\Url::fromString('https://github.com/guanguans/monorepo-builder-worker'),
+// );
 // $license->header();
 // $license->save();
 
 /** @noinspection PhpParamsInspection */
 $finder = PhpCsFixer\Finder::create()
     ->in([
-        __DIR__.'/benchmarks',
         __DIR__.'/src',
         __DIR__.'/tests',
     ])
@@ -69,22 +68,21 @@ return (new PhpCsFixer\Config())
     ->setUsingCache(true)
     ->setCacheFile(__DIR__.'/.php-cs-fixer.cache')
     ->registerCustomFixers(new PhpCsFixerCustomFixers\Fixers())
-    ->registerCustomFixers(new PedroTroller\CS\Fixer\Fixers())
     ->setRules([
-        // '@PHP70Migration' => true,
-        // '@PHP70Migration:risky' => true,
-        // '@PHP71Migration' => true,
-        // '@PHP71Migration:risky' => true,
-        // '@PHP73Migration' => true,
-        '@PHP74Migration' => true,
-        '@PHP74Migration:risky' => true,
+        '@PHP70Migration' => true,
+        '@PHP70Migration:risky' => true,
+        '@PHP71Migration' => true,
+        '@PHP71Migration:risky' => true,
+        '@PHP73Migration' => true,
+        // '@PHP74Migration' => true,
+        // '@PHP74Migration:risky' => true,
         // '@PHP80Migration' => true,
         // '@PHP80Migration:risky' => true,
         // '@PHP81Migration' => true,
         // '@PHP82Migration' => true,
 
         // '@PHPUnit75Migration:risky' => true,
-        '@PHPUnit84Migration:risky' => true,
+        // '@PHPUnit84Migration:risky' => true,
         // '@PHPUnit100Migration:risky' => true,
 
         // '@DoctrineAnnotation' => true,
@@ -97,16 +95,16 @@ return (new PhpCsFixer\Config())
         // array_notation
 
         // basic
-        'curly_braces_position' => [
-            'control_structures_opening_brace' => 'same_line',
-            'functions_opening_brace' => 'next_line_unless_newline_at_signature_end',
-            'anonymous_functions_opening_brace' => 'same_line',
-            'classes_opening_brace' => 'next_line_unless_newline_at_signature_end',
-            'anonymous_classes_opening_brace' => 'same_line',
-            'allow_single_line_empty_anonymous_classes' => true,
-            'allow_single_line_anonymous_functions' => true,
-        ],
-        'no_multiple_statements_per_line' => true,
+        // 'curly_braces_position' => [
+        //     'control_structures_opening_brace' => 'same_line',
+        //     'functions_opening_brace' => 'next_line_unless_newline_at_signature_end',
+        //     'anonymous_functions_opening_brace' => 'same_line',
+        //     'classes_opening_brace' => 'next_line_unless_newline_at_signature_end',
+        //     'anonymous_classes_opening_brace' => 'same_line',
+        //     'allow_single_line_empty_anonymous_classes' => true,
+        //     'allow_single_line_anonymous_functions' => true,
+        // ],
+        // 'no_multiple_statements_per_line' => true,
 
         // casing
         // cast_notation
@@ -116,27 +114,27 @@ return (new PhpCsFixer\Config())
         'final_internal_class' => false,
         'final_public_method_for_abstract_class' => true,
         'ordered_class_elements' => [
-            'order' => [
-                'use_trait',
-                'case',
-
-                'constant_public',
-                'constant_protected',
-                'constant_private',
-
-                'property_public',
-                'property_protected',
-                'property_private',
-
-                'construct',
-                'destruct',
-                'magic',
-                'phpunit',
-
-                'method_public',
-                'method_protected',
-                'method_private',
-            ],
+            // 'order' => [
+            //     'use_trait',
+            //     'case',
+            //
+            //     'constant_public',
+            //     'constant_protected',
+            //     'constant_private',
+            //
+            //     'property_public',
+            //     'property_protected',
+            //     'property_private',
+            //
+            //     'construct',
+            //     'destruct',
+            //     'magic',
+            //     'phpunit',
+            //
+            //     'method_public',
+            //     'method_protected',
+            //     'method_private',
+            // ],
             'sort_algorithm' => 'none',
         ],
         'ordered_interfaces' => [
@@ -159,7 +157,7 @@ return (new PhpCsFixer\Config())
         // constant_notation
 
         // control_structure
-        'control_structure_braces' => true,
+        // 'control_structure_braces' => true,
         'control_structure_continuation_position' => [
             // 'position' => 'same_line',
         ],
@@ -171,7 +169,7 @@ return (new PhpCsFixer\Config())
         // doctrine_annotation
 
         // function_notation
-        'date_time_create_from_format_call' => true,
+        // 'date_time_create_from_format_call' => true,
         'nullable_type_declaration_for_default_null_value' => [
             'use_nullable_type_declaration' => true,
         ],
@@ -202,9 +200,9 @@ return (new PhpCsFixer\Config())
         // naming
 
         // operator
-        'no_useless_concat_operator' => [
-            'juggle_simple_strings' => true,
-        ],
+        // 'no_useless_concat_operator' => [
+        //     'juggle_simple_strings' => true,
+        // ],
         'not_operator_with_successor_space' => true,
 
         // php_tag
@@ -224,7 +222,7 @@ return (new PhpCsFixer\Config())
                 'package',
                 'subpackage',
             ],
-            'case_sensitive' => false,
+            // 'case_sensitive' => false,
         ],
         'phpdoc_line_span' => [
             'const' => null,
@@ -258,28 +256,28 @@ return (new PhpCsFixer\Config())
 
         // whitespace
         'blank_line_before_statement' => [
-            'statements' => [
-                'break',
-                'case',
-                'continue',
-                'declare',
-                'default',
-                'exit',
-                'goto',
-                'include',
-                'include_once',
-                'phpdoc',
-                'require',
-                'require_once',
-                'return',
-                'switch',
-                'throw',
-                'try',
-                'yield',
-                'yield_from',
-            ],
+            // 'statements' => [
+            //     'break',
+            //     'case',
+            //     'continue',
+            //     'declare',
+            //     'default',
+            //     'exit',
+            //     'goto',
+            //     'include',
+            //     'include_once',
+            //     'phpdoc',
+            //     'require',
+            //     'require_once',
+            //     'return',
+            //     'switch',
+            //     'throw',
+            //     'try',
+            //     'yield',
+            //     'yield_from',
+            // ],
         ],
-        'statement_indentation' => true,
+        // 'statement_indentation' => true,
 
         // https://github.com/kubawerlos/php-cs-fixer-custom-fixers
         PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer::name() => true,
@@ -343,7 +341,7 @@ return (new PhpCsFixer\Config())
         PhpCsFixerCustomFixers\Fixer\PhpdocParamTypeFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpdocSelfAccessorFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpdocSingleLineVarFixer::name() => true,
-        PhpCsFixerCustomFixers\Fixer\PhpdocTypesCommaSpacesFixer::name() => true,
+        // PhpCsFixerCustomFixers\Fixer\PhpdocTypesCommaSpacesFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PhpdocTypesTrimFixer::name() => true,
         // PhpCsFixerCustomFixers\Fixer\PhpdocVarAnnotationToAssertFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\PromotedConstructorPropertyFixer::name() => [
@@ -355,24 +353,4 @@ return (new PhpCsFixer\Config())
         ],
         PhpCsFixerCustomFixers\Fixer\SingleSpaceBeforeStatementFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\StringableInterfaceFixer::name() => true,
-
-        // // https://github.com/PedroTroller/PhpCSFixer-Custom-Fixers
-        // 'PedroTroller/order_behat_steps' => ['instanceof' => ['Behat\Behat\Context\Context']],
-        // 'PedroTroller/ordered_with_getter_and_setter_first' => true,
-        // 'PedroTroller/exceptions_punctuation' => true,
-        // 'PedroTroller/forbidden_functions' => [
-        //     'comment' => '@TODO remove this line',
-        //     'functions' => ['var_dump', 'dump', 'die'],
-        // ],
-        // 'PedroTroller/line_break_between_method_arguments' => [
-        //     'max-args' => 5,
-        //     'max-length' => 120,
-        //     // 'automatic-argument-merge' => true,
-        //     // 'inline-attributes' => false,
-        // ],
-        // 'PedroTroller/line_break_between_statements' => true,
-        // 'PedroTroller/comment_line_to_phpdoc_block' => true,
-        // 'PedroTroller/useless_code_after_return' => true,
-        // 'PedroTroller/doctrine_migrations' => ['instanceof' => ['Doctrine\Migrations\AbstractMigration']],
-        // 'PedroTroller/phpspec' => ['instanceof' => ['PhpSpec\ObjectBehavior']],
     ]);

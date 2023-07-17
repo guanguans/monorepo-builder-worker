@@ -3,14 +3,14 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/package-skeleton.
+ * This file is part of the guanguans/monorepo-builder-worker.
  *
  * (c) guanguans <ityaozm@gmail.com>
  *
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\PackageSkeleton;
+namespace Guanguans\MonorepoBuilderWorker;
 
 use MonorepoBuilderPrefix202304\Nette\Utils\DateTime;
 use PharIo\Version\Version;
@@ -19,9 +19,12 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
 {
+    private $processRunner;
+
     public function __construct(
-        private ProcessRunner $processRunner
+        ProcessRunner $processRunner
     ) {
+        $this->processRunner = $processRunner;
     }
 
     public function work(Version $version): void
