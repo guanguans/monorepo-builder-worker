@@ -19,11 +19,11 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
 {
+    /** @var ProcessRunner */
     private $processRunner;
 
-    public function __construct(
-        ProcessRunner $processRunner
-    ) {
+    public function __construct(ProcessRunner $processRunner)
+    {
         $this->processRunner = $processRunner;
     }
 
@@ -37,7 +37,11 @@ class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
 
     public function getDescription(Version $version): string
     {
-        $newHeadline = sprintf('%s - %s', $version->getVersionString(), (new DateTime())->format('Y-m-d'));
+        $newHeadline = sprintf(
+            '%s - %s',
+            $version->getVersionString(),
+            (new DateTime())->format('Y-m-d')
+        );
 
         return sprintf('Update `CHANGELOG.md` to "%s"', $newHeadline);
     }
