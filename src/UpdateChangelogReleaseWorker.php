@@ -29,7 +29,7 @@ class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
 
     public function work(Version $version): void
     {
-        $this->processRunner->run(sprintf('./vendor/bin/conventional-changelog --ver=%s --ansi -v', $version->getOriginalString()));
+        $this->processRunner->run(sprintf('./vendor/bin/conventional-changelog --ver=%s --ansi -v', $version->getVersionString()));
         $this->processRunner->run('git add CHANGELOG.md && git checkout -- *.json');
     }
 
