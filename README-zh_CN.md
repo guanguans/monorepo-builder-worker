@@ -27,9 +27,7 @@ composer require guanguans/monorepo-builder-worker --prefer-dist --dev -v
 
 ## 使用
 
-```php
-// todo
-```
+参考 [monorepo-builder.php](./monorepo-builder.php)
 
 ## 测试
 
