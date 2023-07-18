@@ -10,6 +10,7 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
+use Guanguans\MonorepoBuilderWorker\Contract\ReleaseWorkerInterface;
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\UpdateChangelogReleaseWorker;
 use Symplify\MonorepoBuilder\Config\MBConfig;
@@ -31,7 +32,7 @@ return static function (MBConfig $mbConfig): void {
      *
      * @see https://github.com/symplify/monorepo-builder#6-release-flow
      */
-    $mbConfig->workers([
+    $mbConfig->workers($workers = [
         // UpdateReplaceReleaseWorker::class,
         // SetCurrentMutualDependenciesReleaseWorker::class,
         // AddTagToChangelogReleaseWorker::class,
@@ -43,4 +44,8 @@ return static function (MBConfig $mbConfig): void {
         // UpdateBranchAliasReleaseWorker::class,
         // PushNextDevReleaseWorker::class,
     ]);
+
+    foreach ($workers as $worker) {
+        is_subclass_of($worker, ReleaseWorkerInterface::class) && $worker::checkEnvironment();
+    }
 };

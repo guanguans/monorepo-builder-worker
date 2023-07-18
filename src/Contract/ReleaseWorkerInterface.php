@@ -14,4 +14,5 @@ namespace Guanguans\MonorepoBuilderWorker\Contract;
 
 interface ReleaseWorkerInterface extends \Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface
 {
+    public static function checkEnvironment(): void;
 }

@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\ReleaseWorkerInterface;
 use MonorepoBuilderPrefix202304\Nette\Utils\DateTime;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
-class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
+class UpdateChangelogReleaseWorker extends ReleaseWorker
 {
     /** @var ProcessRunner */
     private $processRunner;
@@ -25,6 +24,11 @@ class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
     public function __construct(ProcessRunner $processRunner)
     {
         $this->processRunner = $processRunner;
+    }
+
+    public static function checkEnvironment(): void
+    {
+        self::createProcessRunner()->run('./vendor/bin/conventional-changelog --help');
     }
 
     public function work(Version $version): void
