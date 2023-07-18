@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
+use Guanguans\MonorepoBuilderWorker\Contract\ReleaseWorkerInterface;
 use MonorepoBuilderPrefix202304\Nette\Utils\DateTime;
 use PharIo\Version\Version;
-use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
@@ -29,20 +29,17 @@ class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
 
     public function work(Version $version): void
     {
-        $this->processRunner->run('git add .');
         $this->processRunner->run(sprintf('./vendor/bin/conventional-changelog --ver=%s --ansi -v', $version->getOriginalString()));
         $this->processRunner->run('git add CHANGELOG.md');
-        $this->processRunner->run('git checkout -- .');
+        $this->processRunner->run('git checkout -- *.json');
     }
 
     public function getDescription(Version $version): string
     {
-        $newHeadline = sprintf(
-            '%s - %s',
+        return sprintf(
+            'Update `CHANGELOG.md` to "%s -%s"',
             $version->getVersionString(),
             (new DateTime())->format('Y-m-d')
         );
-
-        return sprintf('Update `CHANGELOG.md` to "%s"', $newHeadline);
     }
 }

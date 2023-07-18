@@ -10,6 +10,7 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
+use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\UpdateChangelogReleaseWorker;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\AddTagToChangelogReleaseWorker;
@@ -37,6 +38,7 @@ return static function (MBConfig $mbConfig): void {
         UpdateChangelogReleaseWorker::class,
         TagVersionReleaseWorker::class,
         PushTagReleaseWorker::class,
+        CreateGithubReleaseWorker::class,
         // SetNextMutualDependenciesReleaseWorker::class,
         // UpdateBranchAliasReleaseWorker::class,
         // PushNextDevReleaseWorker::class,

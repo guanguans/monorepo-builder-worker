@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
+use Guanguans\MonorepoBuilderWorker\Contract\ReleaseWorkerInterface;
 use PharIo\Version\Version;
-use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class CreateGithubReleaseWorker implements ReleaseWorkerInterface
