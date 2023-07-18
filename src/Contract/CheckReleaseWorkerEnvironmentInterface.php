@@ -12,7 +12,11 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Contract;
 
-interface CheckEnvironmentInterface
+interface CheckReleaseWorkerEnvironmentInterface
 {
-    public static function checkEnvironment(): void;
+    /**
+     * @throws \Throwable
+     * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
+     */
+    public static function check(): void;
 }

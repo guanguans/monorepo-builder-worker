@@ -25,7 +25,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
         $this->processRunner = $processRunner;
     }
 
-    public static function checkEnvironment(): void
+    public static function check(): void
     {
         self::createProcessRunner()->run('gh auth status');
     }

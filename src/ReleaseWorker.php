@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentInterface;
+use Guanguans\MonorepoBuilderWorker\Contract\CheckReleaseWorkerEnvironmentInterface;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Input\ArgvInput;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Output\ConsoleOutput;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
-abstract class ReleaseWorker implements CheckEnvironmentInterface, ReleaseWorkerInterface
+abstract class ReleaseWorker implements CheckReleaseWorkerEnvironmentInterface, ReleaseWorkerInterface
 {
     protected static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {

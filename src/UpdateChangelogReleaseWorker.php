@@ -26,7 +26,7 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
         $this->processRunner = $processRunner;
     }
 
-    public static function checkEnvironment(): void
+    public static function check(): void
     {
         self::createProcessRunner()->run('./vendor/bin/conventional-changelog --help');
     }
