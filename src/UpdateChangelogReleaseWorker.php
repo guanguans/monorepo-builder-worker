@@ -33,7 +33,7 @@ class UpdateChangelogReleaseWorker implements ReleaseWorkerInterface
             './vendor/bin/conventional-changelog --ver=%s --ansi -v',
             $version->getOriginalString()
         ));
-        $this->processRunner->run('git add CHANGELOG.md && git checkout -- *.json && git commit -m "docs(changelog): update CHANGELOG.md"');
+        $this->processRunner->run('git add CHANGELOG.md && git checkout -- *.json && git commit -m "docs(changelog): update CHANGELOG.md" --no-verify && git push');
     }
 
     public function getDescription(Version $version): string
