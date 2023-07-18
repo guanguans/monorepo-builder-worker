@@ -95,7 +95,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.x-dev"
+            "dev-main": "1.x-dev"
         },
         "hooks": {
             "post-merge": [
@@ -129,7 +129,7 @@
         "changelog-patch": "@changelog --patch",
         "checks": [
             "@composer-normalize",
-            "@composer-check-platform-reqs",
+            "@composer-validate",
             "@md-lint",
             "@lint",
             "@style-lint",
