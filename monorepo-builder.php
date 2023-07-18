@@ -10,7 +10,7 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-use Guanguans\MonorepoBuilderWorker\Contract\ReleaseWorkerInterface;
+use Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentInterface;
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\UpdateChangelogReleaseWorker;
 use Symplify\MonorepoBuilder\Config\MBConfig;
@@ -46,6 +46,7 @@ return static function (MBConfig $mbConfig): void {
     ]);
 
     foreach ($workers as $worker) {
-        is_subclass_of($worker, ReleaseWorkerInterface::class) && $worker::checkEnvironment();
+        /** @noinspection NativeMemberUsageInspection */
+        is_subclass_of($worker, CheckEnvironmentInterface::class) and $worker::checkEnvironment();
     }
 };

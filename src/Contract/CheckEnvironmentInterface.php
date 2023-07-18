@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Contract;
 
-interface ReleaseWorkerInterface extends \Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface
+interface CheckEnvironmentInterface
 {
     public static function checkEnvironment(): void;
 }

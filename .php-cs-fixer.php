@@ -278,6 +278,7 @@ return (new PhpCsFixer\Config())
             // ],
         ],
         // 'statement_indentation' => true,
+        'logical_operators' => false,
 
         // https://github.com/kubawerlos/php-cs-fixer-custom-fixers
         PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer::name() => true,
