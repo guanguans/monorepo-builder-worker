@@ -1,15 +1,18 @@
 {
     "name": "guanguans/monorepo-builder-worker",
-    "description": "A PHP package template repository. - 一个PHP软件包模板存储库。",
+    "description": "List of release worker collections for symplify/monorepo-builder.",
     "license": "MIT",
     "type": "library",
     "abandoned": false,
     "non-feature-branches": [],
     "keywords": [
-        "package",
-        "template",
-        "PHP",
-        "skeleton"
+        "symplify",
+        "monorepo",
+        "release",
+        "worker",
+        "workflow",
+        "git",
+        "changelog"
     ],
     "readme": "README.md",
     "authors": [
