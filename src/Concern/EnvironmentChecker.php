@@ -21,10 +21,16 @@ trait EnvironmentChecker
 
     public static function check(): void
     {
-        if (property_exists(static::class, 'checkCommands') && static::$checkCommands) {
-            foreach ((array) static::$checkCommands as $command) {
-                self::createProcessRunner()->run($command);
-            }
+        if (! property_exists(static::class, 'checkCommands')) {
+            return;
+        }
+
+        if (! static::$checkCommands) {
+            return;
+        }
+
+        foreach ((array) static::$checkCommands as $command) {
+            self::createProcessRunner()->run($command);
         }
     }
 }
