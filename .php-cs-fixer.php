@@ -283,7 +283,7 @@ return (new PhpCsFixer\Config())
         // https://github.com/kubawerlos/php-cs-fixer-custom-fixers
         PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\CommentedOutFunctionFixer::name() => [
-            'functions' => ['print_r', 'var_dump', 'var_export', 'dump', 'dd'],
+            'functions' => ['print_r', 'var_dump', 'var_export'],
         ],
         // PhpCsFixerCustomFixers\Fixer\ConstructorEmptyBracesFixer::name() => true,
         PhpCsFixerCustomFixers\Fixer\DataProviderNameFixer::name() => true,
