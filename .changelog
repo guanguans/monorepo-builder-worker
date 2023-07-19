@@ -1,0 +1,25 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * This file is part of the guanguans/monorepo-builder-worker.
+ *
+ * (c) guanguans <ityaozm@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled.
+ */
+
+return [
+    'root' => getcwd(),
+    'path' => 'CHANGELOG.md',
+    'sortBy' => 'subject',
+    'packageBump' => false,
+    'packageLockCommit' => false,
+    'tagPrefix' => 'v',
+    'tagSuffix' => '',
+    'skipVerify' => true,
+    'releaseCommitMessageFormat' => 'chore(release): {{currentTag}}',
+    'preRun' => null,
+    'postRun' => null,
+];

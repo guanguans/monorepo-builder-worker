@@ -33,7 +33,7 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
     public function work(Version $version): void
     {
         $this->processRunner->run("./vendor/bin/conventional-changelog --ver={$version->getOriginalString()} --ansi -v");
-        $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"docs(changelog): update CHANGELOG.md to {$version->getOriginalString()}\" --no-verify && git push");
+        $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
     }
 
     public function getDescription(Version $version): string
