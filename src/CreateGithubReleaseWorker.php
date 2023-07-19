@@ -17,17 +17,16 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class CreateGithubReleaseWorker extends ReleaseWorker
 {
+    protected static $checkCommands = [
+        'gh auth status',
+    ];
+
     /** @var ProcessRunner */
     private $processRunner;
 
     public function __construct(ProcessRunner $processRunner)
     {
         $this->processRunner = $processRunner;
-    }
-
-    public static function check(): void
-    {
-        self::createProcessRunner()->run('gh auth status');
     }
 
     public function work(Version $version): void

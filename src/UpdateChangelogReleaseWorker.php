@@ -18,17 +18,16 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class UpdateChangelogReleaseWorker extends ReleaseWorker
 {
+    protected static $checkCommands = [
+        './vendor/bin/conventional-changelog --help',
+    ];
+
     /** @var ProcessRunner */
     private $processRunner;
 
     public function __construct(ProcessRunner $processRunner)
     {
         $this->processRunner = $processRunner;
-    }
-
-    public static function check(): void
-    {
-        self::createProcessRunner()->run('./vendor/bin/conventional-changelog --help');
     }
 
     public function work(Version $version): void
