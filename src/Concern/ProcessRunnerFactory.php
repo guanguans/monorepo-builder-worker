@@ -18,6 +18,9 @@ use MonorepoBuilderPrefix202304\Symfony\Component\Console\Output\OutputInterface
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
+/**
+ * @mixin \Guanguans\MonorepoBuilderWorker\ReleaseWorker
+ */
 trait ProcessRunnerFactory
 {
     /** @var null|ProcessRunner */
