@@ -64,7 +64,9 @@ class CreateGithubReleaseWorker extends ReleaseWorker
         $lines = array_filter(
             explode(PHP_EOL, $this->processRunner->run("git show $commitId")),
             static function (string $line): bool {
-                return str_starts_with($line, '+') && ! str_starts_with($line, '+++');
+                return str_starts_with($line, '+')
+                    && ! str_starts_with($line, '+## ')
+                    && ! str_starts_with($line, '+++');
             }
         );
 
@@ -75,7 +77,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
             }, $lines)
         );
 
-        if (! (str_contains($lines, '##') && str_contains($lines, $version->getOriginalString()))) {
+        if (! (str_contains($lines, '### ') && str_contains($lines, '* '))) {
             return '';
         }
 
