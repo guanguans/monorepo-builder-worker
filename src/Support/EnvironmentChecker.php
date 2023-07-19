@@ -13,6 +13,9 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
 use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerInterface;
+use MonorepoBuilderPrefix202304\Symfony\Component\Console\Input\ArgvInput;
+use MonorepoBuilderPrefix202304\Symfony\Component\Console\Output\ConsoleOutput;
+use MonorepoBuilderPrefix202304\Symfony\Component\Console\Style\SymfonyStyle;
 
 class EnvironmentChecker
 {
@@ -24,9 +27,14 @@ class EnvironmentChecker
      */
     public static function checks(array $workers): void
     {
+        $symfonyStyle = new SymfonyStyle(new ArgvInput(), new ConsoleOutput());
+        $symfonyStyle->note('Checking environment...');
+
         foreach ($workers as $worker) {
             self::check($worker);
         }
+
+        $symfonyStyle->success('Environment checked!');
     }
 
     /**
