@@ -20,11 +20,18 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 trait ProcessRunnerFactory
 {
+    /** @var null|ProcessRunner */
+    private static $runner;
+
     protected static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {
-        return new ProcessRunner($symfonyStyle ?: new SymfonyStyle(
-            new ArgvInput(),
-            new ConsoleOutput(OutputInterface::VERBOSITY_VERY_VERBOSE)
-        ));
+        if (! self::$runner instanceof ProcessRunner || $symfonyStyle instanceof SymfonyStyle) {
+            self::$runner = new ProcessRunner($symfonyStyle ?: new SymfonyStyle(
+                new ArgvInput(),
+                new ConsoleOutput(OutputInterface::VERBOSITY_VERY_VERBOSE)
+            ));
+        }
+
+        return self::$runner;
     }
 }
