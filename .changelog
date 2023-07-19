@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 return [
     'root' => getcwd(),
-    'path' => 'CHANGELOG.md',
+    'path' => 'CHANGELOG.md', // break keywords in `breaking change`, `feat!`
     'sortBy' => 'subject',
     'packageBump' => false,
     'packageLockCommit' => false,
