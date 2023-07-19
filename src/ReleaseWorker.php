@@ -23,6 +23,6 @@ abstract class ReleaseWorker implements EnvironmentCheckerInterface, ProcessRunn
     use EnvironmentChecker;
     use ProcessRunnerFactory;
 
-    /** @var array<array<string>|string> */
+    /** @var array<array<string>|string>|string */
     protected static $checkCommands = [];
 }
