@@ -57,7 +57,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
         );
 
         $commitId = explode(' ', array_values($commits)[0] ?? '', 2)[0];
-        if (empty($commitId)) {
+        if ('' === $commitId) {
             return '';
         }
 
