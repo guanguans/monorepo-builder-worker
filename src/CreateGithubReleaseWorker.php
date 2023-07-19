@@ -33,7 +33,12 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 
     public function work(Version $version): void
     {
-        $this->processRunner->run("gh release create {$version->getOriginalString()} --generate-notes");
+        $changelog = $this->getChangelog($version);
+
+        $this->processRunner->run(array_merge(
+            ['gh', 'release', 'create', $version->getOriginalString()],
+            $changelog ? ['--notes', $changelog] : ['--generate-notes']
+        ));
     }
 
     public function getDescription(Version $version): string
