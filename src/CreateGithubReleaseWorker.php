@@ -19,6 +19,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 {
     protected static $checkCommands = [
         'gh auth status',
+        'gh release list --limit 1',
     ];
 
     /** @var ProcessRunner */
