@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Contract;
 
-interface CheckReleaseWorkerEnvironmentInterface
+interface EnvironmentCheckerInterface
 {
     /**
      * @throws \Throwable

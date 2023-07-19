@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
-use Guanguans\MonorepoBuilderWorker\Contract\CheckReleaseWorkerEnvironmentInterface;
+use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerInterface;
 
-class Utils
+class EnvironmentChecker
 {
     /**
      * @param array<class-string|object> $workers
@@ -22,10 +22,21 @@ class Utils
      * @throws \Throwable
      * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
      */
-    public static function checkReleaseWorkersEnvironment(array $workers): void
+    public static function checks(array $workers): void
     {
         foreach ($workers as $worker) {
-            is_subclass_of($worker, CheckReleaseWorkerEnvironmentInterface::class) and $worker::check();
+            self::check($worker);
         }
+    }
+
+    /**
+     * @param class-string|object $worker
+     *
+     * @throws \Throwable
+     * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
+     */
+    public static function check($worker): void
+    {
+        is_subclass_of($worker, EnvironmentCheckerInterface::class) and $worker::check();
     }
 }
