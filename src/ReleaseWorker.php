@@ -14,9 +14,10 @@ namespace Guanguans\MonorepoBuilderWorker;
 
 use Guanguans\MonorepoBuilderWorker\Concern\ProcessRunnerFactory;
 use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerInterface;
+use Guanguans\MonorepoBuilderWorker\Contract\ProcessRunnerFactoryInterface;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 
-abstract class ReleaseWorker implements EnvironmentCheckerInterface, ReleaseWorkerInterface
+abstract class ReleaseWorker implements EnvironmentCheckerInterface, ProcessRunnerFactoryInterface, ReleaseWorkerInterface
 {
     use ProcessRunnerFactory;
 }

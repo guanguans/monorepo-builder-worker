@@ -23,7 +23,7 @@ trait ProcessRunnerFactory
     /** @var null|ProcessRunner */
     private static $runner;
 
-    protected static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
+    public static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {
         if (! self::$runner instanceof ProcessRunner || $symfonyStyle instanceof SymfonyStyle) {
             self::$runner = new ProcessRunner($symfonyStyle ?: new SymfonyStyle(
