@@ -36,6 +36,6 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 
     public function getDescription(Version $version): string
     {
-        return "Create github \"{$version->getOriginalString()}\" release";
+        return "Create github release \"{$version->getOriginalString()}\"";
     }
 }

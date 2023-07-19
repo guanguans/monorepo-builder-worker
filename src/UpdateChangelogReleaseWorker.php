@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
-use MonorepoBuilderPrefix202304\Nette\Utils\DateTime;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -38,10 +37,6 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
 
     public function getDescription(Version $version): string
     {
-        return sprintf(
-            'Update `CHANGELOG.md` to "%s - %s"',
-            $version->getOriginalString(),
-            (new DateTime())->format('Y-m-d')
-        );
+        return sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
     }
 }
