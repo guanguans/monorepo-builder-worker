@@ -13,6 +13,7 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\Concern;
 
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Input\ArgvInput;
+use MonorepoBuilderPrefix202304\Symfony\Component\Console\Input\InputInterface;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Output\ConsoleOutput;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Output\OutputInterface;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Style\SymfonyStyle;
@@ -27,19 +28,35 @@ trait ConcreteFactory
     /** @var null|ProcessRunner */
     private static $runner;
 
+    /** @var null|SymfonyStyle */
+    private static $symfonyStyle;
+
     /** @var null|ExecutableFinder */
     private static $executableFinder;
 
     public static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {
         if (! self::$runner instanceof ProcessRunner || $symfonyStyle instanceof SymfonyStyle) {
-            self::$runner = new ProcessRunner($symfonyStyle ?: new SymfonyStyle(
-                new ArgvInput(),
-                new ConsoleOutput(OutputInterface::VERBOSITY_VERY_VERBOSE)
-            ));
+            self::$runner = new ProcessRunner($symfonyStyle ?: self::createSymfonyStyle());
         }
 
         return self::$runner;
+    }
+
+    public static function createSymfonyStyle(?InputInterface $input = null, ?OutputInterface $output = null): SymfonyStyle
+    {
+        if (
+            ! self::$symfonyStyle instanceof SymfonyStyle
+            || $input instanceof InputInterface
+            || $output instanceof OutputInterface
+        ) {
+            self::$symfonyStyle = new SymfonyStyle(
+                $input ?? new ArgvInput(),
+                $output ?? new ConsoleOutput(OutputInterface::VERBOSITY_VERY_VERBOSE)
+            );
+        }
+
+        return self::$symfonyStyle;
     }
 
     public static function createExecutableFinder(): ExecutableFinder
