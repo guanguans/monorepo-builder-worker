@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
+use MonorepoBuilderPrefix202304\Webmozart\Assert\Assert;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -31,6 +32,7 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
     public static function check(): void
     {
         self::createProcessRunner()->run('git rev-parse --is-inside-work-tree');
+        Assert::isEmpty(self::createProcessRunner()->run('git status --short'));
         self::createProcessRunner()->run('./vendor/bin/conventional-changelog -V');
     }
 
