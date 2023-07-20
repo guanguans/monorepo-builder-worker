@@ -4,6 +4,25 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [1.0.2](https://github.com/guanguans/monorepo-builder-worker/compare/v0.1.0...v1.0.2) (2023-07-20)
+
+### Features
+
+
+##### Update Changelog Release Worker
+
+* Add getChangelogDiff method ([b47ac6](https://github.com/guanguans/monorepo-builder-worker/commit/b47ac6bc442904c47ec1127c1edd257b9b66e1cf))
+
+### Bug Fixes
+
+
+##### Release
+
+* Fix issue with changelog generation ([4bac2f](https://github.com/guanguans/monorepo-builder-worker/commit/4bac2f36b9f109c3683dfe73e6945efe4378e00e))
+
+
+---
+
 ## [1.0.1](https://github.com/guanguans/monorepo-builder-worker/compare/v0.1.0...v1.0.1) (2023-07-20)
 
 
