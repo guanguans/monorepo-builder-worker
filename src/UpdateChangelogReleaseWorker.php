@@ -17,11 +17,6 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class UpdateChangelogReleaseWorker extends ReleaseWorker
 {
-    protected static $checkCommands = [
-        'git rev-parse --is-inside-work-tree',
-        './vendor/bin/conventional-changelog --help',
-    ];
-
     /** @var null|string */
     protected static $changelogDiff;
 
@@ -31,6 +26,12 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
     public function __construct(ProcessRunner $processRunner)
     {
         $this->processRunner = $processRunner;
+    }
+
+    public static function check(): void
+    {
+        self::createProcessRunner()->run('git rev-parse --is-inside-work-tree');
+        self::createProcessRunner()->run('./vendor/bin/conventional-changelog -V');
     }
 
     public function work(Version $version): void

@@ -17,18 +17,19 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class CreateGithubReleaseWorker extends ReleaseWorker
 {
-    protected static $checkCommands = [
-        'git rev-parse --is-inside-work-tree',
-        'gh auth status',
-        'gh release list --limit 1',
-    ];
-
     /** @var ProcessRunner */
     private $processRunner;
 
     public function __construct(ProcessRunner $processRunner)
     {
         $this->processRunner = $processRunner;
+    }
+
+    public static function check(): void
+    {
+        self::createProcessRunner()->run('git rev-parse --is-inside-work-tree');
+        self::createProcessRunner()->run('gh auth status');
+        self::createProcessRunner()->run('gh release list --limit 1');
     }
 
     public function work(Version $version): void
