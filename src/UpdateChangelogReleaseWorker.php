@@ -33,10 +33,11 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
     public function work(Version $version): void
     {
         $tag = $version->getOriginalString();
+        $previousTag = $this->getPreviousTag($tag);
 
         $this->processRunner->run(sprintf(
             "./vendor/bin/conventional-changelog %s --to-tag=$tag --ver=$tag --ansi -v",
-            $this->getPreviousTag($tag) ? "--from-tag=$tag" : '--first-release'
+            $previousTag ? "--from-tag=$previousTag" : '--first-release'
         ));
 
         $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $tag\" --no-verify && git push");
