@@ -34,7 +34,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 
     public function work(Version $version): void
     {
-        $changelog = $this->getChangelog();
+        $changelog = $this->toChangelog(UpdateChangelogReleaseWorker::getChangelogDiff());
 
         $this->processRunner->run(array_merge(
             ['gh', 'release', 'create', $version->getOriginalString()],
@@ -47,10 +47,10 @@ class CreateGithubReleaseWorker extends ReleaseWorker
         return "Create github release \"{$version->getOriginalString()}\"";
     }
 
-    protected function getChangelog(): string
+    protected function toChangelog(?string $changelogDiff): string
     {
         $lines = array_filter(
-            explode(PHP_EOL, (string) UpdateChangelogReleaseWorker::getChangelogDiff()),
+            explode(PHP_EOL, (string) $changelogDiff),
             static function (string $line): bool {
                 return str_starts_with($line, '+')
                     && ! str_starts_with($line, '+++')

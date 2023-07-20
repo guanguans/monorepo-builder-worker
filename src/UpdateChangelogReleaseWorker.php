@@ -18,7 +18,7 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 class UpdateChangelogReleaseWorker extends ReleaseWorker
 {
     /** @var null|string */
-    protected static $changelogDiff;
+    private static $changelogDiff;
 
     /** @var ProcessRunner */
     private $processRunner;
@@ -37,7 +37,7 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
     public function work(Version $version): void
     {
         $tag = $version->getOriginalString();
-        $previousTag = $this->getPreviousTag($tag);
+        $previousTag = $this->toPreviousTag($tag);
 
         $this->processRunner->run(sprintf(
             "./vendor/bin/conventional-changelog %s --to-tag=$tag --ver=$tag --ansi -v",
@@ -59,7 +59,7 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
         return self::$changelogDiff;
     }
 
-    protected function getPreviousTag(string $tag): string
+    protected function toPreviousTag(string $tag): string
     {
         $tags = explode(PHP_EOL, $this->processRunner->run('git tag --sort=-committerdate'));
         $previousTagIndex = array_search($tag, $tags, true) + 1;
