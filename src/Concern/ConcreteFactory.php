@@ -20,9 +20,6 @@ use MonorepoBuilderPrefix202304\Symfony\Component\Console\Style\SymfonyStyle;
 use MonorepoBuilderPrefix202304\Symfony\Component\Process\ExecutableFinder;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
-/**
- * @mixin \Guanguans\MonorepoBuilderWorker\ReleaseWorker
- */
 trait ConcreteFactory
 {
     /** @var null|ProcessRunner */
