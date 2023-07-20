@@ -4,6 +4,18 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [1.0.4](https://github.com/guanguans/monorepo-builder-worker/compare/v0.1.0...v1.0.4) (2023-07-20)
+
+### Features
+
+
+##### Update Changelog Release Worker
+
+* Add Assert dependency ([4f9fad](https://github.com/guanguans/monorepo-builder-worker/commit/4f9fad68c5f912202a60ff3c1fe2522231c9b1e6))
+
+
+---
+
 ## [1.0.3](https://github.com/guanguans/monorepo-builder-worker/compare/v0.1.0...v1.0.3) (2023-07-20)
 
 
