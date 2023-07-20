@@ -22,6 +22,9 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
         './vendor/bin/conventional-changelog --help',
     ];
 
+    /** @var null|string */
+    protected static $changelogDiff;
+
     /** @var ProcessRunner */
     private $processRunner;
 
@@ -41,11 +44,18 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
         ));
 
         $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $tag\" --no-verify && git push");
+
+        self::$changelogDiff = $this->processRunner->run('git show');
     }
 
     public function getDescription(Version $version): string
     {
         return sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
+    }
+
+    public static function getChangelogDiff(): ?string
+    {
+        return self::$changelogDiff;
     }
 
     protected function getPreviousTag(string $tag): string

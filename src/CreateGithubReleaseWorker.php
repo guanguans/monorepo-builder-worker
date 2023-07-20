@@ -33,7 +33,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 
     public function work(Version $version): void
     {
-        $changelog = $this->getChangelog($version);
+        $changelog = $this->getChangelog();
 
         $this->processRunner->run(array_merge(
             ['gh', 'release', 'create', $version->getOriginalString()],
@@ -46,27 +46,14 @@ class CreateGithubReleaseWorker extends ReleaseWorker
         return "Create github release \"{$version->getOriginalString()}\"";
     }
 
-    protected function getChangelog(Version $version): string
+    protected function getChangelog(): string
     {
-        // a56d0ff chore(release): 0.6.0
-        $commits = array_filter(
-            explode(PHP_EOL, $this->processRunner->run('git log --oneline -5')),
-            static function (string $commit) use ($version): bool {
-                return str_contains($commit, $version->getOriginalString());
-            }
-        );
-
-        $commitId = explode(' ', array_values($commits)[0] ?? '', 2)[0];
-        if ('' === $commitId) {
-            return '';
-        }
-
         $lines = array_filter(
-            explode(PHP_EOL, $this->processRunner->run("git show $commitId")),
+            explode(PHP_EOL, (string) UpdateChangelogReleaseWorker::getChangelogDiff()),
             static function (string $line): bool {
                 return str_starts_with($line, '+')
-                    && ! str_starts_with($line, '+## ')
-                    && ! str_starts_with($line, '+++');
+                    && ! str_starts_with($line, '+++')
+                    && ! str_starts_with($line, '+## ');
             }
         );
 
