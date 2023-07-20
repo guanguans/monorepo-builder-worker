@@ -12,17 +12,15 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
+use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\Concern\EnvironmentChecker;
-use Guanguans\MonorepoBuilderWorker\Concern\ExecutableFinderFactory;
-use Guanguans\MonorepoBuilderWorker\Concern\ProcessRunnerFactory;
 use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerInterface;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 
 abstract class ReleaseWorker implements EnvironmentCheckerInterface, ReleaseWorkerInterface
 {
+    use ConcreteFactory;
     use EnvironmentChecker;
-    use ExecutableFinderFactory;
-    use ProcessRunnerFactory;
 
     /** @var array<array<string>|string>|string */
     protected static $checkCommands = [];

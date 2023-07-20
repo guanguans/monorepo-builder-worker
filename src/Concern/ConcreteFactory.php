@@ -16,15 +16,19 @@ use MonorepoBuilderPrefix202304\Symfony\Component\Console\Input\ArgvInput;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Output\ConsoleOutput;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Output\OutputInterface;
 use MonorepoBuilderPrefix202304\Symfony\Component\Console\Style\SymfonyStyle;
+use MonorepoBuilderPrefix202304\Symfony\Component\Process\ExecutableFinder;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 /**
  * @mixin \Guanguans\MonorepoBuilderWorker\ReleaseWorker
  */
-trait ProcessRunnerFactory
+trait ConcreteFactory
 {
     /** @var null|ProcessRunner */
     private static $runner;
+
+    /** @var null|ExecutableFinder */
+    private static $executableFinder;
 
     public static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {
@@ -36,5 +40,14 @@ trait ProcessRunnerFactory
         }
 
         return self::$runner;
+    }
+
+    public static function createExecutableFinder(): ExecutableFinder
+    {
+        if (! self::$executableFinder instanceof ExecutableFinder) {
+            self::$executableFinder = new ExecutableFinder();
+        }
+
+        return self::$executableFinder;
     }
 }

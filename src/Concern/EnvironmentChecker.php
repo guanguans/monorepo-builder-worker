@@ -17,7 +17,7 @@ namespace Guanguans\MonorepoBuilderWorker\Concern;
  */
 trait EnvironmentChecker
 {
-    use ProcessRunnerFactory;
+    use ConcreteFactory;
 
     public static function check(): void
     {
