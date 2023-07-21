@@ -12,13 +12,14 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
+use Guanguans\MonorepoBuilderWorker\Contract\ChangelogInterface;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 /**
  * @see https://github.com/git-chglog/git-chglog
  */
-class GoUpdateChangelogReleaseWorker extends ReleaseWorker
+class GoUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogInterface
 {
     /** @var null|string */
     private static $changelog;

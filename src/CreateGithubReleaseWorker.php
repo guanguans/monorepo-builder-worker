@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
+use Guanguans\MonorepoBuilderWorker\Contract\ChangelogInterface;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -48,15 +49,18 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 
     /**
      * @noinspection NativeMemberUsageInspection
-     * @noinspection PhpUndefinedMethodInspection
      */
     public function findChangelog(): string
     {
         foreach ([
             GoUpdateChangelogReleaseWorker::class,
             PhpUpdateChangelogReleaseWorker::class,
-        ] as $changelogClass) {
-            $changelog = $changelogClass::getChangelog();
+        ] as $class) {
+            if (! is_subclass_of($class, ChangelogInterface::class)) {
+                continue;
+            }
+
+            $changelog = $class::getChangelog();
             if (! empty($changelog)) {
                 return $changelog;
             }
