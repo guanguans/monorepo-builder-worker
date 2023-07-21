@@ -8,6 +8,15 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.5"></a>
+## [1.1.5] - 2023-07-21
+### Chore
+- **release:** 1.1.4
+
+### Fix
+- **Changelog:** fix regex pattern for replacing unreleased link
+
+
 <a name="1.1.4"></a>
 ## [1.1.4] - 2023-07-21
 ### Chore
@@ -262,7 +271,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.4...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.5...HEAD
+[1.1.5]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.4...1.1.5
 [1.1.4]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.1...1.1.2
