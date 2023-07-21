@@ -38,7 +38,7 @@ class GoUpdateChangelogReleaseWorker extends ReleaseWorker
 
     public static function getChangelog(): string
     {
-        if (! self::$version instanceof Version) {
+        if (empty(self::$changelog) || ! self::$version instanceof Version) {
             return '';
         }
 

@@ -37,8 +37,12 @@ class PhpUpdateChangelogReleaseWorker extends ReleaseWorker
 
     public static function getChangelog(): string
     {
+        if (empty(self::$changelog)) {
+            return '';
+        }
+
         $lines = array_filter(
-            explode(PHP_EOL, (string) self::$changelog),
+            explode(PHP_EOL, self::$changelog),
             static function (string $line): bool {
                 return str_starts_with($line, '+')
                     && ! str_starts_with($line, '+++')
