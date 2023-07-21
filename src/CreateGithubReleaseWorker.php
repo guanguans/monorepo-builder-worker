@@ -33,7 +33,8 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 
     public function work(Version $version): void
     {
-        $changelog = PhpUpdateChangelogReleaseWorker::getChangelog();
+        $changelog = GoUpdateChangelogReleaseWorker::getChangelog();
+        // $changelog = PhpUpdateChangelogReleaseWorker::getChangelog();
 
         $this->processRunner->run(array_merge(
             ['gh', 'release', 'create', $version->getOriginalString()],

@@ -57,6 +57,7 @@ class GoUpdateChangelogReleaseWorker extends ReleaseWorker
     public function work(Version $version): void
     {
         $this->processRunner->run('git-chglog --output CHANGELOG.md');
+        $this->processRunner->run("git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
 
         self::$version = $version;
         self::$changelog = $this->processRunner->run("git-chglog {$version->getOriginalString()}");
