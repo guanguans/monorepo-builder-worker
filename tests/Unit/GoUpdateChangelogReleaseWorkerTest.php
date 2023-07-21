@@ -42,7 +42,7 @@ it('can get changelog', function (): void {
         self::$version = $mockVersion;
     })->call(new GoUpdateChangelogReleaseWorker($mockProcessRunner));
 
-    expect(GoUpdateChangelogReleaseWorker::getChangelog())->toBeString();
+    expect(GoUpdateChangelogReleaseWorker::getChangelog())->toBeTruthy();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
@@ -61,5 +61,5 @@ it('can get description', function (): void {
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
     expect(new GoUpdateChangelogReleaseWorker(\Mockery::mock(ProcessRunner::class)))
-        ->getDescription($mockVersion)->toBeString();
+        ->getDescription($mockVersion)->toBeTruthy();
 })->group(__DIR__, __FILE__);

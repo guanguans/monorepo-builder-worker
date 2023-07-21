@@ -61,10 +61,6 @@ it('can find changelog', function (): void {
     })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
     (function (): void {
         self::$changelog = '';
-
-        $mockVersion = \Mockery::mock(Version::class);
-        $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-        self::$version = $mockVersion;
     })->call(new GoUpdateChangelogReleaseWorker($mockProcessRunner));
     expect(new CreateGithubReleaseWorker($mockProcessRunner))
         ->findChangelog()->toBeEmpty();

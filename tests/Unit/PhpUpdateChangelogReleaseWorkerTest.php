@@ -37,20 +37,17 @@ it('can get changelog', function (): void {
     (function (): void {
         self::$changelog = <<<'changelog'
             +### Feat
-            +- **Contract:** Add ChangelogInterface
             changelog;
     })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
+    expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeEmpty();
 
-    expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeString();
-
-    $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
     (function (): void {
         self::$changelog = <<<'changelog'
             +### Feat
+            +- **Contract:** Add ChangelogInterface
             changelog;
     })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
-
-    expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeString();
+    expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeTruthy();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
