@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.4"></a>
+## [1.1.4] - 2023-07-21
+### Chore
+- **composer:** update pest and pest-coverage scripts
+- **release:** 1.1.3
+
+### Feat
+- **deps:** Add nunomaduro/mock-final-classes package
+
+### Fix
+- **Changelog:** Fix substring position in GoUpdateChangelogReleaseWorker
+
+### Refactor
+- **concern:** Update access modifiers in ConcreteFactory
+
+
 <a name="1.1.3"></a>
 ## [1.1.3] - 2023-07-21
 ### Chore
@@ -246,7 +262,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.3...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.4...HEAD
+[1.1.4]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.0...1.1.1
