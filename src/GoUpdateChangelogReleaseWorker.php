@@ -42,12 +42,15 @@ class GoUpdateChangelogReleaseWorker extends ReleaseWorker
             return '';
         }
 
-        $tagPos = mb_strpos(self::$changelog, sprintf('<a name="%s"></a>', self::$version->getOriginalString()));
+        $tagPos = strpos(
+            self::$changelog,
+            sprintf('<a name="%s"></a>', self::$version->getOriginalString())
+        );
 
         return preg_replace(
             '/\[Unreleased\]: http?s:\/\/.*compare.*\.\.\.HEAD/',
             '',
-            mb_substr(self::$changelog, $tagPos, \strlen(self::$changelog))
+            substr(self::$changelog, $tagPos, \strlen(self::$changelog))
         );
     }
 
