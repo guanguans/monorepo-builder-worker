@@ -15,6 +15,9 @@ namespace Guanguans\MonorepoBuilderWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
+/**
+ * @see https://github.com/git-chglog/git-chglog
+ */
 class GoUpdateChangelogReleaseWorker extends ReleaseWorker
 {
     /** @var null|string */

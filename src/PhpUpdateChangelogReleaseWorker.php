@@ -16,6 +16,9 @@ use MonorepoBuilderPrefix202304\Webmozart\Assert\Assert;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
+/**
+ * @see https://github.com/marcocesarato/php-conventional-changelog
+ */
 class PhpUpdateChangelogReleaseWorker extends ReleaseWorker
 {
     /** @var null|string */
