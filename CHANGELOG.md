@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.3"></a>
+## [1.1.3] - 2023-07-21
+### Chore
+- **ReleaseWorker:** optimize changelog generation
+- **release:** 1.1.2
+
+### Docs
+- **changelog:** add link to git-chglog
+
+### Feat
+- **Contract:** Add ChangelogInterface
+
+### Refactor
+- **CreateGithubReleaseWorker:** improve changelog handling
+
+
 <a name="1.1.2"></a>
 ## [1.1.2] - 2023-07-21
 ### Chore
@@ -230,7 +246,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.3...HEAD
+[1.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.2...1.1.3
 [1.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.0.4...1.1.0
