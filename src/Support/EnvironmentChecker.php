@@ -46,4 +46,13 @@ class EnvironmentChecker
     {
         is_subclass_of($worker, EnvironmentCheckerInterface::class) and $worker::check();
     }
+
+    /**
+     * @throws \Throwable
+     * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
+     */
+    public static function checkFromCallback(callable $callback): void
+    {
+        $callback(self::class);
+    }
 }
