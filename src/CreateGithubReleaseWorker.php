@@ -33,8 +33,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 
     public function work(Version $version): void
     {
-        $changelog = GoUpdateChangelogReleaseWorker::getChangelog();
-        // $changelog = PhpUpdateChangelogReleaseWorker::getChangelog();
+        $changelog = $this->findChangelog();
 
         $this->processRunner->run(array_merge(
             ['gh', 'release', 'create', $version->getOriginalString()],
@@ -45,5 +44,24 @@ class CreateGithubReleaseWorker extends ReleaseWorker
     public function getDescription(Version $version): string
     {
         return "Create github release \"{$version->getOriginalString()}\"";
+    }
+
+    /**
+     * @noinspection NativeMemberUsageInspection
+     * @noinspection PhpUndefinedMethodInspection
+     */
+    public function findChangelog(): string
+    {
+        foreach ([
+            GoUpdateChangelogReleaseWorker::class,
+            PhpUpdateChangelogReleaseWorker::class,
+        ] as $changelogClass) {
+            $changelog = $changelogClass::getChangelog();
+            if (! empty($changelog)) {
+                return $changelog;
+            }
+        }
+
+        return '';
     }
 }
