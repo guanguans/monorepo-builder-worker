@@ -99,7 +99,7 @@ return static function (RectorConfig $rectorConfig): void {
         WrapEncapsedVariableInCurlyBracesRector::class,
 
         DisallowedEmptyRuleFixerRector::class => [
-            // __DIR__.'/src/Support/QueryAnalyzer.php',
+            '*',
         ],
         RemoveExtraParametersRector::class => [
             // __DIR__.'/src/Macros/QueryBuilderMacro.php',

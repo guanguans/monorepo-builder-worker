@@ -66,15 +66,15 @@ class PhpUpdateChangelogReleaseWorker extends ReleaseWorker
 
     public function work(Version $version): void
     {
-        $tag = $version->getOriginalString();
-        $previousTag = $this->toPreviousTag($tag);
+        $originalString = $version->getOriginalString();
+        $previousTag = $this->toPreviousTag($originalString);
 
         $this->processRunner->run(sprintf(
-            "./vendor/bin/conventional-changelog %s --to-tag=$tag --ver=$tag --ansi -v",
+            "./vendor/bin/conventional-changelog %s --to-tag=$originalString --ver=$originalString --ansi -v",
             $previousTag ? "--from-tag=$previousTag" : '--first-release'
         ));
 
-        $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $tag\" --no-verify && git push");
+        $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $originalString\" --no-verify && git push");
 
         self::$changelog = $this->processRunner->run('git show');
     }
