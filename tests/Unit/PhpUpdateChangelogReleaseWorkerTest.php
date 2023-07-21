@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorkerTests\Unit;
 
 use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\PhpUpdateChangelogReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
@@ -23,8 +22,36 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 uses(ConcreteFactory::class);
 
 it('can check', function (): void {
+    (function (): void {
+        $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+        $mockProcessRunner->allows('run')->andReturns('');
+
+        self::$runner = $mockProcessRunner;
+    })->call(new PhpUpdateChangelogReleaseWorker(\Mockery::mock(ProcessRunner::class)));
+
     expect(PhpUpdateChangelogReleaseWorker::check())->toBeNull();
-})->group(__DIR__, __FILE__)->skip();
+})->group(__DIR__, __FILE__);
+
+it('can get changelog', function (): void {
+    $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+    (function (): void {
+        self::$changelog = <<<'changelog'
+            +### Feat
+            +- **Contract:** Add ChangelogInterface
+            changelog;
+    })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
+
+    expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeString();
+
+    $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+    (function (): void {
+        self::$changelog = <<<'changelog'
+            +### Feat
+            changelog;
+    })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
+
+    expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeString();
+})->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
     $mockProcessRunner = \Mockery::mock(ProcessRunner::class);

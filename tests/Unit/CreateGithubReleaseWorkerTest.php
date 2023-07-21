@@ -16,12 +16,21 @@ namespace Guanguans\MonorepoBuilderWorkerTests\Unit;
 
 use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\GoUpdateChangelogReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\PhpUpdateChangelogReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 uses(ConcreteFactory::class);
 
 it('can check', function (): void {
+    (function (): void {
+        $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+        $mockProcessRunner->allows('run')->andReturns('output');
+
+        self::$runner = $mockProcessRunner;
+    })->call(new CreateGithubReleaseWorker(\Mockery::mock(ProcessRunner::class)));
+
     expect(CreateGithubReleaseWorker::check())->toBeNull();
 })->group(__DIR__, __FILE__);
 
@@ -42,4 +51,31 @@ it('can get description', function (): void {
 
     expect(new CreateGithubReleaseWorker(\Mockery::mock(ProcessRunner::class)))
         ->getDescription($mockVersion)->toBeString();
+})->group(__DIR__, __FILE__);
+
+it('can find changelog', function (): void {
+    $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+
+    (function (): void {
+        self::$changelog = '';
+    })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
+    (function (): void {
+        self::$changelog = '';
+
+        $mockVersion = \Mockery::mock(Version::class);
+        $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
+        self::$version = $mockVersion;
+    })->call(new GoUpdateChangelogReleaseWorker($mockProcessRunner));
+    expect(new CreateGithubReleaseWorker($mockProcessRunner))
+        ->findChangelog()->toBeEmpty();
+
+    (function (): void {
+        self::$changelog = 'changelog';
+
+        $mockVersion = \Mockery::mock(Version::class);
+        $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
+        self::$version = $mockVersion;
+    })->call(new GoUpdateChangelogReleaseWorker($mockProcessRunner));
+    expect(new CreateGithubReleaseWorker($mockProcessRunner))
+        ->findChangelog()->toBeTruthy();
 })->group(__DIR__, __FILE__);

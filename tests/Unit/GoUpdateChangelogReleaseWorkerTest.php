@@ -15,7 +15,6 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorkerTests\Unit;
 
 use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\GoUpdateChangelogReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
@@ -23,7 +22,27 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 uses(ConcreteFactory::class);
 
 it('can check', function (): void {
+    (function (): void {
+        $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+        $mockProcessRunner->allows('run')->andReturns('output');
+
+        self::$runner = $mockProcessRunner;
+    })->call(new GoUpdateChangelogReleaseWorker(\Mockery::mock(ProcessRunner::class)));
+
     expect(GoUpdateChangelogReleaseWorker::check())->toBeNull();
+})->group(__DIR__, __FILE__);
+
+it('can get changelog', function (): void {
+    $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+    (function (): void {
+        self::$changelog = 'changelog';
+
+        $mockVersion = \Mockery::mock(Version::class);
+        $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
+        self::$version = $mockVersion;
+    })->call(new GoUpdateChangelogReleaseWorker($mockProcessRunner));
+
+    expect(GoUpdateChangelogReleaseWorker::getChangelog())->toBeString();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
