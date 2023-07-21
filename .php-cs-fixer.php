@@ -90,7 +90,7 @@ return (new PhpCsFixer\Config())
         '@PhpCsFixer:risky' => true,
 
         // alias
-        'mb_str_functions' => true,
+        'mb_str_functions' => false,
 
         // array_notation
 

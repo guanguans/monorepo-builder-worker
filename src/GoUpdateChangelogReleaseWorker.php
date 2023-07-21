@@ -18,7 +18,10 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 class GoUpdateChangelogReleaseWorker extends ReleaseWorker
 {
     /** @var null|string */
-    private static $changelogDiff;
+    private static $changelog;
+
+    /** @var null|Version */
+    private static $version;
 
     /** @var ProcessRunner */
     private $processRunner;
@@ -33,27 +36,31 @@ class GoUpdateChangelogReleaseWorker extends ReleaseWorker
         self::createProcessRunner()->run('git-chglog -v');
     }
 
+    public static function getChangelog(): string
+    {
+        if (! self::$version instanceof Version) {
+            return '';
+        }
+
+        $tagPos = mb_strpos(self::$changelog, sprintf('<a name="%s"></a>', self::$version->getOriginalString()));
+
+        return preg_replace(
+            '/\[Unreleased\]: http?s:\/\/.*compare.*\.\.\.HEAD/',
+            '',
+            mb_substr(self::$changelog, $tagPos, \strlen(self::$changelog))
+        );
+    }
+
     public function work(Version $version): void
     {
         $this->processRunner->run('git-chglog --output CHANGELOG.md');
-        self::$changelogDiff = $this->processRunner->run("git-chglog {$version->getOriginalString()}");
+
+        self::$version = $version;
+        self::$changelog = $this->processRunner->run("git-chglog {$version->getOriginalString()}");
     }
 
     public function getDescription(Version $version): string
     {
         return sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
-    }
-
-    public static function getChangelogDiff(): ?string
-    {
-        return self::$changelogDiff;
-    }
-
-    protected function toPreviousTag(string $tag): string
-    {
-        $tags = explode(PHP_EOL, $this->processRunner->run('git tag --sort=-committerdate'));
-        $previousTagIndex = array_search($tag, $tags, true) + 1;
-
-        return $tags[$previousTagIndex] ?? '';
     }
 }
