@@ -11,8 +11,8 @@ declare(strict_types=1);
  */
 
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\PhpUpdateChangelogReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
-use Guanguans\MonorepoBuilderWorker\UpdateChangelogReleaseWorker;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\AddTagToChangelogReleaseWorker;
 use Symplify\MonorepoBuilder\Release\ReleaseWorker\PushNextDevReleaseWorker;
@@ -38,7 +38,7 @@ return static function (MBConfig $mbConfig): void {
         // AddTagToChangelogReleaseWorker::class,
         TagVersionReleaseWorker::class,
         PushTagReleaseWorker::class,
-        UpdateChangelogReleaseWorker::class,
+        PhpUpdateChangelogReleaseWorker::class,
         CreateGithubReleaseWorker::class,
         // SetNextMutualDependenciesReleaseWorker::class,
         // UpdateBranchAliasReleaseWorker::class,

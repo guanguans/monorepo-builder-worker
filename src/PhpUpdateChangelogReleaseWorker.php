@@ -16,10 +16,10 @@ use MonorepoBuilderPrefix202304\Webmozart\Assert\Assert;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
-class UpdateChangelogReleaseWorker extends ReleaseWorker
+class PhpUpdateChangelogReleaseWorker extends ReleaseWorker
 {
     /** @var null|string */
-    private static $changelogDiff;
+    private static $changelog;
 
     /** @var ProcessRunner */
     private $processRunner;
@@ -35,6 +35,31 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
         self::createProcessRunner()->run('./vendor/bin/conventional-changelog -V');
     }
 
+    public static function getChangelog(): string
+    {
+        $lines = array_filter(
+            explode(PHP_EOL, (string) self::$changelog),
+            static function (string $line): bool {
+                return str_starts_with($line, '+')
+                    && ! str_starts_with($line, '+++')
+                    && ! str_starts_with($line, '+## ');
+            }
+        );
+
+        $lines = implode(
+            PHP_EOL,
+            array_map(static function (string $line): string {
+                return ltrim($line, '+');
+            }, $lines)
+        );
+
+        if (! (str_contains($lines, '### ') && str_contains($lines, '* '))) {
+            return '';
+        }
+
+        return $lines;
+    }
+
     public function work(Version $version): void
     {
         $tag = $version->getOriginalString();
@@ -47,17 +72,12 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
 
         $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $tag\" --no-verify && git push");
 
-        self::$changelogDiff = $this->processRunner->run('git show');
+        self::$changelog = $this->processRunner->run('git show');
     }
 
     public function getDescription(Version $version): string
     {
         return sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
-    }
-
-    public static function getChangelogDiff(): ?string
-    {
-        return self::$changelogDiff;
     }
 
     protected function toPreviousTag(string $tag): string
