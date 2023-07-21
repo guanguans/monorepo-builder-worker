@@ -23,13 +23,13 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 trait ConcreteFactory
 {
     /** @var null|ProcessRunner */
-    private static $runner;
+    protected static $runner;
 
     /** @var null|SymfonyStyle */
-    private static $symfonyStyle;
+    protected static $symfonyStyle;
 
     /** @var null|ExecutableFinder */
-    private static $executableFinder;
+    protected static $executableFinder;
 
     public static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {

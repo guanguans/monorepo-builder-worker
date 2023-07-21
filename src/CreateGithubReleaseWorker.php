@@ -53,6 +53,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
     public function findChangelog(): string
     {
         foreach ([
+            \stdClass::class,
             GoUpdateChangelogReleaseWorker::class,
             PhpUpdateChangelogReleaseWorker::class,
         ] as $class) {
