@@ -31,7 +31,6 @@ class UpdateChangelogReleaseWorker extends ReleaseWorker
 
     public static function check(): void
     {
-        self::createProcessRunner()->run('git rev-parse --is-inside-work-tree');
         Assert::isEmpty(self::createProcessRunner()->run('git status --short'));
         self::createProcessRunner()->run('./vendor/bin/conventional-changelog -V');
     }

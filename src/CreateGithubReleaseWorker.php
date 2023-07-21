@@ -27,7 +27,6 @@ class CreateGithubReleaseWorker extends ReleaseWorker
 
     public static function check(): void
     {
-        self::createProcessRunner()->run('git rev-parse --is-inside-work-tree');
         self::createProcessRunner()->run('gh auth status');
         self::createProcessRunner()->run('gh release list --limit 1');
     }
