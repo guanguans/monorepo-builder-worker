@@ -96,7 +96,6 @@ class: Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker
  !        - **CreateGithubReleaseWorker:** improve changelog handling                                                   
  !                                                                                                                      
  !                                                                                                                      
- !                                                                                                                      
  !        [1.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.2...1.1.3                           
 
                                                                                                                         
