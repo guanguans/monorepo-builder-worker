@@ -4,6 +4,37 @@
 All notable changes to this project will be documented in this file.
 <!--- END HEADER -->
 
+## [1.1.0](https://github.com/guanguans/monorepo-builder-worker/compare/v0.1.0...v1.1.0) (2023-07-21)
+
+### Features
+
+
+##### Chglog
+
+* Add CHANGELOG template file ([869242](https://github.com/guanguans/monorepo-builder-worker/commit/8692420a005cbb557715f5b4acc19ad4984aa580))
+
+##### Go Update Changelog Release Worker
+
+* Add getChangelog method ([1f846b](https://github.com/guanguans/monorepo-builder-worker/commit/1f846bd222925b9b59be4c8a7932d69f955bfe15))
+
+##### Release Worker
+
+* Add GoUpdateChangelogReleaseWorker class ([d2963c](https://github.com/guanguans/monorepo-builder-worker/commit/d2963c9a8e93c4ea45d2bb326c191bf20a2f8c37))
+
+### Bug Fixes
+
+
+##### Changelog
+
+* Remove Unreleased link ([0094e4](https://github.com/guanguans/monorepo-builder-worker/commit/0094e4cb23dc3b9a472b61234e5b4711b383b9b1))
+
+##### Release Worker
+
+* Handle empty changelog in GoUpdateChangelogReleaseWorker ([12a98f](https://github.com/guanguans/monorepo-builder-worker/commit/12a98f98d1604d4aa11fa27c80ec81870277b9d7))
+
+
+---
+
 ## [1.0.4](https://github.com/guanguans/monorepo-builder-worker/compare/v0.1.0...v1.0.4) (2023-07-20)
 
 ### Features
