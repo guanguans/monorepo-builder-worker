@@ -15,11 +15,16 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorkerTests\Unit;
 
 use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\PhpUpdateChangelogReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 uses(ConcreteFactory::class);
+
+it('can check', function (): void {
+    expect(PhpUpdateChangelogReleaseWorker::check())->toBeNull();
+})->group(__DIR__, __FILE__)->skip();
 
 it('can work', function (): void {
     $mockProcessRunner = \Mockery::mock(ProcessRunner::class);

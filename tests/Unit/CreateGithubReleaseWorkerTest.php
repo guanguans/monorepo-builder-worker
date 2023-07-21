@@ -21,6 +21,10 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 uses(ConcreteFactory::class);
 
+it('can check', function (): void {
+    expect(CreateGithubReleaseWorker::check())->toBeNull();
+})->group(__DIR__, __FILE__);
+
 it('can work', function (): void {
     $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
     $mockProcessRunner->allows('run')->andReturns('output');
