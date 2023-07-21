@@ -64,7 +64,7 @@ class PhpUpdateChangelogReleaseWorker extends ReleaseWorker
             return '';
         }
 
-        return $lines;
+        return trim($lines);
     }
 
     public function work(Version $version): void
@@ -76,7 +76,6 @@ class PhpUpdateChangelogReleaseWorker extends ReleaseWorker
             "./vendor/bin/conventional-changelog %s --to-tag=$originalString --ver=$originalString --ansi -v",
             $previousTag ? "--from-tag=$previousTag" : '--first-release'
         ));
-
         $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $originalString\" --no-verify && git push");
 
         self::$changelog = $this->processRunner->run('git show');
