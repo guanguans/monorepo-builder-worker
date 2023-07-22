@@ -55,6 +55,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
         foreach ([
             \stdClass::class,
             GoUpdateChangelogReleaseWorker::class,
+            NodeUpdateChangelogReleaseWorker::class,
             PhpUpdateChangelogReleaseWorker::class,
         ] as $class) {
             if (! is_subclass_of($class, ChangelogInterface::class)) {
