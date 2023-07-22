@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.8"></a>
+## [1.1.8] - 2023-07-22
+### Ci
+- **chglog:** configure CI pipeline for changelog generation
+
+### Feat
+- **worker:** add NodeUpdateChangelogReleaseWorker
+
+### Fix
+- **changelog:** remove redundant cast in PhpUpdateChangelogReleaseWorker
+- **contract:** Remove unnecessary exception
+
+### Refactor
+- **concern:** update ConcreteFactory trait
+
+
 <a name="1.1.7"></a>
 ## [1.1.7] - 2023-07-22
 ### Feat
@@ -46,6 +62,9 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.1.3"></a>
 ## [1.1.3] - 2023-07-21
+### Docs
+- **changelog:** add link to git-chglog
+
 ### Feat
 - **Contract:** Add ChangelogInterface
 
@@ -129,6 +148,9 @@ All notable changes to this project will be documented in this file.
 
 <a name="0.6.0"></a>
 ## [0.6.0] - 2023-07-19
+### Docs
+- **changelog:** update CHANGELOG.md to 0.5.0
+
 ### Feat
 - **CreateGithubReleaseWorker:** add 'gh release list' command
 
@@ -139,6 +161,10 @@ All notable changes to this project will be documented in this file.
 
 <a name="0.5.0"></a>
 ## [0.5.0] - 2023-07-19
+### Docs
+- **changelog:** update CHANGELOG.md to 0.4.0
+- **create-github-release:** Update description format
+
 ### Feat
 - **Concern:** Add ProcessRunnerFactory trait
 - **Contract:** add ProcessRunnerFactoryInterface
@@ -155,6 +181,9 @@ All notable changes to this project will be documented in this file.
 
 <a name="0.4.0"></a>
 ## [0.4.0] - 2023-07-18
+### Docs
+- **changelog:** update CHANGELOG.md to 0.3.0
+
 ### Feat
 - **monorepo-builder:** Implement checkEnvironment() in CreateGithubReleaseWorker
 - **utils:** Add Utils class
@@ -167,12 +196,20 @@ All notable changes to this project will be documented in this file.
 
 <a name="0.3.0"></a>
 ## [0.3.0] - 2023-07-18
+### Docs
+- **changelog:** update CHANGELOG.md
+- **readme:** update README.md
+
 ### Refactor
 - **psalm:** Clean up psalm-baseline.xml
 
 
 <a name="0.2.0"></a>
 ## [0.2.0] - 2023-07-18
+### Docs
+- **changelog:** remove version 0.2.0
+- **changelog:** update CHANGELOG.md
+
 ### Fix
 - **release:** fix git checkout for *.json files
 - **worker:** fix git checkout command
@@ -206,7 +243,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.7...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.8...HEAD
+[1.1.8]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.7...1.1.8
 [1.1.7]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.6...1.1.7
 [1.1.6]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.5...1.1.6
 [1.1.5]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.4...1.1.5
