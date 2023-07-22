@@ -16,6 +16,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorkerTests\Unit\Support;
 
+use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerInterface;
 use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 
 it('can batch check environment', function (): void {
@@ -24,4 +25,13 @@ it('can batch check environment', function (): void {
 
 it('can check environment', function (): void {
     expect(EnvironmentChecker::check(\stdClass::class))->toBeNull();
+    expect(EnvironmentChecker::check(
+        new class() implements EnvironmentCheckerInterface {
+            public static function check(): void
+            {
+            }
+        }
+    ))->toBeNull();
+    expect(EnvironmentChecker::check(function (): void {
+    }))->toBeNull();
 })->group(__DIR__, __FILE__);
