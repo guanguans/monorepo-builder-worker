@@ -39,11 +39,7 @@ refer to [monorepo-builder.php](./monorepo-builder.php)
 
  ! [NOTE] Running process: gh auth status                                                                               
 
- ! [NOTE] Running process: gh release list --limit 1                                                                    
-
-                                                                                                                        
- [OK] Environment checked.                                                                                              
-                                                                                                                        
+ ! [NOTE] Environment checked!                                                                                          
 
 
  ! [NOTE] Running process: git tag -l --sort=committerdate                                                              

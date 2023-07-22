@@ -41,9 +41,7 @@ composer require guanguans/monorepo-builder-worker --prefer-dist --dev -v
 
  ! [NOTE] Running process: gh release list --limit 1                                                                    
 
-                                                                                                                        
- [OK] Environment checked.                                                                                              
-                                                                                                                        
+ ! [NOTE] Environment checked!                                                                                          
 
 
  ! [NOTE] Running process: git tag -l --sort=committerdate                                                              
