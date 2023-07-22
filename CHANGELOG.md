@@ -8,12 +8,17 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.7"></a>
+## [1.1.7] - 2023-07-22
+### Feat
+- **NodeUpdateChangelogReleaseWorkerTest:** create new test file
+
+### Fix
+- **config:** Add missing newline in config.yml
+
+
 <a name="1.1.6"></a>
 ## [1.1.6] - 2023-07-22
-### Chore
-- **release:** Update monorepo-builder.php
-- **release:** 1.1.5
-
 ### Feat
 - **NodeUpdateChangelogReleaseWorker:** add NodeUpdateChangelogReleaseWorker class
 
@@ -23,19 +28,12 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.1.5"></a>
 ## [1.1.5] - 2023-07-21
-### Chore
-- **release:** 1.1.4
-
 ### Fix
 - **Changelog:** fix regex pattern for replacing unreleased link
 
 
 <a name="1.1.4"></a>
 ## [1.1.4] - 2023-07-21
-### Chore
-- **composer:** update pest and pest-coverage scripts
-- **release:** 1.1.3
-
 ### Feat
 - **deps:** Add nunomaduro/mock-final-classes package
 
@@ -48,13 +46,6 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.1.3"></a>
 ## [1.1.3] - 2023-07-21
-### Chore
-- **ReleaseWorker:** optimize changelog generation
-- **release:** 1.1.2
-
-### Docs
-- **changelog:** add link to git-chglog
-
 ### Feat
 - **Contract:** Add ChangelogInterface
 
@@ -64,15 +55,9 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.1.2"></a>
 ## [1.1.2] - 2023-07-21
-### Chore
-- **release:** Update Go changelog
-
 
 <a name="1.1.1"></a>
 ## [1.1.1] - 2023-07-21
-### Chore
-- **release:** 1.1.0
-
 ### Feat
 - **monorepo-builder:** add GoUpdateChangelogReleaseWorker
 - **support:** add checkFromCallback method
@@ -83,9 +68,6 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.1.0"></a>
 ## [1.1.0] - 2023-07-21
-### Chore
-- **release:** 1.0.4
-
 ### Feat
 - **GoUpdateChangelogReleaseWorker:** add getChangelog method
 - **ReleaseWorker:** Add GoUpdateChangelogReleaseWorker class
@@ -102,10 +84,6 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.0.4"></a>
 ## [1.0.4] - 2023-07-20
-### Chore
-- **Concern:** remove EnvironmentChecker trait
-- **release:** 1.0.3
-
 ### Feat
 - **UpdateChangelogReleaseWorker:** add Assert dependency
 
@@ -115,10 +93,6 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.0.3"></a>
 ## [1.0.3] - 2023-07-20
-### Chore
-- **Concern:** add createSymfonyStyle method
-- **release:** 1.0.2
-
 ### Refactor
 - **Concern:** Rename ProcessRunnerFactory to ConcreteFactory
 - **support:** use ConcreteFactory trait in EnvironmentChecker
@@ -126,9 +100,6 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.0.2"></a>
 ## [1.0.2] - 2023-07-20
-### Chore
-- **release:** 1.0.1
-
 ### Feat
 - **UpdateChangelogReleaseWorker:** add getChangelogDiff method
 
@@ -138,10 +109,6 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.0.1"></a>
 ## [1.0.1] - 2023-07-20
-### Chore
-- **release:** 1.0.1
-- **release:** 1.0.0
-
 ### Feat
 - **UpdateChangelogReleaseWorker:** Add method getPreviousTag
 
@@ -153,28 +120,15 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.0.0"></a>
 ## [1.0.0] - 2023-07-19
-### Chore
-- **release:** add git check command
-- **release:** 0.6.0
-
 ### Feat
 - **workflows:** add PHP 8.2 to matrix in tests.yml
 
 ### Fix
 - **CreateGithubReleaseWorker:** handle missing changelog gracefully
 
-### Style
-- **EnvironmentChecker:** Improve code readability in check method
-
 
 <a name="0.6.0"></a>
 ## [0.6.0] - 2023-07-19
-### Chore
-- **commit:** improve commit message examples
-
-### Docs
-- **changelog:** update CHANGELOG.md to 0.5.0
-
 ### Feat
 - **CreateGithubReleaseWorker:** add 'gh release list' command
 
@@ -185,13 +139,6 @@ All notable changes to this project will be documented in this file.
 
 <a name="0.5.0"></a>
 ## [0.5.0] - 2023-07-19
-### Chore
-- **ReleaseWorker:** Add EnvironmentChecker and commands property
-
-### Docs
-- **changelog:** update CHANGELOG.md to 0.4.0
-- **create-github-release:** Update description format
-
 ### Feat
 - **Concern:** Add ProcessRunnerFactory trait
 - **Contract:** add ProcessRunnerFactoryInterface
@@ -208,9 +155,6 @@ All notable changes to this project will be documented in this file.
 
 <a name="0.4.0"></a>
 ## [0.4.0] - 2023-07-18
-### Docs
-- **changelog:** update CHANGELOG.md to 0.3.0
-
 ### Feat
 - **monorepo-builder:** Implement checkEnvironment() in CreateGithubReleaseWorker
 - **utils:** Add Utils class
@@ -223,26 +167,12 @@ All notable changes to this project will be documented in this file.
 
 <a name="0.3.0"></a>
 ## [0.3.0] - 2023-07-18
-### Chore
-- fix formatting in UpdateChangelogReleaseWorker.php
-- **composer:** update composer.json
-- **composer.json:** update package description
-- **git:** update phpstan.neon
-
-### Docs
-- **changelog:** update CHANGELOG.md
-- **readme:** update README.md
-
 ### Refactor
 - **psalm:** Clean up psalm-baseline.xml
 
 
 <a name="0.2.0"></a>
 ## [0.2.0] - 2023-07-18
-### Docs
-- **changelog:** remove version 0.2.0
-- **changelog:** update CHANGELOG.md
-
 ### Fix
 - **release:** fix git checkout for *.json files
 - **worker:** fix git checkout command
@@ -253,20 +183,12 @@ All notable changes to this project will be documented in this file.
 
 <a name="0.1.2"></a>
 ## [0.1.2] - 2023-07-18
-### Chore
-- **workflows:** update PHP version in php-cs-fixer.yml
-
 
 <a name="0.1.1"></a>
 ## [0.1.1] - 2023-07-18
 
 <a name="v0.1.0"></a>
 ## v0.1.0 - 2023-07-18
-### Chore
-- **CreateGithubReleaseWorker:** add command to create GitHub release
-- **composer:** Update branch-alias for dev-main
-- **composer:** remove version field from composer.json
-
 ### Feat
 - **README:** update project description
 - **create-github-release-worker:** add CreateGithubReleaseWorker class
@@ -284,7 +206,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.6...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.7...HEAD
+[1.1.7]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.6...1.1.7
 [1.1.6]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.5...1.1.6
 [1.1.5]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.4...1.1.5
 [1.1.4]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.3...1.1.4
