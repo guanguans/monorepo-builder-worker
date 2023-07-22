@@ -89,7 +89,7 @@ class PhpUpdateChangelogReleaseWorker extends ReleaseWorker implements Changelog
 
     protected function toPreviousTag(string $tag): string
     {
-        $tags = explode(PHP_EOL, $this->processRunner->run('git tag --sort=-committerdate'));
+        $tags = (array) explode(PHP_EOL, $this->processRunner->run('git tag --sort=-committerdate'));
         $previousTagIndex = array_search($tag, $tags, true) + 1;
 
         return $tags[$previousTagIndex] ?? '';

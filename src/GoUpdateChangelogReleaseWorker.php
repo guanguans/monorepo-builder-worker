@@ -46,15 +46,13 @@ class GoUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogI
             return '';
         }
 
-        $tagPos = strpos(
-            self::$changelog,
-            sprintf('<a name="%s"></a>', self::$version->getOriginalString())
-        );
+        $tagPos = strpos(self::$changelog, sprintf('<a name="%s"></a>', self::$version->getOriginalString()));
 
-        $subChangelog = substr(self::$changelog, (int) $tagPos, \strlen(self::$changelog));
-        $replacedChangelog = preg_replace('/\s\[Unreleased\]: http?s:\/\/.*compare.*\.\.\.HEAD/', '', $subChangelog);
-
-        return trim($replacedChangelog);
+        return trim(preg_replace(
+            '/\s\[Unreleased\]: http?s:\/\/.*compare.*\.\.\.HEAD/',
+            '',
+            substr(self::$changelog, (int) $tagPos, \strlen(self::$changelog))
+        ));
     }
 
     public function work(Version $version): void
