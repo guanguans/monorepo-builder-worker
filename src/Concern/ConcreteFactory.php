@@ -22,14 +22,23 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 trait ConcreteFactory
 {
+    /** @var null|ExecutableFinder */
+    protected static $executableFinder;
+
     /** @var null|ProcessRunner */
     protected static $runner;
 
     /** @var null|SymfonyStyle */
     protected static $symfonyStyle;
 
-    /** @var null|ExecutableFinder */
-    protected static $executableFinder;
+    public static function createExecutableFinder(): ExecutableFinder
+    {
+        if (! self::$executableFinder instanceof ExecutableFinder) {
+            self::$executableFinder = new ExecutableFinder();
+        }
+
+        return self::$executableFinder;
+    }
 
     public static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {
@@ -54,14 +63,5 @@ trait ConcreteFactory
         }
 
         return self::$symfonyStyle;
-    }
-
-    public static function createExecutableFinder(): ExecutableFinder
-    {
-        if (! self::$executableFinder instanceof ExecutableFinder) {
-            self::$executableFinder = new ExecutableFinder();
-        }
-
-        return self::$executableFinder;
     }
 }
