@@ -8,6 +8,19 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.6"></a>
+## [1.1.6] - 2023-07-22
+### Chore
+- **release:** Update monorepo-builder.php
+- **release:** 1.1.5
+
+### Feat
+- **NodeUpdateChangelogReleaseWorker:** add NodeUpdateChangelogReleaseWorker class
+
+### Refactor
+- **EnvironmentChecker:** improve check method
+
+
 <a name="1.1.5"></a>
 ## [1.1.5] - 2023-07-21
 ### Chore
@@ -271,7 +284,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.5...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.6...HEAD
+[1.1.6]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.5...1.1.6
 [1.1.5]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.4...1.1.5
 [1.1.4]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.3...1.1.4
 [1.1.3]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.2...1.1.3
