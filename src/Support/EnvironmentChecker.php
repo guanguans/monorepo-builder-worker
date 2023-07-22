@@ -20,10 +20,9 @@ class EnvironmentChecker
     use ConcreteFactory;
 
     /**
-     * @param array<class-string|object> $workers
+     * @param array<callable|class-string|object> $workers
      *
      * @throws \Throwable
-     * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
      */
     public static function checks(array $workers): void
     {
@@ -40,7 +39,6 @@ class EnvironmentChecker
      * @param callable|class-string|object $worker
      *
      * @throws \Throwable
-     * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
      */
     public static function check($worker): void
     {

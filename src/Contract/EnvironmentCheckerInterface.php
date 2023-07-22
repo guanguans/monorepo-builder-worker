@@ -16,7 +16,6 @@ interface EnvironmentCheckerInterface
 {
     /**
      * @throws \Throwable
-     * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
      */
     public static function check(): void;
 }
