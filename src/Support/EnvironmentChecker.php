@@ -33,26 +33,23 @@ class EnvironmentChecker
             self::check($worker);
         }
 
-        self::createSymfonyStyle()->success('Environment checked.');
+        self::createSymfonyStyle()->note('Environment checked!');
     }
 
     /**
-     * @param class-string|object $worker
+     * @param callable|class-string|object $worker
      *
      * @throws \Throwable
      * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
      */
     public static function check($worker): void
     {
-        is_subclass_of($worker, EnvironmentCheckerInterface::class) and $worker::check();
-    }
+        if (is_subclass_of($worker, EnvironmentCheckerInterface::class)) {
+            $worker::check();
+        }
 
-    /**
-     * @throws \Throwable
-     * @throws \MonorepoBuilderPrefix202304\Symfony\Component\Process\Exception\ProcessFailedException
-     */
-    public static function checkFromCallback(callable $callback): void
-    {
-        $callback(self::class);
+        if (\is_callable($worker)) {
+            $worker(self::class);
+        }
     }
 }
