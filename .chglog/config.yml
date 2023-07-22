@@ -11,6 +11,10 @@ options:
         - fix
         - perf
         - refactor
+        - docs
+        - test
+        - ci
+        - revert
   commit_groups:
   # title_maps:
   #   feat: Features
