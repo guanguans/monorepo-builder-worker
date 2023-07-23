@@ -1,5 +1,5 @@
 {
-    "name": "guanguans/worker",
+    "name": "guanguans/monorepo-builder-worker",
     "description": "List of release worker collections for symplify/monorepo-builder.",
     "license": "MIT",
     "type": "library",
@@ -183,7 +183,7 @@
         "psalm-baseline": "@psalm --update-baseline",
         "rector": "@php ./vendor/bin/rector --clear-cache --ansi -v",
         "rector-dry-run": "@rector --dry-run",
-        "release": "@php ./vendor/bin/monorepo-builder release --ansi -vvv",
+        "release": "@php ./vendor/bin/monorepo-builder release --ansi -v",
         "release-major": "@release major",
         "release-major-dry-run": "@release-major --dry-run",
         "release-minor": "@release minor",
