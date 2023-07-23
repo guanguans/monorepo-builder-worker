@@ -37,6 +37,7 @@
     "require": {
         "php": ">=7.3",
         "marcocesarato/php-conventional-changelog": "^1.17",
+        "symfony/polyfill-php80": "^1.27",
         "symplify/monorepo-builder": "^11.2"
     },
     "require-dev": {
