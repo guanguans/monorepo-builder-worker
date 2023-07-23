@@ -8,9 +8,18 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.9"></a>
+## [1.1.9] - 2023-07-23
+### Feat
+- **deps:** add symfony/polyfill-php80
+
+### Refactor
+- **composer.json:** update package name and URLs
+
+
 <a name="1.1.8"></a>
 ## [1.1.8] - 2023-07-22
-### Ci
+### CI
 - **chglog:** configure CI pipeline for changelog generation
 
 ### Feat
@@ -243,7 +252,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.8...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.9...HEAD
+[1.1.9]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.8...1.1.9
 [1.1.8]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.7...1.1.8
 [1.1.7]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.6...1.1.7
 [1.1.6]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.5...1.1.6
