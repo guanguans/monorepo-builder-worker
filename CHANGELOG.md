@@ -8,6 +8,17 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.11"></a>
+## [1.1.11] - 2023-07-24
+### Feat
+- **CreateGithubReleaseWorkerTest:** Update changelog content
+
+### Fix
+- **Changelog:** handle missing changelog sections
+- **NodeUpdateChangelogReleaseWorker:** handle missing changelog sections
+- **PhpUpdateChangelogReleaseWorker:** fix condition for valid lines
+
+
 <a name="1.1.10"></a>
 ## [1.1.10] - 2023-07-24
 ### Refactor
@@ -258,7 +269,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.10...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.11...HEAD
+[1.1.11]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.10...1.1.11
 [1.1.10]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.9...1.1.10
 [1.1.9]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.8...1.1.9
 [1.1.8]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.7...1.1.8
