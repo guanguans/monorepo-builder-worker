@@ -48,11 +48,16 @@ class GoUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogI
 
         $tagPos = strpos(self::$changelog, sprintf('<a name="%s"></a>', self::$version->getOriginalString()));
 
-        return trim(preg_replace(
-            '/\s\[Unreleased\]: http?s:\/\/.*compare.*\.\.\.HEAD/',
-            '',
-            substr(self::$changelog, (int) $tagPos, \strlen(self::$changelog))
-        ));
+        $lines = array_filter(
+            explode(PHP_EOL, substr(self::$changelog, (int) $tagPos, \strlen(self::$changelog))),
+            static function (string $line): bool {
+                return ! str_starts_with($line, '# ')
+                    && ! str_starts_with($line, '## ')
+                    && ! str_starts_with($line, '[Unreleased]: ');
+            }
+        );
+
+        return trim(implode(PHP_EOL, $lines));
     }
 
     public function work(Version $version): void
