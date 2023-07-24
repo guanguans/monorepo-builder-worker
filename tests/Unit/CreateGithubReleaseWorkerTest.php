@@ -70,7 +70,10 @@ it('can find changelog', function (): void {
         ->findChangelog()->toBeEmpty();
 
     (function (): void {
-        self::$changelog = 'changelog';
+        self::$changelog = <<<'changelog'
+            ### Feat
+            - **Contract:** Add ChangelogInterface
+            changelog;
 
         $mockVersion = \Mockery::mock(Version::class);
         $mockVersion->allows('getOriginalString')->andReturns('1.0.0');

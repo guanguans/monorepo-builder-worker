@@ -35,12 +35,17 @@ it('can check', function (): void {
 it('can get changelog', function (): void {
     $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
     (function (): void {
-        self::$changelog = '';
+        self::$changelog = <<<'changelog'
+            ### Feat
+            changelog;
     })->call(new GoUpdateChangelogReleaseWorker($mockProcessRunner));
     expect(GoUpdateChangelogReleaseWorker::getChangelog())->toBeEmpty();
 
     (function (): void {
-        self::$changelog = 'changelog';
+        self::$changelog = <<<'changelog'
+            ### Feat
+            - **Contract:** Add ChangelogInterface
+            changelog;
 
         $mockVersion = \Mockery::mock(Version::class);
         $mockVersion->allows('getOriginalString')->andReturns('1.0.0');

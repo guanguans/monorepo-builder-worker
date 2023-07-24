@@ -44,7 +44,7 @@ it('can get changelog', function (): void {
     (function (): void {
         self::$changelog = <<<'changelog'
             +### Feat
-            +- **Contract:** Add ChangelogInterface
+            +* **Contract:** Add ChangelogInterface
             changelog;
     })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
     expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeTruthy();

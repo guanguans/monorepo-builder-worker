@@ -37,7 +37,13 @@ it('can check', function (): void {
 it('can get changelog', function (): void {
     $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
     (function (): void {
-        self::$changelog = '';
+        self::$changelog = <<<'changelog'
+            #  (2023-07-22)
+
+            ##  (2023-07-22)
+
+            ### Bug Fixes
+            changelog;
     })->call(new NodeUpdateChangelogReleaseWorker($mockProcessRunner));
     expect(NodeUpdateChangelogReleaseWorker::getChangelog())->toBeEmpty();
 
