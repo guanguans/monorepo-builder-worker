@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.1.10"></a>
+## [1.1.10] - 2023-07-24
+### Refactor
+- **Changelog:** update line filtering logic
+
+
 <a name="1.1.9"></a>
 ## [1.1.9] - 2023-07-23
 ### Feat
@@ -252,7 +258,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.9...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.10...HEAD
+[1.1.10]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.9...1.1.10
 [1.1.9]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.8...1.1.9
 [1.1.8]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.7...1.1.8
 [1.1.7]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.6...1.1.7
