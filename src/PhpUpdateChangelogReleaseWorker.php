@@ -45,23 +45,17 @@ class PhpUpdateChangelogReleaseWorker extends ReleaseWorker implements Changelog
             return '';
         }
 
-        $lines = array_filter(
-            explode(PHP_EOL, self::$changelog),
-            static function (string $line): bool {
-                return str_starts_with($line, '+')
-                    && ! str_starts_with($line, '+++')
-                    && ! str_starts_with($line, '+## ');
-            }
-        );
+        $lines = array_filter(explode(PHP_EOL, self::$changelog), static function (string $line): bool {
+            return str_starts_with($line, '+')
+                && ! str_starts_with($line, '+++')
+                && ! str_starts_with($line, '+# ')
+                && ! str_starts_with($line, '+## ');
+        });
 
-        $lines = implode(
-            PHP_EOL,
-            array_map(static function (string $line): string {
-                return ltrim($line, '+');
-            }, $lines)
-        );
-
-        if (! (str_contains($lines, '### ') && str_contains($lines, '* '))) {
+        $lines = implode(PHP_EOL, array_map(static function (string $line): string {
+            return ltrim($line, '+');
+        }, $lines));
+        if (! str_contains($lines, '### ') || ! str_contains($lines, '* ')) {
             return '';
         }
 
