@@ -43,14 +43,16 @@ class NodeUpdateChangelogReleaseWorker extends ReleaseWorker implements Changelo
             return '';
         }
 
-        $lines = array_filter(
-            explode(PHP_EOL, self::$changelog),
-            static function (string $line): bool {
-                return ! str_starts_with($line, '# ') && ! str_starts_with($line, '## ');
-            }
-        );
+        $lines = array_filter(explode(PHP_EOL, self::$changelog), static function (string $line): bool {
+            return ! str_starts_with($line, '# ') && ! str_starts_with($line, '## ');
+        });
 
-        return trim(implode(PHP_EOL, $lines));
+        $lines = implode(PHP_EOL, $lines);
+        if (! str_contains($lines, '### ') || ! str_contains($lines, '* ')) {
+            return '';
+        }
+
+        return trim($lines);
     }
 
     public function work(Version $version): void
