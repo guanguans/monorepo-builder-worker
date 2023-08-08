@@ -10,9 +10,9 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\MonorepoBuilderWorkerTests\Unit\Concern;
+namespace Guanguans\MonorepoBuilderWorkerTests\Unit\Concerns;
 
-use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
 use MonorepoBuilderPrefix202308\Symfony\Component\Console\Input\ArgvInput;
 use MonorepoBuilderPrefix202308\Symfony\Component\Console\Output\ConsoleOutput;
 use MonorepoBuilderPrefix202308\Symfony\Component\Console\Style\SymfonyStyle;

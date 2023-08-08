@@ -10,7 +10,7 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\MonorepoBuilderWorker\Concern;
+namespace Guanguans\MonorepoBuilderWorker\Concerns;
 
 use MonorepoBuilderPrefix202308\Symfony\Component\Console\Input\ArgvInput;
 use MonorepoBuilderPrefix202308\Symfony\Component\Console\Input\InputInterface;

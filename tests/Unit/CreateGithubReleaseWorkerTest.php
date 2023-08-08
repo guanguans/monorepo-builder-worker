@@ -14,7 +14,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorkerTests\Unit;
 
-use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\GoUpdateChangelogReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\NodeUpdateChangelogReleaseWorker;
