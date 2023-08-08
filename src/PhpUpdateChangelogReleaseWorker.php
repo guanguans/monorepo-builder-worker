@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker;
 
 use Guanguans\MonorepoBuilderWorker\Contract\ChangelogInterface;
-use MonorepoBuilderPrefix202304\Webmozart\Assert\Assert;
+use MonorepoBuilderPrefix202308\Webmozart\Assert\Assert;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
