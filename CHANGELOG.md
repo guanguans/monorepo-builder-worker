@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.2.1"></a>
+## [1.2.1] - 2023-08-08
+### Refactor
+- **changelog:** update class references
+- **concerns:** rename ConcreteFactory.php to ConcreteFactory.php
+
+
 <a name="1.2.0"></a>
 ## [1.2.0] - 2023-08-08
 ### Fix
@@ -284,7 +291,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.1...HEAD
+[1.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.11...1.2.0
 [1.1.11]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.10...1.1.11
 [1.1.10]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.9...1.1.10
