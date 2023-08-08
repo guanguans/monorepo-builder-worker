@@ -8,6 +8,21 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.2.0"></a>
+## [1.2.0] - 2023-08-08
+### Fix
+- **src:** Update Symfony components version
+
+### Pull Requests
+- Merge pull request [#7](https://github.com/guanguans/monorepo-builder-worker/issues/7) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.46.3
+- Merge pull request [#6](https://github.com/guanguans/monorepo-builder-worker/issues/6) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.46.2
+- Merge pull request [#5](https://github.com/guanguans/monorepo-builder-worker/issues/5) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.46.1
+- Merge pull request [#4](https://github.com/guanguans/monorepo-builder-worker/issues/4) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.45.3
+- Merge pull request [#3](https://github.com/guanguans/monorepo-builder-worker/issues/3) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.45.2
+- Merge pull request [#2](https://github.com/guanguans/monorepo-builder-worker/issues/2) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.45.1
+- Merge pull request [#1](https://github.com/guanguans/monorepo-builder-worker/issues/1) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.45.0
+
+
 <a name="1.1.11"></a>
 ## [1.1.11] - 2023-07-24
 ### Feat
@@ -269,7 +284,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.11...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.11...1.2.0
 [1.1.11]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.10...1.1.11
 [1.1.10]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.9...1.1.10
 [1.1.9]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.8...1.1.9
