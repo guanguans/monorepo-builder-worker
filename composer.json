@@ -46,7 +46,7 @@
         "friendsofphp/php-cs-fixer": "^3.4",
         "guanguans/ai-commit": "^1.7",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.7",
-        "mockery/mockery": "^1.5",
+        "mockery/mockery": "^1.6",
         "nunomaduro/mock-final-classes": "^1.2",
         "pestphp/pest": "^1.23 || ^2.0",
         "pestphp/pest-plugin-faker": "^1.0 || ^2.0",
