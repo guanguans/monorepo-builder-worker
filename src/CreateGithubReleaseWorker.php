@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\ChangelogInterface;
+use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -58,7 +58,7 @@ class CreateGithubReleaseWorker extends ReleaseWorker
             NodeUpdateChangelogReleaseWorker::class,
             PhpUpdateChangelogReleaseWorker::class,
         ] as $class) {
-            if (! is_subclass_of($class, ChangelogInterface::class)) {
+            if (! is_subclass_of($class, ChangelogContract::class)) {
                 continue;
             }
 

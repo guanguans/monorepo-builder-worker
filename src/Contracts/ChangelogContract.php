@@ -10,12 +10,12 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled.
  */
 
-namespace Guanguans\MonorepoBuilderWorker\Contract;
+namespace Guanguans\MonorepoBuilderWorker\Contracts;
 
-interface EnvironmentCheckerInterface
+/**
+ * @see https://github.com/marcocesarato/php-conventional-changelog
+ */
+interface ChangelogContract
 {
-    /**
-     * @throws \Throwable
-     */
-    public static function check(): void;
+    public static function getChangelog(): string;
 }

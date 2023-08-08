@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\ChangelogInterface;
+use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
 use MonorepoBuilderPrefix202308\Webmozart\Assert\Assert;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
@@ -20,7 +20,7 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 /**
  * @see https://github.com/marcocesarato/php-conventional-changelog
  */
-class PhpUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogInterface
+class PhpUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogContract
 {
     /** @var null|string */
     private static $changelog;

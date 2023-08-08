@@ -12,14 +12,14 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\ChangelogInterface;
+use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 /**
  * @see https://github.com/conventional-changelog/conventional-changelog
  */
-class NodeUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogInterface
+class NodeUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogContract
 {
     /** @var null|string */
     private static $changelog;

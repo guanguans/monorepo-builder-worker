@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerInterface;
+use Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract;
 
 class EnvironmentChecker
 {
@@ -42,7 +42,7 @@ class EnvironmentChecker
      */
     public static function check($worker): void
     {
-        if (is_subclass_of($worker, EnvironmentCheckerInterface::class)) {
+        if (is_subclass_of($worker, EnvironmentCheckerContract::class)) {
             $worker::check();
         }
 
