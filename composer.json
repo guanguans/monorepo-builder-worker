@@ -44,7 +44,7 @@
         "brainmaestro/composer-git-hooks": "^2.8 || ^3.0",
         "ergebnis/composer-normalize": "^2.20",
         "friendsofphp/php-cs-fixer": "^3.4",
-        "guanguans/ai-commit": "^1.7",
+        "guanguans/ai-commit": "^1.8",
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.7",
         "mockery/mockery": "^1.6",
         "nunomaduro/mock-final-classes": "^1.2",
@@ -55,7 +55,7 @@
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-deprecation-rules": "^1.1",
         "pyrech/composer-changelogs": "^1.8",
-        "rector/rector": "^0.17 || ^0.18",
+        "rector/rector": "^0.18",
         "roave/security-advisories": "dev-latest",
         "symfony/var-dumper": "^5.4 || ^6.0",
         "vimeo/psalm": "^4.30 || ^5.0"
@@ -99,6 +99,11 @@
         "sort-packages": true
     },
     "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": true,
+            "target-directory": "vendor-bin"
+        },
         "branch-alias": {
             "dev-main": "1.x-dev"
         },
@@ -173,7 +178,7 @@
         "phpmd": "@php ./vendor/bin/phpmd src/ ansi cleancode,codesize,controversial,design,naming,unusedcode --suffixes=php",
         "phpmetrics": "@php ./vendor/bin/phpmetrics --report-html=./build/phpmetrics/ ./src/",
         "phpmnd": "@php ./vendor/bin/phpmnd ./src/ --exclude=./vendor/ --non-zero-exit-on-violation --ansi -v",
-        "phpstan": "@php ./vendor/bin/phpstan analyse --xdebug --ansi -vv",
+        "phpstan": "@php ./vendor/bin/phpstan analyse --ansi -v",
         "phpstan-baseline": "@phpstan --generate-baseline --allow-empty-baseline",
         "pint": "@php ./vendor/bin/pint --ansi -v",
         "pint-test": "@pint --test",
@@ -182,7 +187,7 @@
         ],
         "psalm": "@php ./vendor/bin/psalm",
         "psalm-baseline": "@psalm --update-baseline",
-        "rector": "@php ./vendor/bin/rector --clear-cache --ansi -v",
+        "rector": "@php ./vendor/bin/rector --ansi -v",
         "rector-dry-run": "@rector --dry-run",
         "release": "@php ./vendor/bin/monorepo-builder release --ansi -v",
         "release-major": "@release major",
