@@ -8,6 +8,19 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.2.2"></a>
+## [1.2.2] - 2023-08-22
+### Fix
+- **CreateGithubReleaseWorker:** add title and verify-tag options
+
+### Pull Requests
+- Merge pull request [#12](https://github.com/guanguans/monorepo-builder-worker/issues/12) from guanguans/dependabot/composer/rector/rector-tw-0.17or-tw-0.18
+- Merge pull request [#11](https://github.com/guanguans/monorepo-builder-worker/issues/11) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.52.1
+- Merge pull request [#10](https://github.com/guanguans/monorepo-builder-worker/issues/10) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.50.0
+- Merge pull request [#9](https://github.com/guanguans/monorepo-builder-worker/issues/9) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.48.0
+- Merge pull request [#8](https://github.com/guanguans/monorepo-builder-worker/issues/8) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.47.0
+
+
 <a name="1.2.1"></a>
 ## [1.2.1] - 2023-08-08
 ### Refactor
@@ -291,7 +304,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.2...HEAD
+[1.2.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.11...1.2.0
 [1.1.11]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.10...1.1.11
