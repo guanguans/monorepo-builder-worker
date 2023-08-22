@@ -33,7 +33,6 @@ use Rector\EarlyReturn\Rector\StmtsAwareInterface\ReturnEarlyIfVariableRector;
 use Rector\Naming\Rector\Class_\RenamePropertyToMatchTypeRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Naming\Rector\Foreach_\RenameForeachValueVariableToMatchExprVariableRector;
-use Rector\Php56\Rector\FunctionLike\AddDefaultValueForUndefinedVariableRector;
 use Rector\Php71\Rector\FuncCall\RemoveExtraParametersRector;
 use Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector;
 use Rector\PHPUnit\Set\PHPUnitLevelSetList;
@@ -81,7 +80,6 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->skip([
         // rules
         // AddArrayDefaultToArrayPropertyRector::class,
-        // AddDefaultValueForUndefinedVariableRector::class,
         // AddSeeTestAnnotationRector::class,
         // CallableThisArrayToAnonymousFunctionRector::class,
         // ChangeAndIfToEarlyReturnRector::class,

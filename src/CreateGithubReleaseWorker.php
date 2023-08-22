@@ -37,7 +37,11 @@ class CreateGithubReleaseWorker extends ReleaseWorker
         $changelog = $this->findChangelog();
 
         $this->processRunner->run(array_merge(
-            ['gh', 'release', 'create', $version->getOriginalString()],
+            [
+                'gh', 'release', 'create', $version->getOriginalString(),
+                '--title', $version->getOriginalString(),
+                '--verify-tag',
+            ],
             $changelog ? ['--notes', $changelog] : ['--generate-notes']
         ));
     }
