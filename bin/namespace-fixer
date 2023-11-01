@@ -1,0 +1,73 @@
+#!/usr/bin/env php
+<?php
+
+$loaded = false;
+
+foreach ([__DIR__.'/../../../autoload.php', __DIR__.'/../vendor/autoload.php'] as $file) {
+    if (file_exists($file)) {
+        require $file;
+        $loaded = true;
+        break;
+    }
+}
+
+if (! $loaded) {
+    exit(
+        'You need to set up the project dependencies using the following commands:'.PHP_EOL.
+        'wget http://getcomposer.org/composer.phar'.PHP_EOL.
+        'php composer.phar install'.PHP_EOL
+    );
+}
+
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\SingleCommandApplication;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Finder\Finder;
+
+/**
+ * ```
+ * php ./bin/namespace-fixer --original=MonorepoBuilderPrefix202308 --new=MonorepoBuilderPrefix202310
+ * ```
+ *
+ * @noinspection PhpUnhandledExceptionInspection
+ */
+exit(
+    (new SingleCommandApplication())
+        ->setName('Namespace Fixer') // Optional
+        ->setVersion('1.0.0') // Optional
+        ->addArgument('paths', InputArgument::IS_ARRAY | InputArgument::OPTIONAL, 'The paths to fix', [__DIR__.'/../src', __DIR__.'/../tests'])
+        ->addOption('original', null, InputOption::VALUE_REQUIRED, 'The original namespace')
+        ->addOption('new', null, InputOption::VALUE_OPTIONAL, 'The new namespace', sprintf('MonorepoBuilderPrefix%s', date('Ym')))
+        ->setCode(function (InputInterface $input, OutputInterface $output): int {
+            $original = $input->getOption('original');
+            $new = $input->getOption('new');
+            if (empty($original) || empty($new)) {
+                (new SymfonyStyle($input, $output))->error('You must specify the original namespace and the new namespace.');
+                return Command::INVALID;
+            }
+
+            $finder = Finder::create()
+                ->in($input->getArgument('paths'))
+                ->name('*.php')
+                ->ignoreDotFiles(true)
+                ->ignoreVCS(true);
+
+            /**
+             * @var \Symfony\Component\Finder\SplFileInfo $splFileInfo
+             * @noinspection VirtualTypeCheckInspection
+             */
+            foreach ($finder as $splFileInfo) {
+                file_put_contents(
+                    $splFileInfo->getRealPath(),
+                    str_replace($original, $new, $splFileInfo->getContents())
+                );
+            }
+
+            return Command::SUCCESS;
+        })
+        ->run()
+);
