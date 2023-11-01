@@ -18,7 +18,6 @@ use Rector\CodeQuality\Rector\Identical\SimplifyBoolIdenticalTrueRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Class_\AddArrayDefaultToArrayPropertyRector;
-use Rector\CodingStyle\Rector\ClassMethod\UnSpreadOperatorRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
@@ -38,6 +37,7 @@ use Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector;
 use Rector\PHPUnit\Set\PHPUnitLevelSetList;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
+use Rector\Set\ValueObject\DowngradeLevelSetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
@@ -89,7 +89,6 @@ return static function (RectorConfig $rectorConfig): void {
         // ReturnBinaryOrToEarlyReturnRector::class,
         // SimplifyBoolIdenticalTrueRector::class,
         // StaticClosureRector::class,
-        // UnSpreadOperatorRector::class,
 
         EncapsedStringsToSprintfRector::class,
         // InlineIfToExplicitIfRector::class,
@@ -130,9 +129,6 @@ return static function (RectorConfig $rectorConfig): void {
         // ReturnEarlyIfVariableRector::class => [
         //     __DIR__.'/src/Support/EscapeArg.php',
         // ],
-        // UnSpreadOperatorRector::class => [
-        //     __DIR__.'/src/Concerns/WithDumpable.php',
-        // ],
 
         // paths
         __DIR__.'/tests/AspectMock',
@@ -153,6 +149,7 @@ return static function (RectorConfig $rectorConfig): void {
     ]);
 
     $rectorConfig->sets([
+        // DowngradeLevelSetList::DOWN_TO_PHP_73,
         LevelSetList::UP_TO_PHP_73,
         SetList::CODE_QUALITY,
         SetList::CODING_STYLE,
