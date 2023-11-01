@@ -8,6 +8,45 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.3.0"></a>
+## [1.3.0] - 2023-11-01
+### Feat
+- **commit:** Add namespace fixer script
+
+### Fix
+- **bin:** rename namespace-fixer to namespace-prefix-fixer
+- **rector.php:** Remove UnSpreadOperatorRector
+- **src:** Update Symfony components versions
+
+### Refactor
+- **bin:** Refactor namespace-fixer script
+- **changelog:** rename GoUpdateChangelogReleaseWorker to UpdateChangelogViaGoReleaseWorker
+
+### Pull Requests
+- Merge pull request [#34](https://github.com/guanguans/monorepo-builder-worker/issues/34) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.62.1
+- Merge pull request [#33](https://github.com/guanguans/monorepo-builder-worker/issues/33) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.62.0
+- Merge pull request [#32](https://github.com/guanguans/monorepo-builder-worker/issues/32) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.60.4
+- Merge pull request [#31](https://github.com/guanguans/monorepo-builder-worker/issues/31) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.60.3
+- Merge pull request [#30](https://github.com/guanguans/monorepo-builder-worker/issues/30) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.60.2
+- Merge pull request [#29](https://github.com/guanguans/monorepo-builder-worker/issues/29) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.60.1
+- Merge pull request [#28](https://github.com/guanguans/monorepo-builder-worker/issues/28) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.60.0
+- Merge pull request [#27](https://github.com/guanguans/monorepo-builder-worker/issues/27) from guanguans/dependabot/github_actions/stefanzweifel/git-auto-commit-action-5
+- Merge pull request [#26](https://github.com/guanguans/monorepo-builder-worker/issues/26) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.59.0
+- Merge pull request [#25](https://github.com/guanguans/monorepo-builder-worker/issues/25) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.58.0
+- Merge pull request [#24](https://github.com/guanguans/monorepo-builder-worker/issues/24) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.57.0
+- Merge pull request [#23](https://github.com/guanguans/monorepo-builder-worker/issues/23) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.56.1
+- Merge pull request [#22](https://github.com/guanguans/monorepo-builder-worker/issues/22) from guanguans/dependabot/github_actions/codecov/codecov-action-4
+- Merge pull request [#21](https://github.com/guanguans/monorepo-builder-worker/issues/21) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.56.0
+- Merge pull request [#20](https://github.com/guanguans/monorepo-builder-worker/issues/20) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.55.1
+- Merge pull request [#19](https://github.com/guanguans/monorepo-builder-worker/issues/19) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.54.4
+- Merge pull request [#18](https://github.com/guanguans/monorepo-builder-worker/issues/18) from guanguans/dependabot/github_actions/actions/checkout-4
+- Merge pull request [#17](https://github.com/guanguans/monorepo-builder-worker/issues/17) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.54.3
+- Merge pull request [#16](https://github.com/guanguans/monorepo-builder-worker/issues/16) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.54.2
+- Merge pull request [#15](https://github.com/guanguans/monorepo-builder-worker/issues/15) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.54.1
+- Merge pull request [#14](https://github.com/guanguans/monorepo-builder-worker/issues/14) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.54.0
+- Merge pull request [#13](https://github.com/guanguans/monorepo-builder-worker/issues/13) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.53.0
+
+
 <a name="1.2.2"></a>
 ## [1.2.2] - 2023-08-22
 ### Fix
@@ -304,7 +343,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.3.0...HEAD
+[1.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.2...1.3.0
 [1.2.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.1.11...1.2.0
