@@ -20,7 +20,7 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 /**
  * @see https://github.com/marcocesarato/php-conventional-changelog
  */
-class PhpUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogContract
+class UpdateChangelogViaPhpReleaseWorker extends ReleaseWorker implements ChangelogContract
 {
     /** @var null|string */
     private static $changelog;

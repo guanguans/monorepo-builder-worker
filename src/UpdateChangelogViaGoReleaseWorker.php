@@ -19,7 +19,7 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 /**
  * @see https://github.com/git-chglog/git-chglog
  */
-class GoUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogContract
+class UpdateChangelogViaGoReleaseWorker extends ReleaseWorker implements ChangelogContract
 {
     /** @var null|string */
     private static $changelog;

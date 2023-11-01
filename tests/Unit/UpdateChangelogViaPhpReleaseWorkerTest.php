@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorkerTests\Unit;
 
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\PhpUpdateChangelogReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaPhpReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -27,9 +27,9 @@ it('can check', function (): void {
         $mockProcessRunner->allows('run')->andReturns('');
 
         self::$runner = $mockProcessRunner;
-    })->call(new PhpUpdateChangelogReleaseWorker(\Mockery::mock(ProcessRunner::class)));
+    })->call(new UpdateChangelogViaPhpReleaseWorker(\Mockery::mock(ProcessRunner::class)));
 
-    expect(PhpUpdateChangelogReleaseWorker::check())->toBeNull();
+    expect(UpdateChangelogViaPhpReleaseWorker::check())->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can get changelog', function (): void {
@@ -38,16 +38,16 @@ it('can get changelog', function (): void {
         self::$changelog = <<<'changelog'
             +### Feat
             changelog;
-    })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
-    expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeEmpty();
+    })->call(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner));
+    expect(UpdateChangelogViaPhpReleaseWorker::getChangelog())->toBeEmpty();
 
     (function (): void {
         self::$changelog = <<<'changelog'
             +### Feat
             +* **Contract:** Add ChangelogInterface
             changelog;
-    })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
-    expect(PhpUpdateChangelogReleaseWorker::getChangelog())->toBeTruthy();
+    })->call(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner));
+    expect(UpdateChangelogViaPhpReleaseWorker::getChangelog())->toBeTruthy();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
@@ -57,7 +57,7 @@ it('can work', function (): void {
     $mockVersion = \Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new PhpUpdateChangelogReleaseWorker($mockProcessRunner))
+    expect(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner))
         ->work($mockVersion)->toBeNull();
 })->group(__DIR__, __FILE__);
 
@@ -65,6 +65,6 @@ it('can get description', function (): void {
     $mockVersion = \Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new PhpUpdateChangelogReleaseWorker(\Mockery::mock(ProcessRunner::class)))
+    expect(new UpdateChangelogViaPhpReleaseWorker(\Mockery::mock(ProcessRunner::class)))
         ->getDescription($mockVersion)->toBeString();
 })->group(__DIR__, __FILE__);

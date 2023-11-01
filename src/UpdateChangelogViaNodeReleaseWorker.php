@@ -19,7 +19,7 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 /**
  * @see https://github.com/conventional-changelog/conventional-changelog
  */
-class NodeUpdateChangelogReleaseWorker extends ReleaseWorker implements ChangelogContract
+class UpdateChangelogViaNodeReleaseWorker extends ReleaseWorker implements ChangelogContract
 {
     /** @var null|string */
     private static $changelog;

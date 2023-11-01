@@ -16,9 +16,9 @@ namespace Guanguans\MonorepoBuilderWorkerTests\Unit;
 
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\GoUpdateChangelogReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\NodeUpdateChangelogReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\PhpUpdateChangelogReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaGoReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaNodeReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaPhpReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -59,13 +59,13 @@ it('can find changelog', function (): void {
 
     (function (): void {
         self::$changelog = '';
-    })->call(new GoUpdateChangelogReleaseWorker($mockProcessRunner));
+    })->call(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner));
     (function (): void {
         self::$changelog = '';
-    })->call(new NodeUpdateChangelogReleaseWorker($mockProcessRunner));
+    })->call(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner));
     (function (): void {
         self::$changelog = '';
-    })->call(new PhpUpdateChangelogReleaseWorker($mockProcessRunner));
+    })->call(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner));
     expect(new CreateGithubReleaseWorker($mockProcessRunner))
         ->findChangelog()->toBeEmpty();
 
@@ -78,7 +78,7 @@ it('can find changelog', function (): void {
         $mockVersion = \Mockery::mock(Version::class);
         $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
         self::$version = $mockVersion;
-    })->call(new GoUpdateChangelogReleaseWorker($mockProcessRunner));
+    })->call(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner));
     expect(new CreateGithubReleaseWorker($mockProcessRunner))
         ->findChangelog()->toBeTruthy();
 })->group(__DIR__, __FILE__);
