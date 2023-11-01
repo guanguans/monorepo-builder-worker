@@ -45,7 +45,7 @@ $finder = PhpCsFixer\Finder::create()
         'vendor/',
     ])
     ->append(glob(__DIR__.'/{.*,*}.php', GLOB_BRACE))
-    ->append([__DIR__.'/bin/namespace-fixer', __DIR__.'/.changelog'])
+    ->append([__DIR__.'/bin/namespace-prefix-fixer', __DIR__.'/.changelog'])
     ->notPath([
         'bootstrap/*',
         'storage/*',

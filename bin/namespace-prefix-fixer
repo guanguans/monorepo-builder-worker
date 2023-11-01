@@ -40,14 +40,14 @@ use Symfony\Component\Finder\Finder;
 
 /**
  * ```
- * php ./bin/namespace-fixer --original=MonorepoBuilderPrefix202308 --new=MonorepoBuilderPrefix202310
+ * php ./bin/namespace-prefix-fixer --original=MonorepoBuilderPrefix202308 --new=MonorepoBuilderPrefix202310
  * ```
  *
  * @noinspection PhpUnhandledExceptionInspection
  */
 exit(
     (new SingleCommandApplication())
-        ->setName('Namespace Fixer')
+        ->setName('Namespace Prefix Fixer')
         ->setDescription('Fixes the namespace prefix of files in the given paths')
         ->setHelp('This command fixes the namespace prefix of files in the given paths.')
         ->setVersion('1.0.0')
@@ -58,7 +58,7 @@ exit(
             $original = $input->getOption('original');
             $new = $input->getOption('new');
             if (empty($original) || empty($new)) {
-                (new SymfonyStyle($input, $output))->error('You must specify the original namespace and the new namespace.');
+                (new SymfonyStyle($input, $output))->error('You must specify the original namespace prefix and the new namespace prefix.');
 
                 return Command::INVALID;
             }
