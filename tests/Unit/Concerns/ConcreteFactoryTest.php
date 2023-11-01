@@ -13,10 +13,10 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorkerTests\Unit\Concerns;
 
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
-use MonorepoBuilderPrefix202308\Symfony\Component\Console\Input\ArgvInput;
-use MonorepoBuilderPrefix202308\Symfony\Component\Console\Output\ConsoleOutput;
-use MonorepoBuilderPrefix202308\Symfony\Component\Console\Style\SymfonyStyle;
-use MonorepoBuilderPrefix202308\Symfony\Component\Process\ExecutableFinder;
+use MonorepoBuilderPrefix202310\Symfony\Component\Console\Input\ArgvInput;
+use MonorepoBuilderPrefix202310\Symfony\Component\Console\Output\ConsoleOutput;
+use MonorepoBuilderPrefix202310\Symfony\Component\Console\Style\SymfonyStyle;
+use MonorepoBuilderPrefix202310\Symfony\Component\Process\ExecutableFinder;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 uses(ConcreteFactory::class);
