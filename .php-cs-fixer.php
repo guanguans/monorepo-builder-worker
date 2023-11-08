@@ -268,7 +268,7 @@ return (new PhpCsFixer\Config())
                 'include',
                 'include_once',
                 // 'phpdoc',
-                'require',
+                // 'require',
                 'require_once',
                 'return',
                 'switch',
