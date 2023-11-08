@@ -51,8 +51,10 @@ use Symfony\Component\Finder\Finder;
             $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
         }
 
-        (new SymfonyStyle($input, $output))->info("The correct namespace prefix is [MonorepoBuilderPrefix$yearMonth].");
+        $symfonyStyle = new SymfonyStyle($input, $output);
+        $symfonyStyle->info("The correct namespace prefix is [MonorepoBuilderPrefix$yearMonth].");
 
+        /** @var \Symfony\Component\Finder\SplFileInfo $splFileInfo */
         foreach (
             Finder::create()
                 ->in([__DIR__.'/../src', __DIR__.'/../tests'])
@@ -61,15 +63,15 @@ use Symfony\Component\Finder\Finder;
                 ->ignoreVCS(true)
             as $splFileInfo
         ) {
-            file_put_contents(
-                $splFileInfo->getRealPath(),
-                preg_replace(
-                    '/MonorepoBuilderPrefix\d{4}\d{2}/',
-                    "MonorepoBuilderPrefix$yearMonth",
-                    $splFileInfo->getContents()
-                )
-            );
+            $replacedContents = preg_replace('/MonorepoBuilderPrefix\d{4}\d{2}/', "MonorepoBuilderPrefix$yearMonth", $splFileInfo->getContents());
+            if ($replacedContents !== $splFileInfo->getContents()) {
+                $symfonyStyle->info("The file's [{$splFileInfo->getRelativePathname()}] namespace prefix is being fixed...");
+            }
+
+            file_put_contents($splFileInfo->getRealPath(), $replacedContents);
         }
+
+        $symfonyStyle->success("The all files's namespace prefix has been fixed.");
 
         return Command::SUCCESS;
     })
