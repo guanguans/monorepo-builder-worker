@@ -29,38 +29,25 @@ if (! $loaded) {
     );
 }
 
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Finder\Finder;
-
-(static function (InputInterface $input, OutputInterface $output): void {
+(static function (): void {
     $yearMonth = date('Ym');
     while ($yearMonth >= 202310 && ! class_exists(sprintf('MonorepoBuilderPrefix%s\Symfony\Component\Console\Style\SymfonyStyle', $yearMonth))) {
         $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
     }
 
-    $symfonyStyle = new SymfonyStyle($input, $output);
-    $symfonyStyle->info("The correct namespace prefix is [MonorepoBuilderPrefix$yearMonth].");
+    echo "The correct namespace prefix is [MonorepoBuilderPrefix$yearMonth].", PHP_EOL;
 
-    /** @var \Symfony\Component\Finder\SplFileInfo $splFileInfo */
-    foreach (
-        Finder::create()
-            ->in([__DIR__.'/../src', __DIR__.'/../tests'])
-            ->name('*.php')
-            ->ignoreDotFiles(true)
-            ->ignoreVCS(true)
-        as $splFileInfo
-    ) {
-        $replacedContents = preg_replace('/MonorepoBuilderPrefix\d{4}\d{2}/', "MonorepoBuilderPrefix$yearMonth", $splFileInfo->getContents());
-        if ($replacedContents !== $splFileInfo->getContents()) {
-            $symfonyStyle->info("The file's [{$splFileInfo->getRelativePathname()}] namespace prefix is being fixed...");
+    foreach (array_map('realpath', glob(__DIR__.'/../{src,tests}{/,/*/,/*/*/,/*/*/*/}*.php', GLOB_BRACE)) as $file) {
+        $contents = file_get_contents($file);
+
+        $replacedContents = preg_replace('/MonorepoBuilderPrefix\d{4}\d{2}/', "MonorepoBuilderPrefix$yearMonth", $contents);
+
+        if ($replacedContents !== $contents) {
+            echo ("The file's [{$file}] namespace prefix is being fixed..."), PHP_EOL;
         }
 
-        file_put_contents($splFileInfo->getRealPath(), $replacedContents);
+        file_put_contents($file, $replacedContents);
     }
 
-    $symfonyStyle->success("The all files's namespace prefix has been fixed.");
-})(new ArgvInput(), new ConsoleOutput(OutputInterface::VERBOSITY_VERY_VERBOSE));
+    echo "The all files's namespace prefix has been fixed.", PHP_EOL;
+})();
