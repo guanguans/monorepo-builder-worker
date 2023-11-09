@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.3.2"></a>
+## [1.3.2] - 2023-11-09
+### Refactor
+- **bin:** update namespace prefix fixing script
+
+
 <a name="1.3.1"></a>
 ## [1.3.1] - 2023-11-08
 ### Feat
@@ -353,7 +359,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.3.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.3.2...HEAD
+[1.3.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.3.1...1.3.2
 [1.3.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.3.0...1.3.1
 [1.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.2...1.3.0
 [1.2.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.2.1...1.2.2
