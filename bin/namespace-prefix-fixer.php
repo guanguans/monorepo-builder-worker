@@ -35,7 +35,7 @@ if (! $loaded) {
         $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
     }
 
-    echo "The correct namespace prefix is [MonorepoBuilderPrefix$yearMonth].", PHP_EOL;
+    echo PHP_EOL,"The correct namespace prefix is [MonorepoBuilderPrefix$yearMonth].", PHP_EOL;
 
     foreach (array_map('realpath', glob(__DIR__.'/../{src,tests}{/,/*/,/*/*/,/*/*/*/}*.php', GLOB_BRACE)) as $file) {
         $contents = file_get_contents($file);
@@ -43,7 +43,7 @@ if (! $loaded) {
         $replacedContents = preg_replace('/MonorepoBuilderPrefix\d{4}\d{2}/', "MonorepoBuilderPrefix$yearMonth", $contents);
 
         if ($replacedContents !== $contents) {
-            echo ("The file's [{$file}] namespace prefix is being fixed..."), PHP_EOL;
+            echo "The file's [{$file}] namespace prefix is being fixed...", PHP_EOL;
         }
 
         file_put_contents($file, $replacedContents);
