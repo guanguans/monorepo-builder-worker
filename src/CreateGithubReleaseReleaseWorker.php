@@ -16,7 +16,7 @@ use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
-class CreateGithubReleaseWorker extends ReleaseWorker
+class CreateGithubReleaseReleaseWorker extends ReleaseWorker
 {
     /** @var ProcessRunner */
     private $processRunner;
