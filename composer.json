@@ -170,7 +170,6 @@
         "mark-start": "printf '\\n!\\n!\\t\\033[0;36m%s\\033[0m\\n!\\n\\n' \"Started\"",
         "md-fix": "@md-lint --fix",
         "md-lint": "lint-md --config .lintmdrc ./*.md ./.github/ ./docs/",
-        "namespace-prefix-fixer": "@php ./bin/namespace-prefix-fixer --ansi -v",
         "neon-lint": "@php ./vendor/bin/neon-lint *.neon",
         "pest": "@php ./vendor/bin/pest --coverage",
         "pest-coverage": "@pest --coverage-html=./build/phpunit/ --coverage-clover=./clover.xml",

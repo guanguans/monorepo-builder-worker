@@ -35,7 +35,6 @@ $header = <<<'header'
 /** @noinspection PhpParamsInspection */
 $finder = PhpCsFixer\Finder::create()
     ->in([
-        __DIR__.'/bin',
         __DIR__.'/src',
         __DIR__.'/tests',
     ])
@@ -46,7 +45,7 @@ $finder = PhpCsFixer\Finder::create()
         'vendor/',
     ])
     ->append(glob(__DIR__.'/{.*,*}.php', GLOB_BRACE))
-    ->append([__DIR__.'/bin/namespace-prefix-fixer', __DIR__.'/.changelog'])
+    ->append([__DIR__.'/.changelog'])
     ->notPath([
         'bootstrap/*',
         'storage/*',
