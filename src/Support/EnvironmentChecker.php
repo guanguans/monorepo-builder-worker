@@ -26,7 +26,11 @@ class EnvironmentChecker
      */
     public static function checks(array $workers): void
     {
-        self::fixNamespacePrefix();
+        try {
+            self::createProcessRunner();
+        } catch (\Error $error) {
+            self::fixNamespacePrefix();
+        }
 
         self::createSymfonyStyle()->note('Checking environment...');
 
@@ -74,6 +78,6 @@ class EnvironmentChecker
             file_put_contents($file, $replacedContents);
         }
 
-        echo "The all files's namespace prefix has been fixed.", PHP_EOL;
+        echo 'The all files namespace prefix has been fixed.', PHP_EOL;
     }
 }
