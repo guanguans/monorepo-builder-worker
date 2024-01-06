@@ -33,7 +33,7 @@ jobs:
         run: composer install --no-interaction --prefer-dist --ansi -v
 
       - name: Fix monorepo builder prefix
-        run: composer release-patch-dry-run
+        run: composer fix-namespace-prefix
 
       - name: Run psalm
         run: composer psalm

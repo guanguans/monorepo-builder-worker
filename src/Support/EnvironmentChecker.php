@@ -57,7 +57,7 @@ class EnvironmentChecker
         }
     }
 
-    protected static function fixNamespacePrefix(): void
+    public static function fixNamespacePrefix(): void
     {
         $yearMonth = date('Ym');
         while ($yearMonth >= 202310 && ! class_exists(sprintf('MonorepoBuilderPrefix%s\Symfony\Component\Console\Style\SymfonyStyle', $yearMonth))) {
