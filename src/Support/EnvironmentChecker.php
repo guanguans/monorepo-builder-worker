@@ -79,5 +79,7 @@ class EnvironmentChecker
         }
 
         echo 'The all files namespace prefix has been fixed.', PHP_EOL;
+
+        exit(0);
     }
 }
