@@ -32,5 +32,8 @@ jobs:
       - name: Run composer install
         run: composer install --no-interaction --prefer-dist --ansi -v
 
+      - name: Fix monorepo builder prefix
+        run: composer release-patch-dry-run
+
       - name: Run psalm
         run: composer psalm
