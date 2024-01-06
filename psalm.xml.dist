@@ -22,13 +22,12 @@
 
   <issueHandlers>
     <PropertyNotSetInConstructor errorLevel="info"/>
-    <!--<InvalidArgument>
+    <UndefinedClass>
       <errorLevel type="suppress">
-        <directory name="src/Macros"/>
-        <file name="src/Macros/QueryBuilderMacro.php"/>
+        <file name="src/Support/EnvironmentChecker.php"/>
       </errorLevel>
-    </InvalidArgument>
-    <UnusedClass>
+    </UndefinedClass>
+    <!--<UnusedClass>
       <errorLevel type="suppress">
         <directory name="src/Outputs"/>
       </errorLevel>
