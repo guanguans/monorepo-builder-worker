@@ -8,6 +8,27 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.4.2"></a>
+## [1.4.2] - 2024-01-07
+### Fix
+- fix monorepo builder prefix
+- **build:** Fix monorepo builder prefix
+- **concerns:** update Symfony console classes
+- **support:** Fix all files namespace prefix
+
+### Pull Requests
+- Merge pull request [#44](https://github.com/guanguans/monorepo-builder-worker/issues/44) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.7
+- Merge pull request [#43](https://github.com/guanguans/monorepo-builder-worker/issues/43) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.6
+- Merge pull request [#42](https://github.com/guanguans/monorepo-builder-worker/issues/42) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.5
+- Merge pull request [#41](https://github.com/guanguans/monorepo-builder-worker/issues/41) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.4
+- Merge pull request [#40](https://github.com/guanguans/monorepo-builder-worker/issues/40) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.3
+- Merge pull request [#39](https://github.com/guanguans/monorepo-builder-worker/issues/39) from guanguans/dependabot/github_actions/actions/stale-9
+- Merge pull request [#38](https://github.com/guanguans/monorepo-builder-worker/issues/38) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.2
+- Merge pull request [#37](https://github.com/guanguans/monorepo-builder-worker/issues/37) from guanguans/dependabot/github_actions/actions/labeler-5
+- Merge pull request [#36](https://github.com/guanguans/monorepo-builder-worker/issues/36) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.1
+- Merge pull request [#35](https://github.com/guanguans/monorepo-builder-worker/issues/35) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.0
+
+
 <a name="1.4.1"></a>
 ## [1.4.1] - 2023-11-13
 
@@ -375,7 +396,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.2...HEAD
+[1.4.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.3.2...1.4.0
 [1.3.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.3.1...1.3.2
