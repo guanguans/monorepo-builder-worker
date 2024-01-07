@@ -5,4 +5,9 @@
       <code>(array) explode(PHP_EOL, $this-&gt;processRunner-&gt;run('git tag --sort=-committerdate'))</code>
     </RedundantCast>
   </file>
+  <file src="src/Concerns/ConcreteFactory.php">
+    <InvalidArgument occurrences="1">
+      <code>$symfonyStyle ?: self::createSymfonyStyle()</code>
+    </InvalidArgument>
+  </file>
 </files>

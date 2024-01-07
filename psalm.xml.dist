@@ -24,9 +24,16 @@
     <PropertyNotSetInConstructor errorLevel="info"/>
     <UndefinedClass>
       <errorLevel type="suppress">
+        <file name="src/Concerns/ConcreteFactory.php"/>
         <file name="src/Support/EnvironmentChecker.php"/>
+        <file name="src/UpdateChangelogViaPhpReleaseWorker.php"/>
       </errorLevel>
     </UndefinedClass>
+    <UndefinedDocblockClass>
+      <errorLevel type="suppress">
+        <file name="src/Concerns/ConcreteFactory.php"/>
+      </errorLevel>
+    </UndefinedDocblockClass>
     <!--<UnusedClass>
       <errorLevel type="suppress">
         <directory name="src/Outputs"/>
