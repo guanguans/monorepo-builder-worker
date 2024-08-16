@@ -8,6 +8,25 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.4.3"></a>
+## [1.4.3] - 2024-08-16
+### Feat
+- Update project configuration and dependency management
+
+### Refactor
+- **rector:** 更新依赖并调整Rector规则
+
+### Pull Requests
+- Merge pull request [#53](https://github.com/guanguans/monorepo-builder-worker/issues/53) from guanguans/dependabot/github_actions/super-linter/super-linter-7
+- Merge pull request [#52](https://github.com/guanguans/monorepo-builder-worker/issues/52) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.2.0
+- Merge pull request [#51](https://github.com/guanguans/monorepo-builder-worker/issues/51) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.1.0
+- Merge pull request [#50](https://github.com/guanguans/monorepo-builder-worker/issues/50) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.0.0
+- Merge pull request [#49](https://github.com/guanguans/monorepo-builder-worker/issues/49) from guanguans/dependabot/github_actions/super-linter/super-linter-6
+- Merge pull request [#48](https://github.com/guanguans/monorepo-builder-worker/issues/48) from guanguans/dependabot/composer/rector/rector-tw-0.18or-tw-0.19or-tw-1.0
+- Merge pull request [#46](https://github.com/guanguans/monorepo-builder-worker/issues/46) from guanguans/dependabot/github_actions/actions/cache-4
+- Merge pull request [#45](https://github.com/guanguans/monorepo-builder-worker/issues/45) from guanguans/dependabot/composer/rector/rector-tw-0.18or-tw-0.19
+
+
 <a name="1.4.2"></a>
 ## [1.4.2] - 2024-01-07
 ### Fix
@@ -396,7 +415,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.3...HEAD
+[1.4.3]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.0...1.4.1
 [1.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.3.2...1.4.0
