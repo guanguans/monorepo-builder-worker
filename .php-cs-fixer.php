@@ -45,7 +45,10 @@ $finder = PhpCsFixer\Finder::create()
         'vendor/',
     ])
     ->append(glob(__DIR__.'/{.*,*}.php', GLOB_BRACE))
-    ->append([__DIR__.'/.changelog'])
+    ->append([
+        __DIR__.'/composer-updater',
+        __DIR__.'/.changelog',
+    ])
     ->notPath([
         'bootstrap/*',
         'storage/*',
@@ -279,6 +282,12 @@ return (new PhpCsFixer\Config())
         ],
         // 'statement_indentation' => true,
         'logical_operators' => false,
+        'class_definition' => [
+            // 'multi_line_extends_each_single_line' => false,
+            // 'single_item_single_line' => false,
+            // 'single_line' => false,
+            // 'space_before_parenthesis' => false,
+        ],
 
         // https://github.com/kubawerlos/php-cs-fixer-custom-fixers
         PhpCsFixerCustomFixers\Fixer\CommentSurroundedBySpacesFixer::name() => true,
