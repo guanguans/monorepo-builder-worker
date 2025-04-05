@@ -35,7 +35,7 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
+        "php": ">=8.0",
         "marcocesarato/php-conventional-changelog": "^1.17",
         "symfony/polyfill-php80": "^1.31",
         "symplify/monorepo-builder": "^11.2"
