@@ -8,8 +8,38 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="2.0.0"></a>
+## [2.0.0] - 2025-04-05
+### Builds
+- **composer:** Update development dependencies and scripts ([36cf8b4](https://github.com/guanguans/monorepo-builder-worker/commit/36cf8b4))
+
+### Code Refactorings
+- apply rector ([bdc1c4d](https://github.com/guanguans/monorepo-builder-worker/commit/bdc1c4d))
+
+### Continuous Integrations
+- **config:** Update configuration files and cleanup unused files ([91a6da5](https://github.com/guanguans/monorepo-builder-worker/commit/91a6da5))
+- **configuration:** Remove deprecated PHPStan and Psalm files ([7e4654e](https://github.com/guanguans/monorepo-builder-worker/commit/7e4654e))
+- **dependency-analyser:** Add composer dependency analyser configuration ([fa90236](https://github.com/guanguans/monorepo-builder-worker/commit/fa90236))
+- **github:** Add Code of Conduct and Bug Reporting Templates ([6c9498d](https://github.com/guanguans/monorepo-builder-worker/commit/6c9498d))
+
+### Documents
+- Remove unused badge entries from README files ([677eb7d](https://github.com/guanguans/monorepo-builder-worker/commit/677eb7d))
+
+### Features
+- **autoload:** Add helper functions and exception transformer ([df941d0](https://github.com/guanguans/monorepo-builder-worker/commit/df941d0))
+
+### Styles
+- apply php-cs-fixer ([e2730ec](https://github.com/guanguans/monorepo-builder-worker/commit/e2730ec))
+
+### Tests
+- **workflows:** Modify testing workflow triggers and commands ([1a545ef](https://github.com/guanguans/monorepo-builder-worker/commit/1a545ef))
+
+
 <a name="1.5.0"></a>
 ## [1.5.0] - 2025-04-05
+### Builds
+- **dependencies:** Update package versions and configurations ([7b21e51](https://github.com/guanguans/monorepo-builder-worker/commit/7b21e51))
+
 ### Pull Requests
 - Merge pull request [#55](https://github.com/guanguans/monorepo-builder-worker/issues/55) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.3.0
 - Merge pull request [#54](https://github.com/guanguans/monorepo-builder-worker/issues/54) from guanguans/dependabot/github_actions/codecov/codecov-action-5
@@ -17,11 +47,11 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.4.3"></a>
 ## [1.4.3] - 2024-08-16
-### Feat
-- Update project configuration and dependency management
+### Code Refactorings
+- **rector:** 更新依赖并调整Rector规则 ([7176cff](https://github.com/guanguans/monorepo-builder-worker/commit/7176cff))
 
-### Refactor
-- **rector:** 更新依赖并调整Rector规则
+### Features
+- Update project configuration and dependency management ([e34cba5](https://github.com/guanguans/monorepo-builder-worker/commit/e34cba5))
 
 ### Pull Requests
 - Merge pull request [#53](https://github.com/guanguans/monorepo-builder-worker/issues/53) from guanguans/dependabot/github_actions/super-linter/super-linter-7
@@ -36,11 +66,11 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.4.2"></a>
 ## [1.4.2] - 2024-01-07
-### Fix
-- fix monorepo builder prefix
-- **build:** Fix monorepo builder prefix
-- **concerns:** update Symfony console classes
-- **support:** Fix all files namespace prefix
+### Bug Fixes
+- fix monorepo builder prefix ([c06ffc5](https://github.com/guanguans/monorepo-builder-worker/commit/c06ffc5))
+- **build:** Fix monorepo builder prefix ([efe1712](https://github.com/guanguans/monorepo-builder-worker/commit/efe1712))
+- **concerns:** update Symfony console classes ([a3554e3](https://github.com/guanguans/monorepo-builder-worker/commit/a3554e3))
+- **support:** Fix all files namespace prefix ([313052b](https://github.com/guanguans/monorepo-builder-worker/commit/313052b))
 
 ### Pull Requests
 - Merge pull request [#44](https://github.com/guanguans/monorepo-builder-worker/issues/44) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.63.7
@@ -60,46 +90,46 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.4.0"></a>
 ## [1.4.0] - 2023-11-13
-### Feat
-- **src:** Add fixNamespacePrefix method in EnvironmentChecker
+### Bug Fixes
+- **Support:** Fix namespace prefix and create process runner ([b434557](https://github.com/guanguans/monorepo-builder-worker/commit/b434557))
 
-### Fix
-- **Support:** Fix namespace prefix and create process runner
+### Code Refactorings
+- **build:** remove unused files and scripts ([c958ff6](https://github.com/guanguans/monorepo-builder-worker/commit/c958ff6))
+- **worker:** rename CreateGithubReleaseWorker to CreateGithubReleaseReleaseWorker ([0a360d4](https://github.com/guanguans/monorepo-builder-worker/commit/0a360d4))
 
-### Refactor
-- **build:** remove unused files and scripts
-- **worker:** rename CreateGithubReleaseWorker to CreateGithubReleaseReleaseWorker
+### Features
+- **src:** Add fixNamespacePrefix method in EnvironmentChecker ([09157d0](https://github.com/guanguans/monorepo-builder-worker/commit/09157d0))
 
 
 <a name="1.3.2"></a>
 ## [1.3.2] - 2023-11-09
-### Refactor
-- **bin:** update namespace prefix fixing script
+### Code Refactorings
+- **bin:** update namespace prefix fixing script ([fc91a0c](https://github.com/guanguans/monorepo-builder-worker/commit/fc91a0c))
 
 
 <a name="1.3.1"></a>
 ## [1.3.1] - 2023-11-08
-### Feat
-- **bin:** Add namespace-prefix-fixer
+### Code Refactorings
+- **bin:** Refactor namespace prefix fixer command ([ef808fb](https://github.com/guanguans/monorepo-builder-worker/commit/ef808fb))
+- **namespace-prefix-fixer:** Refactor namespace prefix fixing ([3465f4c](https://github.com/guanguans/monorepo-builder-worker/commit/3465f4c))
 
-### Refactor
-- **bin:** Refactor namespace prefix fixer command
-- **namespace-prefix-fixer:** Refactor namespace prefix fixing
+### Features
+- **bin:** Add namespace-prefix-fixer ([97c8005](https://github.com/guanguans/monorepo-builder-worker/commit/97c8005))
 
 
 <a name="1.3.0"></a>
 ## [1.3.0] - 2023-11-01
-### Feat
-- **commit:** Add namespace fixer script
+### Bug Fixes
+- **bin:** rename namespace-fixer to namespace-prefix-fixer ([ac7ff28](https://github.com/guanguans/monorepo-builder-worker/commit/ac7ff28))
+- **rector.php:** Remove UnSpreadOperatorRector ([d9ad2b0](https://github.com/guanguans/monorepo-builder-worker/commit/d9ad2b0))
+- **src:** Update Symfony components versions ([8190a65](https://github.com/guanguans/monorepo-builder-worker/commit/8190a65))
 
-### Fix
-- **bin:** rename namespace-fixer to namespace-prefix-fixer
-- **rector.php:** Remove UnSpreadOperatorRector
-- **src:** Update Symfony components versions
+### Code Refactorings
+- **bin:** Refactor namespace-fixer script ([9293218](https://github.com/guanguans/monorepo-builder-worker/commit/9293218))
+- **changelog:** rename GoUpdateChangelogReleaseWorker to UpdateChangelogViaGoReleaseWorker ([7222661](https://github.com/guanguans/monorepo-builder-worker/commit/7222661))
 
-### Refactor
-- **bin:** Refactor namespace-fixer script
-- **changelog:** rename GoUpdateChangelogReleaseWorker to UpdateChangelogViaGoReleaseWorker
+### Features
+- **commit:** Add namespace fixer script ([5a77acb](https://github.com/guanguans/monorepo-builder-worker/commit/5a77acb))
 
 ### Pull Requests
 - Merge pull request [#34](https://github.com/guanguans/monorepo-builder-worker/issues/34) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.62.1
@@ -128,8 +158,8 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.2.2"></a>
 ## [1.2.2] - 2023-08-22
-### Fix
-- **CreateGithubReleaseWorker:** add title and verify-tag options
+### Bug Fixes
+- **CreateGithubReleaseWorker:** add title and verify-tag options ([c05e9b2](https://github.com/guanguans/monorepo-builder-worker/commit/c05e9b2))
 
 ### Pull Requests
 - Merge pull request [#12](https://github.com/guanguans/monorepo-builder-worker/issues/12) from guanguans/dependabot/composer/rector/rector-tw-0.17or-tw-0.18
@@ -141,15 +171,15 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.2.1"></a>
 ## [1.2.1] - 2023-08-08
-### Refactor
-- **changelog:** update class references
-- **concerns:** rename ConcreteFactory.php to ConcreteFactory.php
+### Code Refactorings
+- **changelog:** update class references ([1ac9989](https://github.com/guanguans/monorepo-builder-worker/commit/1ac9989))
+- **concerns:** rename ConcreteFactory.php to ConcreteFactory.php ([8256e56](https://github.com/guanguans/monorepo-builder-worker/commit/8256e56))
 
 
 <a name="1.2.0"></a>
 ## [1.2.0] - 2023-08-08
-### Fix
-- **src:** Update Symfony components version
+### Bug Fixes
+- **src:** Update Symfony components version ([fbabbfc](https://github.com/guanguans/monorepo-builder-worker/commit/fbabbfc))
 
 ### Pull Requests
 - Merge pull request [#7](https://github.com/guanguans/monorepo-builder-worker/issues/7) from guanguans/dependabot/github_actions/trufflesecurity/trufflehog-3.46.3
@@ -163,92 +193,92 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.1.11"></a>
 ## [1.1.11] - 2023-07-24
-### Feat
-- **CreateGithubReleaseWorkerTest:** Update changelog content
+### Bug Fixes
+- **Changelog:** handle missing changelog sections ([a14f8e4](https://github.com/guanguans/monorepo-builder-worker/commit/a14f8e4))
+- **NodeUpdateChangelogReleaseWorker:** handle missing changelog sections ([31982cb](https://github.com/guanguans/monorepo-builder-worker/commit/31982cb))
+- **PhpUpdateChangelogReleaseWorker:** fix condition for valid lines ([b9f76b5](https://github.com/guanguans/monorepo-builder-worker/commit/b9f76b5))
 
-### Fix
-- **Changelog:** handle missing changelog sections
-- **NodeUpdateChangelogReleaseWorker:** handle missing changelog sections
-- **PhpUpdateChangelogReleaseWorker:** fix condition for valid lines
+### Features
+- **CreateGithubReleaseWorkerTest:** Update changelog content ([9f28d3b](https://github.com/guanguans/monorepo-builder-worker/commit/9f28d3b))
 
 
 <a name="1.1.10"></a>
 ## [1.1.10] - 2023-07-24
-### Refactor
-- **Changelog:** update line filtering logic
+### Code Refactorings
+- **Changelog:** update line filtering logic ([35cc640](https://github.com/guanguans/monorepo-builder-worker/commit/35cc640))
 
 
 <a name="1.1.9"></a>
 ## [1.1.9] - 2023-07-23
-### Feat
-- **deps:** add symfony/polyfill-php80
+### Code Refactorings
+- **composer.json:** update package name and URLs ([e4fcc4c](https://github.com/guanguans/monorepo-builder-worker/commit/e4fcc4c))
 
-### Refactor
-- **composer.json:** update package name and URLs
+### Features
+- **deps:** add symfony/polyfill-php80 ([2793581](https://github.com/guanguans/monorepo-builder-worker/commit/2793581))
 
 
 <a name="1.1.8"></a>
 ## [1.1.8] - 2023-07-22
-### CI
-- **chglog:** configure CI pipeline for changelog generation
+### Bug Fixes
+- **changelog:** remove redundant cast in PhpUpdateChangelogReleaseWorker ([14af76f](https://github.com/guanguans/monorepo-builder-worker/commit/14af76f))
+- **contract:** Remove unnecessary exception ([07027a9](https://github.com/guanguans/monorepo-builder-worker/commit/07027a9))
 
-### Feat
-- **worker:** add NodeUpdateChangelogReleaseWorker
+### Code Refactorings
+- **concern:** update ConcreteFactory trait ([aa009f1](https://github.com/guanguans/monorepo-builder-worker/commit/aa009f1))
 
-### Fix
-- **changelog:** remove redundant cast in PhpUpdateChangelogReleaseWorker
-- **contract:** Remove unnecessary exception
+### Continuous Integrations
+- **chglog:** configure CI pipeline for changelog generation ([73b5ac7](https://github.com/guanguans/monorepo-builder-worker/commit/73b5ac7))
 
-### Refactor
-- **concern:** update ConcreteFactory trait
+### Features
+- **worker:** add NodeUpdateChangelogReleaseWorker ([147f4d8](https://github.com/guanguans/monorepo-builder-worker/commit/147f4d8))
 
 
 <a name="1.1.7"></a>
 ## [1.1.7] - 2023-07-22
-### Feat
-- **NodeUpdateChangelogReleaseWorkerTest:** create new test file
+### Bug Fixes
+- **config:** Add missing newline in config.yml ([22802b1](https://github.com/guanguans/monorepo-builder-worker/commit/22802b1))
 
-### Fix
-- **config:** Add missing newline in config.yml
+### Features
+- **NodeUpdateChangelogReleaseWorkerTest:** create new test file ([3799c51](https://github.com/guanguans/monorepo-builder-worker/commit/3799c51))
 
 
 <a name="1.1.6"></a>
 ## [1.1.6] - 2023-07-22
-### Feat
-- **NodeUpdateChangelogReleaseWorker:** add NodeUpdateChangelogReleaseWorker class
+### Code Refactorings
+- **EnvironmentChecker:** improve check method ([a7f9b4c](https://github.com/guanguans/monorepo-builder-worker/commit/a7f9b4c))
 
-### Refactor
-- **EnvironmentChecker:** improve check method
+### Features
+- **NodeUpdateChangelogReleaseWorker:** add NodeUpdateChangelogReleaseWorker class ([8856713](https://github.com/guanguans/monorepo-builder-worker/commit/8856713))
 
 
 <a name="1.1.5"></a>
 ## [1.1.5] - 2023-07-21
-### Fix
-- **Changelog:** fix regex pattern for replacing unreleased link
+### Bug Fixes
+- **Changelog:** fix regex pattern for replacing unreleased link ([49352c7](https://github.com/guanguans/monorepo-builder-worker/commit/49352c7))
 
 
 <a name="1.1.4"></a>
 ## [1.1.4] - 2023-07-21
-### Feat
-- **deps:** Add nunomaduro/mock-final-classes package
+### Bug Fixes
+- **Changelog:** Fix substring position in GoUpdateChangelogReleaseWorker ([3d764d7](https://github.com/guanguans/monorepo-builder-worker/commit/3d764d7))
 
-### Fix
-- **Changelog:** Fix substring position in GoUpdateChangelogReleaseWorker
+### Code Refactorings
+- **concern:** Update access modifiers in ConcreteFactory ([e2549af](https://github.com/guanguans/monorepo-builder-worker/commit/e2549af))
 
-### Refactor
-- **concern:** Update access modifiers in ConcreteFactory
+### Features
+- **deps:** Add nunomaduro/mock-final-classes package ([81a957b](https://github.com/guanguans/monorepo-builder-worker/commit/81a957b))
 
 
 <a name="1.1.3"></a>
 ## [1.1.3] - 2023-07-21
-### Docs
-- **changelog:** add link to git-chglog
+### Code Refactorings
+- **CreateGithubReleaseWorker:** improve changelog handling ([6bfceaf](https://github.com/guanguans/monorepo-builder-worker/commit/6bfceaf))
 
-### Feat
-- **Contract:** Add ChangelogInterface
+### Documents
+- **changelog:** add link to git-chglog ([6dffee6](https://github.com/guanguans/monorepo-builder-worker/commit/6dffee6))
 
-### Refactor
-- **CreateGithubReleaseWorker:** improve changelog handling
+### Features
+- **Contract:** Add ChangelogInterface ([d64c66b](https://github.com/guanguans/monorepo-builder-worker/commit/d64c66b))
 
 
 <a name="1.1.2"></a>
@@ -256,145 +286,148 @@ All notable changes to this project will be documented in this file.
 
 <a name="1.1.1"></a>
 ## [1.1.1] - 2023-07-21
-### Feat
-- **monorepo-builder:** add GoUpdateChangelogReleaseWorker
-- **support:** add checkFromCallback method
+### Bug Fixes
+- **DisallowedEmptyRuleFixerRector:** enable disallowed empty rule fixer for all files ([ba4ba1a](https://github.com/guanguans/monorepo-builder-worker/commit/ba4ba1a))
 
-### Fix
-- **DisallowedEmptyRuleFixerRector:** enable disallowed empty rule fixer for all files
+### Features
+- **monorepo-builder:** add GoUpdateChangelogReleaseWorker ([7ffaed4](https://github.com/guanguans/monorepo-builder-worker/commit/7ffaed4))
+- **support:** add checkFromCallback method ([c0156be](https://github.com/guanguans/monorepo-builder-worker/commit/c0156be))
 
 
 <a name="1.1.0"></a>
 ## [1.1.0] - 2023-07-21
-### Feat
-- **GoUpdateChangelogReleaseWorker:** add getChangelog method
-- **ReleaseWorker:** Add GoUpdateChangelogReleaseWorker class
-- **chglog:** add CHANGELOG template file
+### Bug Fixes
+- **ReleaseWorker:** handle empty changelog in GoUpdateChangelogReleaseWorker ([12a98f9](https://github.com/guanguans/monorepo-builder-worker/commit/12a98f9))
+- **changelog:** remove Unreleased link ([0094e4c](https://github.com/guanguans/monorepo-builder-worker/commit/0094e4c))
 
-### Fix
-- **ReleaseWorker:** handle empty changelog in GoUpdateChangelogReleaseWorker
-- **changelog:** remove Unreleased link
+### Code Refactorings
+- **CreateGithubReleaseWorker:** remove unnecessary git command ([b73fb8b](https://github.com/guanguans/monorepo-builder-worker/commit/b73fb8b))
+- **monorepo-builder:** rename UpdateChangelogReleaseWorker to PhpUpdateChangelogReleaseWorker ([e527831](https://github.com/guanguans/monorepo-builder-worker/commit/e527831))
 
-### Refactor
-- **CreateGithubReleaseWorker:** remove unnecessary git command
-- **monorepo-builder:** rename UpdateChangelogReleaseWorker to PhpUpdateChangelogReleaseWorker
+### Features
+- **GoUpdateChangelogReleaseWorker:** add getChangelog method ([1f846bd](https://github.com/guanguans/monorepo-builder-worker/commit/1f846bd))
+- **ReleaseWorker:** Add GoUpdateChangelogReleaseWorker class ([d2963c9](https://github.com/guanguans/monorepo-builder-worker/commit/d2963c9))
+- **chglog:** add CHANGELOG template file ([8692420](https://github.com/guanguans/monorepo-builder-worker/commit/8692420))
 
 
 <a name="1.0.4"></a>
 ## [1.0.4] - 2023-07-20
-### Feat
-- **UpdateChangelogReleaseWorker:** add Assert dependency
+### Code Refactorings
+- **CreateGithubReleaseWorker:** update getChangelog method ([d5abacc](https://github.com/guanguans/monorepo-builder-worker/commit/d5abacc))
 
-### Refactor
-- **CreateGithubReleaseWorker:** update getChangelog method
+### Features
+- **UpdateChangelogReleaseWorker:** add Assert dependency ([4f9fad6](https://github.com/guanguans/monorepo-builder-worker/commit/4f9fad6))
 
 
 <a name="1.0.3"></a>
 ## [1.0.3] - 2023-07-20
-### Refactor
-- **Concern:** Rename ProcessRunnerFactory to ConcreteFactory
-- **support:** use ConcreteFactory trait in EnvironmentChecker
+### Code Refactorings
+- **Concern:** Rename ProcessRunnerFactory to ConcreteFactory ([a414da6](https://github.com/guanguans/monorepo-builder-worker/commit/a414da6))
+- **support:** use ConcreteFactory trait in EnvironmentChecker ([fa4efbb](https://github.com/guanguans/monorepo-builder-worker/commit/fa4efbb))
 
 
 <a name="1.0.2"></a>
 ## [1.0.2] - 2023-07-20
-### Feat
-- **UpdateChangelogReleaseWorker:** add getChangelogDiff method
+### Bug Fixes
+- **release:** Fix issue with changelog generation ([4bac2f3](https://github.com/guanguans/monorepo-builder-worker/commit/4bac2f3))
 
-### Fix
-- **release:** Fix issue with changelog generation
+### Features
+- **UpdateChangelogReleaseWorker:** add getChangelogDiff method ([b47ac6b](https://github.com/guanguans/monorepo-builder-worker/commit/b47ac6b))
 
 
 <a name="1.0.1"></a>
 ## [1.0.1] - 2023-07-20
-### Feat
-- **UpdateChangelogReleaseWorker:** Add method getPreviousTag
+### Bug Fixes
+- **CreateGithubReleaseWorker:** handle empty commitId ([6574f7d](https://github.com/guanguans/monorepo-builder-worker/commit/6574f7d))
+- **release:** Fix line filtering in CreateGithubReleaseWorker ([598a333](https://github.com/guanguans/monorepo-builder-worker/commit/598a333))
+- **support:** Fix environment checking logic ([8150d92](https://github.com/guanguans/monorepo-builder-worker/commit/8150d92))
 
-### Fix
-- **CreateGithubReleaseWorker:** handle empty commitId
-- **release:** Fix line filtering in CreateGithubReleaseWorker
-- **support:** Fix environment checking logic
+### Features
+- **UpdateChangelogReleaseWorker:** Add method getPreviousTag ([0a39409](https://github.com/guanguans/monorepo-builder-worker/commit/0a39409))
 
 
 <a name="1.0.0"></a>
 ## [1.0.0] - 2023-07-19
-### Feat
-- **workflows:** add PHP 8.2 to matrix in tests.yml
+### Bug Fixes
+- **CreateGithubReleaseWorker:** handle missing changelog gracefully ([0525903](https://github.com/guanguans/monorepo-builder-worker/commit/0525903))
 
-### Fix
-- **CreateGithubReleaseWorker:** handle missing changelog gracefully
+### Features
+- **workflows:** add PHP 8.2 to matrix in tests.yml ([2b68377](https://github.com/guanguans/monorepo-builder-worker/commit/2b68377))
+
+### Styles
+- **EnvironmentChecker:** Improve code readability in check method ([6fee6cc](https://github.com/guanguans/monorepo-builder-worker/commit/6fee6cc))
 
 
 <a name="0.6.0"></a>
 ## [0.6.0] - 2023-07-19
-### Docs
-- **changelog:** update CHANGELOG.md to 0.5.0
+### Bug Fixes
+- **UpdateChangelogReleaseWorker:** modify commit message format ([8438f08](https://github.com/guanguans/monorepo-builder-worker/commit/8438f08))
+- **github:** Fix description for github release ([068a5c4](https://github.com/guanguans/monorepo-builder-worker/commit/068a5c4))
 
-### Feat
-- **CreateGithubReleaseWorker:** add 'gh release list' command
+### Documents
+- **changelog:** update CHANGELOG.md to 0.5.0 ([86cdca6](https://github.com/guanguans/monorepo-builder-worker/commit/86cdca6))
 
-### Fix
-- **UpdateChangelogReleaseWorker:** modify commit message format
-- **github:** Fix description for github release
+### Features
+- **CreateGithubReleaseWorker:** add 'gh release list' command ([21c7694](https://github.com/guanguans/monorepo-builder-worker/commit/21c7694))
 
 
 <a name="0.5.0"></a>
 ## [0.5.0] - 2023-07-19
-### Docs
-- **changelog:** update CHANGELOG.md to 0.4.0
-- **create-github-release:** Update description format
+### Code Refactorings
+- **ProcessRunnerFactory:** optimize process runner creation ([75e9513](https://github.com/guanguans/monorepo-builder-worker/commit/75e9513))
+- **ReleaseWorker:** update property name in ReleaseWorker ([d4038e1](https://github.com/guanguans/monorepo-builder-worker/commit/d4038e1))
+- **ReleaseWorker:** update createProcessRunner method ([72c5551](https://github.com/guanguans/monorepo-builder-worker/commit/72c5551))
+- **src:** update ReleaseWorker.php ([439c09c](https://github.com/guanguans/monorepo-builder-worker/commit/439c09c))
 
-### Feat
-- **Concern:** Add ProcessRunnerFactory trait
-- **Contract:** add ProcessRunnerFactoryInterface
-- **CreateGithubReleaseWorker:** add 'gh auth status' to check commands
-- **EnvironmentChecker:** add check method
-- **changelog:** Add new changelog configuration file
+### Documents
+- **changelog:** update CHANGELOG.md to 0.4.0 ([0ee9325](https://github.com/guanguans/monorepo-builder-worker/commit/0ee9325))
+- **create-github-release:** Update description format ([1bf5873](https://github.com/guanguans/monorepo-builder-worker/commit/1bf5873))
 
-### Refactor
-- **ProcessRunnerFactory:** optimize process runner creation
-- **ReleaseWorker:** update property name in ReleaseWorker
-- **ReleaseWorker:** update createProcessRunner method
-- **src:** update ReleaseWorker.php
+### Features
+- **Concern:** Add ProcessRunnerFactory trait ([424613a](https://github.com/guanguans/monorepo-builder-worker/commit/424613a))
+- **Contract:** add ProcessRunnerFactoryInterface ([50b2933](https://github.com/guanguans/monorepo-builder-worker/commit/50b2933))
+- **CreateGithubReleaseWorker:** add 'gh auth status' to check commands ([6cc433a](https://github.com/guanguans/monorepo-builder-worker/commit/6cc433a))
+- **EnvironmentChecker:** add check method ([d5c3946](https://github.com/guanguans/monorepo-builder-worker/commit/d5c3946))
+- **changelog:** Add new changelog configuration file ([cd56507](https://github.com/guanguans/monorepo-builder-worker/commit/cd56507))
 
 
 <a name="0.4.0"></a>
 ## [0.4.0] - 2023-07-18
-### Docs
-- **changelog:** update CHANGELOG.md to 0.3.0
+### Code Refactorings
+- **datasets:** rename Movies.php to Datasets/Movies.php ([d8c7cae](https://github.com/guanguans/monorepo-builder-worker/commit/d8c7cae))
+- **monorepo-builder:** rename CheckEnvironmentInterface to CheckReleaseWorkerEnvironmentInterface ([9a11a26](https://github.com/guanguans/monorepo-builder-worker/commit/9a11a26))
+- **worker:** Rename ReleaseWorkerInterface to CheckEnvironmentInterface ([2d26574](https://github.com/guanguans/monorepo-builder-worker/commit/2d26574))
 
-### Feat
-- **monorepo-builder:** Implement checkEnvironment() in CreateGithubReleaseWorker
-- **utils:** Add Utils class
+### Documents
+- **changelog:** update CHANGELOG.md to 0.3.0 ([4de5e56](https://github.com/guanguans/monorepo-builder-worker/commit/4de5e56))
 
-### Refactor
-- **datasets:** rename Movies.php to Datasets/Movies.php
-- **monorepo-builder:** rename CheckEnvironmentInterface to CheckReleaseWorkerEnvironmentInterface
-- **worker:** Rename ReleaseWorkerInterface to CheckEnvironmentInterface
+### Features
+- **monorepo-builder:** Implement checkEnvironment() in CreateGithubReleaseWorker ([149b33c](https://github.com/guanguans/monorepo-builder-worker/commit/149b33c))
+- **utils:** Add Utils class ([bc04c8c](https://github.com/guanguans/monorepo-builder-worker/commit/bc04c8c))
 
 
 <a name="0.3.0"></a>
 ## [0.3.0] - 2023-07-18
-### Docs
-- **changelog:** update CHANGELOG.md
-- **readme:** update README.md
+### Code Refactorings
+- **psalm:** Clean up psalm-baseline.xml ([44fd948](https://github.com/guanguans/monorepo-builder-worker/commit/44fd948))
 
-### Refactor
-- **psalm:** Clean up psalm-baseline.xml
+### Documents
+- **changelog:** update CHANGELOG.md ([aae4e75](https://github.com/guanguans/monorepo-builder-worker/commit/aae4e75))
+- **readme:** update README.md ([7b6298e](https://github.com/guanguans/monorepo-builder-worker/commit/7b6298e))
 
 
 <a name="0.2.0"></a>
 ## [0.2.0] - 2023-07-18
-### Docs
-- **changelog:** remove version 0.2.0
-- **changelog:** update CHANGELOG.md
+### Bug Fixes
+- **release:** fix git checkout for *.json files ([4cf64f2](https://github.com/guanguans/monorepo-builder-worker/commit/4cf64f2))
+- **worker:** fix git checkout command ([77559da](https://github.com/guanguans/monorepo-builder-worker/commit/77559da))
 
-### Fix
-- **release:** fix git checkout for *.json files
-- **worker:** fix git checkout command
+### Code Refactorings
+- **release:** Update release worker sequence ([c18bc8a](https://github.com/guanguans/monorepo-builder-worker/commit/c18bc8a))
 
-### Refactor
-- **release:** Update release worker sequence
+### Documents
+- **changelog:** remove version 0.2.0 ([04640cd](https://github.com/guanguans/monorepo-builder-worker/commit/04640cd))
+- **changelog:** update CHANGELOG.md ([c58e1b8](https://github.com/guanguans/monorepo-builder-worker/commit/c58e1b8))
 
 
 <a name="0.1.2"></a>
@@ -405,24 +438,25 @@ All notable changes to this project will be documented in this file.
 
 <a name="v0.1.0"></a>
 ## v0.1.0 - 2023-07-18
-### Feat
-- **README:** update project description
-- **create-github-release-worker:** add CreateGithubReleaseWorker class
-- **create-github-release-worker:** add CreateGithubReleaseWorker class
-- **deps:** add pyrech/composer-changelogs package
-- **monorepo-builder:** add CreateGithubReleaseWorker class
-- **worker:** Add CreateGithubReleaseWorker class
+### Bug Fixes
+- **composer.json:** Update dependencies version ([bcefcb0](https://github.com/guanguans/monorepo-builder-worker/commit/bcefcb0))
+- **worker:** update version parameter in UpdateChangelogReleaseWorker ([8ce0d54](https://github.com/guanguans/monorepo-builder-worker/commit/8ce0d54))
 
-### Fix
-- **composer.json:** Update dependencies version
-- **worker:** update version parameter in UpdateChangelogReleaseWorker
+### Code Refactorings
+- **CreateGithubReleaseWorker:** change method of version retrieval ([376446f](https://github.com/guanguans/monorepo-builder-worker/commit/376446f))
+- **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
-### Refactor
-- **CreateGithubReleaseWorker:** change method of version retrieval
-- **release:** improve code readability
+### Features
+- **README:** update project description ([00496a5](https://github.com/guanguans/monorepo-builder-worker/commit/00496a5))
+- **create-github-release-worker:** add CreateGithubReleaseWorker class ([e41facf](https://github.com/guanguans/monorepo-builder-worker/commit/e41facf))
+- **create-github-release-worker:** add CreateGithubReleaseWorker class ([21d6242](https://github.com/guanguans/monorepo-builder-worker/commit/21d6242))
+- **deps:** add pyrech/composer-changelogs package ([f3c3ad2](https://github.com/guanguans/monorepo-builder-worker/commit/f3c3ad2))
+- **monorepo-builder:** add CreateGithubReleaseWorker class ([d8cd737](https://github.com/guanguans/monorepo-builder-worker/commit/d8cd737))
+- **worker:** Add CreateGithubReleaseWorker class ([bf4b4a3](https://github.com/guanguans/monorepo-builder-worker/commit/bf4b4a3))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.5.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.0...HEAD
+[2.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.5.0...2.0.0
 [1.5.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.3...1.5.0
 [1.4.3]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.1...1.4.2
