@@ -25,10 +25,7 @@ use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
 use Webmozart\Assert\Assert;
 
-/**
- * @internal
- */
-final class TransformToInternalExceptionRector extends AbstractRector implements ConfigurableRectorInterface
+class TransformToInternalExceptionRector extends AbstractRector implements ConfigurableRectorInterface
 {
     private array $except = [];
 

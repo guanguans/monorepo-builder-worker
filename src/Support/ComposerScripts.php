@@ -13,7 +13,4 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
-/**
- * @internal
- */
-final class ComposerScripts {}
+class ComposerScripts {}

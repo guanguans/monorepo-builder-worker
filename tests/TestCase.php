@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorkerTests;
 
+use DG\BypassFinals;
 use phpmock\phpunit\PHPMock;
 
 class TestCase extends \PHPUnit\Framework\TestCase
@@ -35,7 +36,8 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        // \DG\BypassFinals::enable();
+
+        BypassFinals::enable();
     }
 
     /**
