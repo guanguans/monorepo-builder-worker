@@ -1,52 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-  backupGlobals="false"
-  backupStaticAttributes="false"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   bootstrap="vendor/autoload.php"
   cacheResultFile=".build/phpunit/.phpunit.result.cache"
   colors="true"
-  convertErrorsToExceptions="true"
-  convertNoticesToExceptions="true"
-  convertWarningsToExceptions="true"
-  executionOrder="random"
-  printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printer"
-  processIsolation="false"
-  resolveDependencies="true"
-  stopOnFailure="false"
-  testdox="false"
   verbose="true"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
+  xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
 >
-  <coverage>
-    <include>
-      <directory suffix=".php">src/</directory>
-    </include>
-    <exclude>
-      <file>src/Skeleton.php</file>
-    </exclude>
-  </coverage>
+  <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printer"-->
+  <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printers\DefaultPrinter"-->
+  <!--printerClass="NunoMaduro\Collision\Adapters\Phpunit\Printers\ReportablePrinter"-->
   <testsuites>
     <testsuite name="Guanguans Test Suite">
       <directory>tests/</directory>
       <exclude>vendor/</exclude>
     </testsuite>
   </testsuites>
-  <listeners>
-    <!--<listener class="JohnKary\PHPUnit\Listener\SpeedTrapListener">
-      <arguments>
-        <array>
-          <element key="slowThreshold">
-            <integer>500</integer>
-          </element>
-          <element key="reportLength">
-            <integer>10</integer>
-          </element>
-          <element key="stopOnSlow">
-            <boolean>false</boolean>
-          </element>
-        </array>
-      </arguments>
-    </listener>-->
-  </listeners>
+  <source>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+    <exclude>
+      <directory>src/Support/Rectors/</directory>
+      <file>src/Support/ComposerScripts.php</file>
+    </exclude>
+  </source>
+  <coverage>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+    <exclude>
+      <directory>src/Support/Rectors/</directory>
+      <file>src/Support/ComposerScripts.php</file>
+    </exclude>
+  </coverage>
+  <extensions>
+    <!--<extension class="NunoMaduro\Collision\Adapters\Phpunit\Printer"/>-->
+    <!--<extension class="Ergebnis\PHPUnit\SlowTestDetector\Extension"/>-->
+    <!--<bootstrap class="Ergebnis\PHPUnit\SlowTestDetector\Extension"/>-->
+  </extensions>
 </phpunit>

@@ -223,7 +223,7 @@
         "phparkitect": "@php ./vendor/bin/phparkitect check --ansi -v",
         "phploc": "@php ./vendor/bin/phploc --suffix=php src/",
         "phpmd": "@php ./vendor/bin/phpmd src/ ansi cleancode,codesize,controversial,design,naming,unusedcode --suffixes=php",
-        "phpmetrics": "@php ./vendor/bin/phpmetrics --report-html=./build/phpmetrics/ ./src/",
+        "phpmetrics": "@php ./vendor/bin/phpmetrics --report-html=./.build/phpmetrics/ ./src/",
         "phpmnd": "@php ./vendor/bin/phpmnd src --exclude-path=Support/Utils.php --hint --progress --ansi -v",
         "phpstan": "@php ./vendor/bin/phpstan analyse --ansi -v",
         "phpstan-baseline": "@phpstan --generate-baseline --allow-empty-baseline",
