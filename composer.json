@@ -87,7 +87,10 @@
     "autoload": {
         "psr-4": {
             "Guanguans\\MonorepoBuilderWorker\\": "src"
-        }
+        },
+        "files": [
+            "src/Support/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
