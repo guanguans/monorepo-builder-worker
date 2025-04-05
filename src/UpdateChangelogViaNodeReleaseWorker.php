@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/monorepo-builder-worker.
+ * Copyright (c) 2023-2025 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
 namespace Guanguans\MonorepoBuilderWorker;
@@ -21,11 +22,8 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
  */
 class UpdateChangelogViaNodeReleaseWorker extends ReleaseWorker implements ChangelogContract
 {
-    /** @var null|string */
-    private static $changelog;
-
-    /** @var ProcessRunner */
-    private $processRunner;
+    private static ?string $changelog = null;
+    private ProcessRunner $processRunner;
 
     public function __construct(ProcessRunner $processRunner)
     {
@@ -43,12 +41,11 @@ class UpdateChangelogViaNodeReleaseWorker extends ReleaseWorker implements Chang
             return '';
         }
 
-        $lines = array_filter(explode(PHP_EOL, self::$changelog), static function (string $line): bool {
-            return ! str_starts_with($line, '# ') && ! str_starts_with($line, '## ');
-        });
+        $lines = array_filter(explode(\PHP_EOL, self::$changelog), static fn (string $line): bool => !str_starts_with($line, '# ') && !str_starts_with($line, '## '));
 
-        $lines = implode(PHP_EOL, $lines);
-        if (! str_contains($lines, '### ') || ! str_contains($lines, '* ')) {
+        $lines = implode(\PHP_EOL, $lines);
+
+        if (!str_contains($lines, '### ') || !str_contains($lines, '* ')) {
             return '';
         }
 
@@ -65,6 +62,6 @@ class UpdateChangelogViaNodeReleaseWorker extends ReleaseWorker implements Chang
 
     public function getDescription(Version $version): string
     {
-        return sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
+        return \sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
     }
 }

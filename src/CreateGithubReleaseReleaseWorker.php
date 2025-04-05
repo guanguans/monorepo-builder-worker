@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/monorepo-builder-worker.
+ * Copyright (c) 2023-2025 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
 namespace Guanguans\MonorepoBuilderWorker;
@@ -18,8 +19,7 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class CreateGithubReleaseReleaseWorker extends ReleaseWorker
 {
-    /** @var ProcessRunner */
-    private $processRunner;
+    private ProcessRunner $processRunner;
 
     public function __construct(ProcessRunner $processRunner)
     {
@@ -62,12 +62,13 @@ class CreateGithubReleaseReleaseWorker extends ReleaseWorker
             UpdateChangelogViaNodeReleaseWorker::class,
             UpdateChangelogViaPhpReleaseWorker::class,
         ] as $class) {
-            if (! is_subclass_of($class, ChangelogContract::class)) {
+            if (!is_subclass_of($class, ChangelogContract::class)) {
                 continue;
             }
 
             $changelog = $class::getChangelog();
-            if (! empty($changelog)) {
+
+            if (!empty($changelog)) {
                 return $changelog;
             }
         }

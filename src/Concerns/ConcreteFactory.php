@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/monorepo-builder-worker.
+ * Copyright (c) 2023-2025 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
 namespace Guanguans\MonorepoBuilderWorker\Concerns;
@@ -22,19 +23,14 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 trait ConcreteFactory
 {
-    /** @var null|ExecutableFinder */
-    protected static $executableFinder;
-
-    /** @var null|ProcessRunner */
-    protected static $runner;
-
-    /** @var null|SymfonyStyle */
-    protected static $symfonyStyle;
+    protected static ?ExecutableFinder $executableFinder = null;
+    protected static ?ProcessRunner $runner = null;
+    protected static ?SymfonyStyle $symfonyStyle = null;
 
     public static function createExecutableFinder(): ExecutableFinder
     {
-        if (! self::$executableFinder instanceof ExecutableFinder) {
-            self::$executableFinder = new ExecutableFinder();
+        if (!self::$executableFinder instanceof ExecutableFinder) {
+            self::$executableFinder = new ExecutableFinder;
         }
 
         return self::$executableFinder;
@@ -42,7 +38,7 @@ trait ConcreteFactory
 
     public static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {
-        if (! self::$runner instanceof ProcessRunner || $symfonyStyle instanceof SymfonyStyle) {
+        if (!self::$runner instanceof ProcessRunner || $symfonyStyle instanceof SymfonyStyle) {
             self::$runner = new ProcessRunner($symfonyStyle ?: self::createSymfonyStyle());
         }
 
@@ -52,12 +48,12 @@ trait ConcreteFactory
     public static function createSymfonyStyle(?InputInterface $input = null, ?OutputInterface $output = null): SymfonyStyle
     {
         if (
-            ! self::$symfonyStyle instanceof SymfonyStyle
+            !self::$symfonyStyle instanceof SymfonyStyle
             || $input instanceof InputInterface
             || $output instanceof OutputInterface
         ) {
             self::$symfonyStyle = new SymfonyStyle(
-                $input ?? new ArgvInput(),
+                $input ?? new ArgvInput,
                 $output ?? new ConsoleOutput(OutputInterface::VERBOSITY_VERY_VERBOSE)
             );
         }

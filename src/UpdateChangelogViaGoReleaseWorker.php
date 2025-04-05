@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/monorepo-builder-worker.
+ * Copyright (c) 2023-2025 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
 namespace Guanguans\MonorepoBuilderWorker;
@@ -21,14 +22,9 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
  */
 class UpdateChangelogViaGoReleaseWorker extends ReleaseWorker implements ChangelogContract
 {
-    /** @var null|string */
-    private static $changelog;
-
-    /** @var null|Version */
-    private static $version;
-
-    /** @var ProcessRunner */
-    private $processRunner;
+    private static ?string $changelog = null;
+    private static ?Version $version = null;
+    private ProcessRunner $processRunner;
 
     public function __construct(ProcessRunner $processRunner)
     {
@@ -42,18 +38,17 @@ class UpdateChangelogViaGoReleaseWorker extends ReleaseWorker implements Changel
 
     public static function getChangelog(): string
     {
-        if (empty(self::$changelog) || ! self::$version instanceof Version) {
+        if (empty(self::$changelog) || !self::$version instanceof Version) {
             return '';
         }
 
-        $tagPos = strpos(self::$changelog, sprintf('<a name="%s"></a>', self::$version->getOriginalString()));
+        $tagPos = strpos(self::$changelog, \sprintf('<a name="%s"></a>', self::$version->getOriginalString()));
         $subChangelog = substr(self::$changelog, (int) $tagPos, \strlen(self::$changelog));
-        $lines = array_filter(explode(PHP_EOL, $subChangelog), static function (string $line): bool {
-            return ! str_starts_with($line, '# ') && ! str_starts_with($line, '[Unreleased]: ');
-        });
+        $lines = array_filter(explode(\PHP_EOL, $subChangelog), static fn (string $line): bool => !str_starts_with($line, '# ') && !str_starts_with($line, '[Unreleased]: '));
 
-        $lines = implode(PHP_EOL, $lines);
-        if (! str_contains($lines, '### ') || ! str_contains($lines, '- ')) {
+        $lines = implode(\PHP_EOL, $lines);
+
+        if (!str_contains($lines, '### ') || !str_contains($lines, '- ')) {
             return '';
         }
 
@@ -71,6 +66,6 @@ class UpdateChangelogViaGoReleaseWorker extends ReleaseWorker implements Changel
 
     public function getDescription(Version $version): string
     {
-        return sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
+        return \sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
     }
 }

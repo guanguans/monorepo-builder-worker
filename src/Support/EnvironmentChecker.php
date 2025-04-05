@@ -3,11 +3,12 @@
 declare(strict_types=1);
 
 /**
- * This file is part of the guanguans/monorepo-builder-worker.
+ * Copyright (c) 2023-2025 guanguans<ityaozm@gmail.com>
  *
- * (c) guanguans <ityaozm@gmail.com>
+ * For the full copyright and license information, please view
+ * the LICENSE file that was distributed with this source code.
  *
- * This source file is subject to the MIT license that is bundled.
+ * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
 namespace Guanguans\MonorepoBuilderWorker\Support;
@@ -20,7 +21,7 @@ class EnvironmentChecker
     use ConcreteFactory;
 
     /**
-     * @param array<callable|class-string|object> $workers
+     * @param list<callable|class-string|object> $workers
      *
      * @throws \Throwable
      */
@@ -60,26 +61,27 @@ class EnvironmentChecker
     public static function fixNamespacePrefix(): void
     {
         $yearMonth = date('Ym');
-        while ($yearMonth >= 202310 && ! class_exists(sprintf('MonorepoBuilderPrefix%s\Symfony\Component\Console\Style\SymfonyStyle', $yearMonth))) {
+
+        while (202310 <= $yearMonth && !class_exists(\sprintf('MonorepoBuilderPrefix%s\Symfony\Component\Console\Style\SymfonyStyle', $yearMonth))) {
             $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
         }
 
-        echo PHP_EOL, "The correct namespace prefix is [MonorepoBuilderPrefix$yearMonth].", PHP_EOL;
+        echo \PHP_EOL, "The correct namespace prefix is [MonorepoBuilderPrefix$yearMonth].", \PHP_EOL;
 
-        foreach (array_map('realpath', glob(__DIR__.'/../../{src,tests}{/,/*/,/*/*/,/*/*/*/}*.php', GLOB_BRACE)) as $file) {
+        foreach (array_map('realpath', glob(__DIR__.'/../../{src,tests}{/,/*/,/*/*/,/*/*/*/}*.php', \GLOB_BRACE)) as $file) {
             $contents = file_get_contents($file);
 
             $replacedContents = preg_replace('/MonorepoBuilderPrefix\d{4}\d{2}/', "MonorepoBuilderPrefix$yearMonth", $contents);
 
             if ($replacedContents !== $contents) {
-                echo "The file's [{$file}] namespace prefix is being fixed...", PHP_EOL;
+                echo "The file's [{$file}] namespace prefix is being fixed...", \PHP_EOL;
             }
 
             file_put_contents($file, $replacedContents);
         }
 
-        echo 'The all files namespace prefix has been fixed.', PHP_EOL;
+        echo 'The all files namespace prefix has been fixed.', \PHP_EOL;
 
-        exit(0);
+        // exit(0);
     }
 }
