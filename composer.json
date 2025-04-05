@@ -157,16 +157,12 @@
         "changelog-major": "@changelog --major",
         "changelog-minor": "@changelog --minor",
         "changelog-patch": "@changelog --patch",
-        "check-soar-binary": "Guanguans\\SoarPHP\\Support\\ComposerScripts::checkSoarBinary",
         "checks": [
             "@composer-normalize",
             "@composer-validate",
-            "@check-soar-binary",
-            "@dump-soar-config",
             "@json-lint",
             "@md-lint",
             "@yaml-lint",
-            "@lint",
             "@style-lint",
             "@composer-dependency-analyser",
             "@release-patch-dry-run",
@@ -189,17 +185,6 @@
         "composer-updater-dry-run": "@composer-updater --dry-run",
         "composer-validate": "@composer validate --check-lock --strict --ansi -v",
         "doctum": "@php ./vendor/bin/doctum.php update doctum.php --ansi -v",
-        "dump-soar-config": [
-            "@dump-soar-yaml-config",
-            "@dump-soar-php-config"
-        ],
-        "dump-soar-original-php-config": "Guanguans\\SoarPHP\\Support\\ComposerScripts::dumpSoarPHPConfig",
-        "dump-soar-php-config": [
-            "@dump-soar-original-php-config",
-            "@rector-soar-options --no-diffs",
-            "@style-fix --quiet"
-        ],
-        "dump-soar-yaml-config": "Guanguans\\SoarPHP\\Support\\ComposerScripts::dumpSoarYamlConfig",
         "facade-lint": "@facade-update --lint",
         "facade-update": [
             "@putenvs",
@@ -212,8 +197,8 @@
         "json-lint": "@php ./vendor/bin/jsonlint *.json .*rc",
         "lint": [
             "@putenvs",
-            "for DIR in .; do find $DIR -maxdepth 1 -type f -name '*.php' -type f ! -name 'xxx.php' -exec $PHP74 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done",
-            "for DIR in ./src ./tests; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec $PHP74 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
+            "for DIR in .; do find $DIR -maxdepth 1 -type f -name '*.php' -type f ! -name 'xxx.php' -exec $PHP80 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done",
+            "for DIR in ./src ./tests; do find $DIR -type f -name '*.php' -type f ! -name 'xxx.php' -exec $PHP80 -l {} \\; 2>&1 | (! grep -v '^No syntax errors detected'); done"
         ],
         "mark-finish": "printf '\\n!\\n!\\t\\033[0;32m%s\\033[0m\\n!\\n\\n' \"Finished\"",
         "mark-separate": "printf '\\n!\\n!\\t\\033[0;33m%s\\033[0m\\n!\\n\\n' \"----------------\"",
@@ -271,8 +256,6 @@
         "rector-dry-run": "@rector --dry-run",
         "rector-list-rules": "@rector list-rules",
         "rector-setup-ci": "@rector setup-ci",
-        "rector-soar-options": "@rector-clear-cache --config=rector-soar-options.php",
-        "rector-soar-options-dry-run": "@rector-soar-options --dry-run",
         "release": "@php ./vendor/bin/monorepo-builder release --ansi -v",
         "release-1.0.0-BETA1": "@release 1.0.0-BETA1",
         "release-1.0.0-BETA1-dry-run": "@release-1.0.0-BETA1 --dry-run",
@@ -309,14 +292,14 @@
         "text-lint": "npx textlint --format=pretty-error ./*.md ./.github/*.md ./docs/**/*.md",
         "time-end": "@php -r 'date_default_timezone_set('\\''Asia/Shanghai'\\''); echo \"\\nTime: \".round(time() - (int) getenv('\\''START_TIME'\\'')).'\\'' seconds, Memory: '\\''.round(memory_get_peak_usage(true) / 1024 / 1024, 2).\" MB\\n\";'",
         "time-start": "@putenv START_TIME=$(date +%s);",
-        "trufflehog": "trufflehog git https://github.com/guanguans/soar-php --only-verified",
+        "trufflehog": "trufflehog git https://github.com/guanguans/monorepo-builder-worker --only-verified",
         "var-dump-server": "@php ./vendor/bin/var-dump-server --ansi -v",
         "vhs": [
             "@cghooks-uninstall",
             "vhs < music-dl.tape",
             "@cghooks-install"
         ],
-        "yaml-lint": "@php ./vendor/bin/yaml-lint .github/ examples/ --ansi -v",
+        "yaml-lint": "@php ./vendor/bin/yaml-lint .github/ --ansi -v",
         "zh-fix": "@zh-lint --fix",
         "zh-lint": "zhlint {./,docs/,docs/**/}*-zh_CN.md"
     },
