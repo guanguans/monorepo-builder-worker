@@ -37,7 +37,7 @@
     "require": {
         "php": ">=7.3",
         "marcocesarato/php-conventional-changelog": "^1.17",
-        "symfony/polyfill-php80": "^1.30",
+        "symfony/polyfill-php80": "^1.31",
         "symplify/monorepo-builder": "^11.2"
     },
     "require-dev": {
@@ -48,17 +48,17 @@
         "kubawerlos/php-cs-fixer-custom-fixers": "^3.7",
         "mockery/mockery": "^1.6",
         "nunomaduro/mock-final-classes": "^1.2",
-        "pestphp/pest": "^1.23 || ^2.0",
-        "pestphp/pest-plugin-faker": "^1.0 || ^2.0",
-        "php-mock/php-mock-phpunit": "^2.10",
+        "pestphp/pest": "^1.23 || ^2.0 || ^3.0",
+        "pestphp/pest-plugin-faker": "^1.0 || ^2.0 || ^3.0",
+        "php-mock/php-mock-phpunit": "^2.13",
         "phpstan/extension-installer": "^1.4",
-        "phpstan/phpstan": "^1.11",
-        "phpstan/phpstan-deprecation-rules": "^1.2",
+        "phpstan/phpstan": "^1.12 || ^2.0",
+        "phpstan/phpstan-deprecation-rules": "^1.2 || ^2.0",
         "pyrech/composer-changelogs": "^1.8 || ^2.0",
-        "rector/rector": "^1.2",
+        "rector/rector": "^1.2 || ^2.0",
         "roave/security-advisories": "dev-latest",
         "symfony/var-dumper": "^5.4 || ^6.0 || ^7.0",
-        "vimeo/psalm": "^4.30 || ^5.0"
+        "vimeo/psalm": "^4.30 || ^5.0 || ^6.0"
     },
     "repositories": [],
     "minimum-stability": "dev",
@@ -122,7 +122,13 @@
             "@cghooks update"
         ],
         "post-autoload-dump": [],
-        "ai-commit": "@php ./vendor/bin/ai-commit commit --generator=bito_cli --ansi",
+        "ai-commit": "@php ./vendor/bin/ai-commit commit --ansi",
+        "ai-commit-bito": "@ai-commit --generator=bito_cli",
+        "ai-commit-bito-no-verify": "@ai-commit-bito --no-verify",
+        "ai-commit-github-copilot": "@ai-commit --generator=github_copilot_cli",
+        "ai-commit-github-copilot-no-verify": "@ai-commit-github-copilot --no-verify",
+        "ai-commit-github-models": "@ai-commit --generator=github_models_cli",
+        "ai-commit-github-models-no-verify": "@ai-commit-github-models --no-verify",
         "ai-commit-no-verify": "@ai-commit --no-verify",
         "benchmark": "@php ./vendor/bin/phpbench run --retry-threshold=3 --iterations=15 --revs=1000 --warmup=2 --ansi -v",
         "cghooks": "@php ./vendor/bin/cghooks --ansi -v",
@@ -151,10 +157,8 @@
         "composer-require-checker": "@php ./vendor/bin/composer-require-checker check --config-file=composer-require-checker.json composer.json --ansi -v",
         "composer-unused": "@php ./vendor/bin/composer-unused --ansi -v",
         "composer-unused-checker": "@php ./vendor/bin/composer-unused --ansi -v",
-        "composer-updater": [
-            "Composer\\Config::disableProcessTimeout",
-            "@php ./composer-updater --highest-php-binary=/opt/homebrew/opt/php@8.3/bin/php --ansi"
-        ],
+        "composer-updater": "@php ./composer-updater --highest-php-binary=/opt/homebrew/opt/php@8.4/bin/php --except-packages=pestphp/pest-plugin-laravel --ansi",
+        "composer-updater-dry-run": "@composer-updater --dry-run",
         "composer-validate": "@composer validate --check-lock --strict --ansi -v",
         "doctum": "@php ./vendor/bin/doctum.php update doctum.php --ansi -v",
         "facades-lint": "@facades-update -- --lint",
