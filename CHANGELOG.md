@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="1.5.0"></a>
+## [1.5.0] - 2025-04-05
+### Pull Requests
+- Merge pull request [#55](https://github.com/guanguans/monorepo-builder-worker/issues/55) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.3.0
+- Merge pull request [#54](https://github.com/guanguans/monorepo-builder-worker/issues/54) from guanguans/dependabot/github_actions/codecov/codecov-action-5
+
+
 <a name="1.4.3"></a>
 ## [1.4.3] - 2024-08-16
 ### Feat
@@ -415,7 +422,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.3...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/1.5.0...HEAD
+[1.5.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.3...1.5.0
 [1.4.3]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.2...1.4.3
 [1.4.2]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.1...1.4.2
 [1.4.1]: https://github.com/guanguans/monorepo-builder-worker/compare/1.4.0...1.4.1
