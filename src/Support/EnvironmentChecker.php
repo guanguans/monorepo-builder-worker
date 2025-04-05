@@ -29,7 +29,7 @@ class EnvironmentChecker
     {
         try {
             self::createProcessRunner();
-        } catch (\Error $error) {
+        } catch (\Error) {
             self::fixNamespacePrefix();
         }
 
