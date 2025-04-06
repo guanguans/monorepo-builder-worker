@@ -27,14 +27,23 @@ if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
      */
     function classes(): array
     {
-        static $classes;
+        static $classes = [];
+
+        if ($classes) {
+            return $classes;
+        }
 
         foreach (spl_autoload_functions() as $loader) {
             if (\is_array($loader) && $loader[0] instanceof ClassLoader) {
-                return $classes ??= array_keys($loader[0]->getClassMap());
+                $classes[] = array_keys($loader[0]->getClassMap());
             }
         }
 
-        return $classes ??= [];
+        return array_unique(array_merge(
+            get_declared_classes(),
+            get_declared_interfaces(),
+            get_declared_traits(),
+            ...$classes
+        ));
     }
 }

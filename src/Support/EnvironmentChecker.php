@@ -60,6 +60,8 @@ class EnvironmentChecker
 
     public static function fixNamespacePrefix(): void
     {
+        self::requireAutoload();
+
         $yearMonth = date('Ym');
 
         while (
@@ -84,6 +86,39 @@ class EnvironmentChecker
             if ($replacedContents !== $contents) {
                 file_put_contents($file, $replacedContents);
                 echo "The namespace prefix of the file [$file] has been fixed", \PHP_EOL;
+            }
+        }
+    }
+
+    private static function requireAutoload(): void
+    {
+        $possibleAutoloadPaths = [
+            __DIR__.'/../../vendor/autoload.php',
+            __DIR__.'/../../../../../vendor/autoload.php',
+            // __DIR__.'/../../vendor/symplify/monorepo-builder/bootstrap.php',
+            // __DIR__.'/../../../../../vendor/symplify/monorepo-builder/bootstrap.php',
+        ];
+
+        foreach ($possibleAutoloadPaths as $possibleAutoloadPath) {
+            if (file_exists($possibleAutoloadPath)) {
+                require_once $possibleAutoloadPath;
+
+                break;
+            }
+        }
+
+        $possibleAutoloadPaths = [
+            // __DIR__.'/../../vendor/autoload.php',
+            // __DIR__.'/../../../../../vendor/autoload.php',
+            __DIR__.'/../../vendor/symplify/monorepo-builder/bootstrap.php',
+            __DIR__.'/../../../../../vendor/symplify/monorepo-builder/bootstrap.php',
+        ];
+
+        foreach ($possibleAutoloadPaths as $possibleAutoloadPath) {
+            if (file_exists($possibleAutoloadPath)) {
+                require_once $possibleAutoloadPath;
+
+                break;
             }
         }
     }

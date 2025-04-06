@@ -22,5 +22,6 @@ namespace Guanguans\MonorepoBuilderWorkerTests\Support;
 use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 it('can get classes', function (): void {
-    expect(classes())->toBeArray()->toBeTruthy();
+    expect(classes())->toBeArray()->toBeTruthy()
+        ->and(classes())->toBeArray()->toBeTruthy();
 })->group(__DIR__, __FILE__);
