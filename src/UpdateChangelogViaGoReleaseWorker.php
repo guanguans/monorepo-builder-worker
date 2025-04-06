@@ -24,12 +24,8 @@ class UpdateChangelogViaGoReleaseWorker extends ReleaseWorker implements Changel
 {
     private static ?string $changelog = null;
     private static ?Version $version = null;
-    private ProcessRunner $processRunner;
 
-    public function __construct(ProcessRunner $processRunner)
-    {
-        $this->processRunner = $processRunner;
-    }
+    public function __construct(private ProcessRunner $processRunner) {}
 
     public static function check(): void
     {

@@ -13,18 +13,12 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class CreateGithubReleaseReleaseWorker extends ReleaseWorker
 {
-    private ProcessRunner $processRunner;
-
-    public function __construct(ProcessRunner $processRunner)
-    {
-        $this->processRunner = $processRunner;
-    }
+    public function __construct(private ProcessRunner $processRunner) {}
 
     public static function check(): void
     {
@@ -51,21 +45,16 @@ class CreateGithubReleaseReleaseWorker extends ReleaseWorker
         return "Create github release \"{$version->getOriginalString()}\"";
     }
 
-    /**
-     * @noinspection NativeMemberUsageInspection
-     */
     final public function findChangelog(): string
     {
-        foreach ([
-            \stdClass::class,
-            UpdateChangelogViaGoReleaseWorker::class,
-            UpdateChangelogViaNodeReleaseWorker::class,
-            UpdateChangelogViaPhpReleaseWorker::class,
-        ] as $class) {
-            if (!is_subclass_of($class, ChangelogContract::class)) {
-                continue;
-            }
-
+        foreach (
+            [
+                UpdateChangelogViaGoReleaseWorker::class,
+                UpdateChangelogViaNodeReleaseWorker::class,
+                UpdateChangelogViaPhpReleaseWorker::class,
+            ] as $class
+        ) {
+            /** @var class-string<\Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract> $class */
             $changelog = $class::getChangelog();
 
             if (!empty($changelog)) {
