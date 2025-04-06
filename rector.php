@@ -17,6 +17,7 @@ declare(strict_types=1);
 
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
+use Guanguans\MonorepoBuilderWorker\Support\Rectors\AddNoinspectionsDocCommentToDeclareRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\TransformToInternalExceptionRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -51,8 +52,8 @@ function classes(): array
 
 return RectorConfig::configure()
     ->withPaths([
-        __DIR__.'/src',
-        __DIR__.'/tests',
+        __DIR__.'/src/',
+        __DIR__.'/tests/',
         ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
         __DIR__.'/composer-updater',
     ])
@@ -65,7 +66,7 @@ return RectorConfig::configure()
     ])
     ->withCache(__DIR__.'/.build/rector/')
     ->withParallel()
-    ->withoutParallel()
+    // ->withoutParallel()
     // ->withImportNames(importNames: false)
     ->withImportNames(importDocBlockNames: false, importShortClasses: false)
     ->withFluentCallNewLine()
@@ -104,6 +105,13 @@ return RectorConfig::configure()
         'phpstan-ignore-next-line',
         'psalm-suppress',
     ])
+    ->withConfiguredRule(AddNoinspectionsDocCommentToDeclareRector::class, [
+        'AnonymousFunctionStaticInspection',
+        'NullPointerExceptionInspection',
+        'PhpPossiblePolymorphicInvocationInspection',
+        'PhpUnhandledExceptionInspection',
+        'StaticClosureCanBeUsedInspection',
+    ])
     ->withConfiguredRule(
         RenameFunctionRector::class,
         [
@@ -141,5 +149,9 @@ return RectorConfig::configure()
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/src',
             __DIR__.'/tests',
+        ],
+        AddNoinspectionsDocCommentToDeclareRector::class => [
+            __DIR__.'/src/',
+            ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
         ],
     ]);
