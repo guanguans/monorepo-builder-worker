@@ -14,11 +14,18 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorkerTests;
 
 use DG\BypassFinals;
+use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use phpmock\phpunit\PHPMock;
+use Spatie\Snapshots\MatchesSnapshots;
+use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
+    use Faker;
+    use MatchesSnapshots;
+    use MockeryPHPUnitIntegration;
     use PHPMock;
+    use VarDumperTestTrait;
 
     /**
      * This method is called before the first test of this test class is run.
@@ -35,8 +42,6 @@ class TestCase extends \PHPUnit\Framework\TestCase
      */
     protected function setUp(): void
     {
-        parent::setUp();
-
         BypassFinals::enable();
     }
 
@@ -46,7 +51,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     protected function tearDown(): void
     {
         $this->finish();
-        \Mockery::close();
+        $this->closeMockery();
     }
 
     /**

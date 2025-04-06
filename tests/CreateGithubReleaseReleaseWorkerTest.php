@@ -13,7 +13,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorkerTests\Unit;
+namespace Guanguans\MonorepoBuilderWorkerTests;
 
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseReleaseWorker;

@@ -1,5 +1,16 @@
 <?php
 
+/** @noinspection AnonymousFunctionStaticInspection */
+/** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection StaticClosureCanBeUsedInspection */
+
+/** @noinspection PhpInconsistentReturnPointsInspection */
+/** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpMultipleClassDeclarationsInspection */
+/** @noinspection PhpUnused */
+
 declare(strict_types=1);
 
 /**
@@ -11,7 +22,10 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
+use Composer\Autoload\ClassLoader;
+use Faker\Factory;
 use Guanguans\MonorepoBuilderWorkerTests\TestCase;
+use Illuminate\Support\Collection;
 use Pest\Expectation;
 
 uses(TestCase::class)
@@ -19,7 +33,7 @@ uses(TestCase::class)
     ->beforeEach(function (): void {})
     ->afterEach(function (): void {})
     ->afterAll(function (): void {})
-    ->in(__DIR__.'/Feature', __DIR__.'/Unit');
+    ->in(__DIR__, __DIR__.'/Feature', __DIR__.'/Unit');
 /*
 |--------------------------------------------------------------------------
 | Expectations
@@ -31,21 +45,15 @@ uses(TestCase::class)
 |
  */
 
-expect()->extend('toBeOne', fn () => $this->toBe(1));
-
-expect()->extend('assert', function (Closure $assertions): Expectation {
+expect()->extend('toAssert', function (Closure $assertions): Expectation {
     $assertions($this->value);
 
     return $this;
 });
 
-expect()->extend('between', function (int $min, int $max): Expectation {
-    expect($this->value)
-        ->toBeGreaterThanOrEqual($min)
-        ->toBeLessThanOrEqual($max);
-
-    return $this;
-});
+expect()->extend('toBetween', fn (int $min, int $max): Expectation => expect($this->value)
+    ->toBeGreaterThanOrEqual($min)
+    ->toBeLessThanOrEqual($max));
 
 /*
 |--------------------------------------------------------------------------
@@ -58,8 +66,23 @@ expect()->extend('between', function (int $min, int $max): Expectation {
 |
  */
 
+function classes(): Collection
+{
+    static $classes;
+
+    return $classes ??= collect(spl_autoload_functions())
+        ->pipe(static fn (Collection $splAutoloadFunctions): Collection => collect(
+            $splAutoloadFunctions
+                ->firstOrFail(
+                    static fn (mixed $loader): bool => \is_array($loader) && $loader[0] instanceof ClassLoader
+                )[0]
+                ->getClassMap()
+        ))
+        ->keys();
+}
+
 /**
- * @throws \ReflectionException
+ * @throws ReflectionException
  */
 function class_namespace(object|string $class): string
 {
@@ -70,5 +93,20 @@ function class_namespace(object|string $class): string
 
 function fixtures_path(string $path = ''): string
 {
-    return __DIR__.'/Fixtures'.($path ? \DIRECTORY_SEPARATOR.$path : $path);
+    return __DIR__.\DIRECTORY_SEPARATOR.'Fixtures'.($path ? \DIRECTORY_SEPARATOR.$path : $path);
+}
+
+function faker(string $locale = Factory::DEFAULT_LOCALE): Generator
+{
+    return fake($locale);
+}
+
+function fake(string $locale = Factory::DEFAULT_LOCALE): Generator
+{
+    return Factory::create($locale);
+}
+
+function running_in_github_action(): bool
+{
+    return getenv('GITHUB_ACTIONS') === 'true';
 }

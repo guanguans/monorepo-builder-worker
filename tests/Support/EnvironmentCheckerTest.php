@@ -15,7 +15,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorkerTests\Unit\Support;
+namespace Guanguans\MonorepoBuilderWorkerTests\Support;
 
 use Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract;
 use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
