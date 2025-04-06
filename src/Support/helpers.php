@@ -19,6 +19,10 @@ use Composer\Autoload\ClassLoader;
 
 if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
     /**
+     * @see \get_declared_classes()
+     * @see \get_declared_interfaces()
+     * @see \get_declared_traits()
+     *
      * @return list<class-string>
      */
     function classes(): array
