@@ -13,20 +13,19 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Support\Rectors;
 
+use Illuminate\Support\Str;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
-use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
 use Symplify\RuleDocGenerator\Exception\PoorDocumentationException;
 use Symplify\RuleDocGenerator\Exception\ShouldNotHappenException;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
 use Symplify\RuleDocGenerator\ValueObject\RuleDefinition;
-use Webmozart\Assert\Assert;
 
-class TransformToInternalExceptionRector extends AbstractRector implements ConfigurableRectorInterface
+class TransformToInternalExceptionRector extends AbstractRector
 {
-    private array $namespace = [];
+    private const SEPARATOR = '\\';
 
     /**
      * @throws PoorDocumentationException
@@ -44,17 +43,12 @@ class TransformToInternalExceptionRector extends AbstractRector implements Confi
                     <<<'CODE_SAMPLE'
                         throw new \Guanguans\MonorepoBuilderWorker\Exceptions\InvalidArgumentException('on_headers must be callable');
                         CODE_SAMPLE,
-                    ['exceptionClassPattern' => 'exceptionClassPattern'],
+                    [
+                        'Guanguans\\MonorepoBuilderWorker\\Exceptions',
+                    ],
                 ),
             ],
         );
-    }
-
-    final public function configure(array $configuration): void
-    {
-        Assert::count($configuration, 1);
-        Assert::allStringNotEmpty($configuration);
-        $this->namespace = $configuration;
     }
 
     final public function getNodeTypes(): array
@@ -74,15 +68,27 @@ class TransformToInternalExceptionRector extends AbstractRector implements Confi
         if (
             null === $className
             || !str_ends_with($className, 'Exception')
-            || str_starts_with($className, ltrim($this->namespace[0], '\\'))
+            || str_starts_with($className, Str::of($this->getNamespace())->ltrim(self::SEPARATOR)->toString())
         ) {
             return null;
         }
 
+        /** @var \PhpParser\Node\Name $class */
+        $class = $node->class;
+
         $node->class = new Name(
-            str($this->namespace[0])->start('\\')->finish('\\')->append($node->class->getLast())->toString()
+            Str::of($this->getNamespace())
+                ->start(self::SEPARATOR)
+                ->finish(self::SEPARATOR)
+                ->append($class->getLast())
+                ->toString()
         );
 
         return $node;
+    }
+
+    private function getNamespace(): string
+    {
+        return Str::of(__NAMESPACE__)->explode(self::SEPARATOR)->take(2)->implode(self::SEPARATOR);
     }
 }

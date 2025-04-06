@@ -21,7 +21,7 @@ class EnvironmentChecker
     use ConcreteFactory;
 
     /**
-     * @param list<callable|class-string|object> $workers
+     * @param list<callable|class-string<EnvironmentCheckerContract>|EnvironmentCheckerContract> $workers
      *
      * @throws \Throwable
      */

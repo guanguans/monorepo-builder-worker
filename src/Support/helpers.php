@@ -1,5 +1,7 @@
 <?php
 
+/** @noinspection PhpMultipleClassDeclarationsInspection */
+
 declare(strict_types=1);
 
 /**
@@ -12,3 +14,23 @@ declare(strict_types=1);
  */
 
 namespace Guanguans\MonorepoBuilderWorker\Support;
+
+use Composer\Autoload\ClassLoader;
+
+if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
+    /**
+     * @return list<class-string>
+     */
+    function classes(): array
+    {
+        static $classes;
+
+        foreach (spl_autoload_functions() as $loader) {
+            if (\is_array($loader) && $loader[0] instanceof ClassLoader) {
+                return $classes ??= array_keys($loader[0]->getClassMap());
+            }
+        }
+
+        return $classes ??= [];
+    }
+}

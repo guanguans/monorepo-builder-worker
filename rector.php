@@ -19,6 +19,7 @@ use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\AddNoinspectionsDocCommentToDeclareRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\TransformToInternalExceptionRector;
+use Illuminate\Support\Str;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
@@ -35,6 +36,8 @@ use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
+use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
+use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use Rector\ValueObject\PhpVersion;
 
 function classes(): array
@@ -66,7 +69,7 @@ return RectorConfig::configure()
     ])
     ->withCache(__DIR__.'/.build/rector/')
     ->withParallel()
-    // ->withoutParallel()
+    ->withoutParallel()
     // ->withImportNames(importNames: false)
     ->withImportNames(importDocBlockNames: false, importShortClasses: false)
     ->withFluentCallNewLine()
@@ -99,8 +102,8 @@ return RectorConfig::configure()
         StaticClosureRector::class,
         TransformToInternalExceptionRector::class,
     ])
-    ->withConfiguredRule(TransformToInternalExceptionRector::class, [
-        'Guanguans\\MonorepoBuilderWorker\\Exceptions',
+    ->withConfiguredRule(FuncCallToStaticCallRector::class, [
+        new FuncCallToStaticCall('str', Str::class, 'of'),
     ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
         'codeCoverageIgnore',
@@ -125,6 +128,7 @@ return RectorConfig::configure()
             'test' => 'it',
         ] + array_reduce(
             [
+                'classes',
             ],
             static function (array $carry, string $func): array {
                 /** @see https://github.com/laravel/framework/blob/11.x/src/Illuminate/Support/functions.php */

@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker;
 
+use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
+use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 class CreateGithubReleaseReleaseWorker extends ReleaseWorker
 {
@@ -47,13 +49,19 @@ class CreateGithubReleaseReleaseWorker extends ReleaseWorker
 
     final public function findChangelog(): string
     {
-        foreach (
-            [
-                UpdateChangelogViaGoReleaseWorker::class,
-                UpdateChangelogViaNodeReleaseWorker::class,
-                UpdateChangelogViaPhpReleaseWorker::class,
-            ] as $class
-        ) {
+        // $classes = array_filter(
+        //     classes(),
+        //     static fn (string $class): bool => str_starts_with($class, __NAMESPACE__)
+        //         && is_subclass_of($class, ChangelogContract::class)
+        // );
+
+        $classes = [
+            UpdateChangelogViaGoReleaseWorker::class,
+            UpdateChangelogViaNodeReleaseWorker::class,
+            UpdateChangelogViaPhpReleaseWorker::class,
+        ];
+
+        foreach ($classes as $class) {
             /** @var class-string<\Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract> $class */
             $changelog = $class::getChangelog();
 

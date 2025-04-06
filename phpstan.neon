@@ -72,9 +72,9 @@ parameters:
 #        - identifier: logicalAnd.resultUnused
 #        - identifier: method.nonObject
 #        - identifier: missingType.generics
-#        - identifier: return.type
+#        - identifier: missingType.iterableValue
 #        - identifier: return.void
 #        - identifier: symplify.noDynamicName
 #        - identifier: typePerfect.noMixedMethodCaller
         - identifier: argument.type
-        - identifier: missingType.iterableValue
+        - identifier: return.type
