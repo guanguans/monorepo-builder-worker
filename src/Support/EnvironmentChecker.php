@@ -43,11 +43,11 @@ class EnvironmentChecker
     }
 
     /**
-     * @param callable|class-string|object $worker
+     * @param callable|class-string<EnvironmentCheckerContract>|EnvironmentCheckerContract $worker
      *
      * @throws \Throwable
      */
-    public static function check($worker): void
+    public static function check(callable|EnvironmentCheckerContract|string $worker): void
     {
         if (is_subclass_of($worker, EnvironmentCheckerContract::class)) {
             $worker::check();

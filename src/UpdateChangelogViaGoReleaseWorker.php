@@ -55,7 +55,7 @@ class UpdateChangelogViaGoReleaseWorker extends ReleaseWorker implements Changel
         return trim($lines);
     }
 
-    public function work(Version $version): void
+    final public function work(Version $version): void
     {
         $this->processRunner->run('git-chglog --output CHANGELOG.md');
         $this->processRunner->run("git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
@@ -64,7 +64,7 @@ class UpdateChangelogViaGoReleaseWorker extends ReleaseWorker implements Changel
         self::$changelog = $this->processRunner->run("git-chglog {$version->getOriginalString()}");
     }
 
-    public function getDescription(Version $version): string
+    final public function getDescription(Version $version): string
     {
         return \sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
     }

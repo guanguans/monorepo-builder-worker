@@ -32,7 +32,7 @@ class CreateGithubReleaseReleaseWorker extends ReleaseWorker
         self::createProcessRunner()->run('gh release list --limit 1');
     }
 
-    public function work(Version $version): void
+    final public function work(Version $version): void
     {
         $changelog = $this->findChangelog();
 
@@ -46,7 +46,7 @@ class CreateGithubReleaseReleaseWorker extends ReleaseWorker
         ));
     }
 
-    public function getDescription(Version $version): string
+    final public function getDescription(Version $version): string
     {
         return "Create github release \"{$version->getOriginalString()}\"";
     }
@@ -54,7 +54,7 @@ class CreateGithubReleaseReleaseWorker extends ReleaseWorker
     /**
      * @noinspection NativeMemberUsageInspection
      */
-    public function findChangelog(): string
+    final public function findChangelog(): string
     {
         foreach ([
             \stdClass::class,

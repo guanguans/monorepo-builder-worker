@@ -33,7 +33,7 @@ class TransformToInternalExceptionRector extends AbstractRector implements Confi
      * @throws PoorDocumentationException
      * @throws ShouldNotHappenException
      */
-    public function getRuleDefinition(): RuleDefinition
+    final public function getRuleDefinition(): RuleDefinition
     {
         return new RuleDefinition(
             'Transform to internal exception',
@@ -51,13 +51,13 @@ class TransformToInternalExceptionRector extends AbstractRector implements Confi
         );
     }
 
-    public function configure(array $configuration): void
+    final public function configure(array $configuration): void
     {
         Assert::allStringNotEmpty($configuration);
         $this->except = array_merge($this->except, $configuration);
     }
 
-    public function getNodeTypes(): array
+    final public function getNodeTypes(): array
     {
         return [
             New_::class,
@@ -67,7 +67,7 @@ class TransformToInternalExceptionRector extends AbstractRector implements Confi
     /**
      * @param Node\Expr\New_ $node
      */
-    public function refactor(Node $node): ?Node
+    final public function refactor(Node $node): ?Node
     {
         $class = $node->class;
 

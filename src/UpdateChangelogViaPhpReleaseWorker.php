@@ -57,7 +57,7 @@ class UpdateChangelogViaPhpReleaseWorker extends ReleaseWorker implements Change
         return trim($lines);
     }
 
-    public function work(Version $version): void
+    final public function work(Version $version): void
     {
         $originalString = $version->getOriginalString();
         $previousTag = $this->toPreviousTag($originalString);
@@ -71,14 +71,14 @@ class UpdateChangelogViaPhpReleaseWorker extends ReleaseWorker implements Change
         self::$changelog = $this->processRunner->run('git show');
     }
 
-    public function getDescription(Version $version): string
+    final public function getDescription(Version $version): string
     {
         return \sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
     }
 
-    protected function toPreviousTag(string $tag): string
+    private function toPreviousTag(string $tag): string
     {
-        $tags = (array) explode(\PHP_EOL, $this->processRunner->run('git tag --sort=-committerdate'));
+        $tags = explode(\PHP_EOL, $this->processRunner->run('git tag --sort=-committerdate'));
         $previousTagIndex = array_search($tag, $tags, true) + 1;
 
         return $tags[$previousTagIndex] ?? '';

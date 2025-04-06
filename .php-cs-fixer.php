@@ -102,8 +102,8 @@ $ruleSet = Php80::create()
         // ],
         'explicit_string_variable' => false,
         'final_class' => false,
-        // 'final_internal_class' => false,
-        // 'final_public_method_for_abstract_class' => false,
+        'final_internal_class' => true,
+        'final_public_method_for_abstract_class' => true,
         'fully_qualified_strict_types' => [
             'import_symbols' => false,
             'leading_backslash_in_global_namespace' => false,
