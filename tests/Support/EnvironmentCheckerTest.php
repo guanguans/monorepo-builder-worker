@@ -1,9 +1,12 @@
 <?php
 
 /** @noinspection AnonymousFunctionStaticInspection */
+/** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpPossiblePolymorphicInvocationInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
-
 declare(strict_types=1);
 
 /**
@@ -25,13 +28,13 @@ it('can batch check environment', function (): void {
 })->group(__DIR__, __FILE__);
 
 it('can check environment', function (): void {
-    expect(EnvironmentChecker::check(\stdClass::class))->toBeNull();
-    expect(EnvironmentChecker::check(
-        new class implements EnvironmentCheckerContract {
-            public static function check(): void {}
-        }
-    ))->toBeNull();
-    expect(EnvironmentChecker::check(function (): void {}))->toBeNull();
+    expect(EnvironmentChecker::check(\stdClass::class))->toBeNull()
+        ->and(EnvironmentChecker::check(
+            new class implements EnvironmentCheckerContract {
+                public static function check(): void {}
+            }
+        ))->toBeNull()
+        ->and(EnvironmentChecker::check(function (): void {}))->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can fix namespace prefix', function (): void {

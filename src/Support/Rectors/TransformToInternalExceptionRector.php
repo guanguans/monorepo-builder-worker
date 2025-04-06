@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Support\Rectors;
 
-use Illuminate\Support\Str;
 use PhpParser\Node;
 use PhpParser\Node\Expr\New_;
 use PhpParser\Node\Name;
@@ -27,7 +26,7 @@ use Webmozart\Assert\Assert;
 
 class TransformToInternalExceptionRector extends AbstractRector implements ConfigurableRectorInterface
 {
-    private array $except = [];
+    private array $namespace = [];
 
     /**
      * @throws PoorDocumentationException
@@ -53,8 +52,9 @@ class TransformToInternalExceptionRector extends AbstractRector implements Confi
 
     final public function configure(array $configuration): void
     {
+        Assert::count($configuration, 1);
         Assert::allStringNotEmpty($configuration);
-        $this->except = array_merge($this->except, $configuration);
+        $this->namespace = $configuration;
     }
 
     final public function getNodeTypes(): array
@@ -69,57 +69,20 @@ class TransformToInternalExceptionRector extends AbstractRector implements Confi
      */
     final public function refactor(Node $node): ?Node
     {
-        $class = $node->class;
+        $className = $this->getName($node->class);
 
         if (
-            !$class instanceof Name
-            || Str::is($this->except, $class->toString())
-            || str_starts_with($class->toString(), 'Guanguans\\MonorepoBuilderWorker\\Exceptions\\')
-            || !str_ends_with($class->toString(), 'Exception')
+            null === $className
+            || !str_ends_with($className, 'Exception')
+            || str_starts_with($className, ltrim($this->namespace[0], '\\'))
         ) {
             return null;
         }
 
-        $internalExceptionClass = "\\Guanguans\\MonorepoBuilderWorker\\Exceptions\\{$class->getLast()}";
-
-        if (!class_exists($internalExceptionClass)) {
-            $this->createInternalException($class);
-        }
-
-        $node->class = new Name($internalExceptionClass, $class->getAttributes());
+        $node->class = new Name(
+            str($this->namespace[0])->start('\\')->finish('\\')->append($node->class->getLast())->toString()
+        );
 
         return $node;
-    }
-
-    private function createInternalException(Name $name): void
-    {
-        /** @var class-string $externalExceptionClass */
-        $externalExceptionClass = $name->toString();
-        $reflectionClass = new \ReflectionClass($externalExceptionClass);
-
-        if ($reflectionClass->isFinal()) {
-            return;
-        }
-
-        $file = __DIR__."/../../Exceptions/{$name->getLast()}.php";
-
-        /** @noinspection MkdirRaceConditionInspection */
-        is_dir($dir = \dirname($file)) or mkdir($dir, 0755, true);
-
-        file_put_contents(
-            $file,
-            <<<PHP
-                <?php
-
-                declare(strict_types=1);
-
-                namespace Guanguans\\MonorepoBuilderWorker\\Exceptions;
-
-                use Guanguans\\MonorepoBuilderWorker\\Contracts\\ThrowableContract;
-
-                class {$name->getLast()} extends \\$externalExceptionClass implements ThrowableContract {}
-
-                PHP
-        );
     }
 }

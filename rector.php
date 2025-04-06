@@ -99,6 +99,9 @@ return RectorConfig::configure()
         StaticClosureRector::class,
         TransformToInternalExceptionRector::class,
     ])
+    ->withConfiguredRule(TransformToInternalExceptionRector::class, [
+        'Guanguans\\MonorepoBuilderWorker\\Exceptions',
+    ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
         'codeCoverageIgnore',
         'phpstan-ignore',
@@ -109,6 +112,7 @@ return RectorConfig::configure()
         'AnonymousFunctionStaticInspection',
         'NullPointerExceptionInspection',
         'PhpPossiblePolymorphicInvocationInspection',
+        'PhpUndefinedClassInspection',
         'PhpUnhandledExceptionInspection',
         'StaticClosureCanBeUsedInspection',
     ])
