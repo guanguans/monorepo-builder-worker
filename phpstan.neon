@@ -41,6 +41,7 @@ parameters:
         lineBefore: 3
         lineAfter: 3
         editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    treatPhpDocTypesAsCertain: false
     type_coverage:
         declare: 100
         param_type: 100
@@ -70,11 +71,11 @@ parameters:
 #        - identifier: cast.string
 #        - identifier: encapsedStringPart.nonString
 #        - identifier: logicalAnd.resultUnused
-#        - identifier: missingType.generics
 #        - identifier: missingType.iterableValue
 #        - identifier: return.void
 #        - identifier: symplify.noDynamicName
 #        - identifier: typePerfect.noMixedMethodCaller
         - identifier: argument.type
         - identifier: method.nonObject
+        - identifier: missingType.generics
         - identifier: return.type

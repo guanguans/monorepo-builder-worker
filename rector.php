@@ -18,10 +18,11 @@ declare(strict_types=1);
 use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\AddNoinspectionsDocCommentToDeclareRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\TransformToInternalExceptionRector;
+use Guanguans\MonorepoBuilderWorker\Support\Rectors\NewToNewAnonymousImplementsRector;
 use Illuminate\Support\Str;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
+use Rector\CodeQuality\Rector\New_\NewStaticToNewSelfRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
@@ -100,16 +101,6 @@ return RectorConfig::configure()
         SortAssociativeArrayByKeyRector::class,
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
-        TransformToInternalExceptionRector::class,
-    ])
-    ->withConfiguredRule(FuncCallToStaticCallRector::class, [
-        new FuncCallToStaticCall('str', Str::class, 'of'),
-    ])
-    ->withConfiguredRule(RemoveAnnotationRector::class, [
-        'codeCoverageIgnore',
-        'phpstan-ignore',
-        'phpstan-ignore-next-line',
-        'psalm-suppress',
     ])
     ->withConfiguredRule(AddNoinspectionsDocCommentToDeclareRector::class, [
         'AnonymousFunctionStaticInspection',
@@ -118,6 +109,18 @@ return RectorConfig::configure()
         'PhpUndefinedClassInspection',
         'PhpUnhandledExceptionInspection',
         'StaticClosureCanBeUsedInspection',
+    ])
+    ->withConfiguredRule(NewToNewAnonymousImplementsRector::class, [
+        'Guanguans\MonorepoBuilderWorker\Contracts\ThrowableContract',
+    ])
+    ->withConfiguredRule(RemoveAnnotationRector::class, [
+        'codeCoverageIgnore',
+        'phpstan-ignore',
+        'phpstan-ignore-next-line',
+        'psalm-suppress',
+    ])
+    ->withConfiguredRule(FuncCallToStaticCallRector::class, [
+        new FuncCallToStaticCall('str', Str::class, 'of'),
     ])
     ->withConfiguredRule(
         RenameFunctionRector::class,
