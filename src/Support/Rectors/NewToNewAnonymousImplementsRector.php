@@ -79,8 +79,8 @@ class NewToNewAnonymousImplementsRector extends AbstractRector implements Config
      */
     final public function refactor(Node $node): ?Node
     {
-        // It's magical.
-        class_exists(ReleaseWorkerInterface::class);
+        // // It's magical.
+        // class_exists(ReleaseWorkerInterface::class);
 
         if (
             !($className = $this->getName($node->class))

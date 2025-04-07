@@ -36,6 +36,7 @@ use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use Rector\ValueObject\PhpVersion;
+use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -51,9 +52,16 @@ return RectorConfig::configure()
         '**/Fixtures/*',
         // __FILE__,
     ])
+    ->withAutoloadPaths([
+        (new ReflectionClass(ReleaseWorkerInterface::class))->getFileName(),
+    ])
+    ->withBootstrapFiles([
+        // __DIR__.'/vendor/symplify/monorepo-builder/vendor/autoload.php',
+        // __DIR__.'/vendor/symplify/monorepo-builder/vendor/scoper-autoload.php',
+    ])
     ->withCache(__DIR__.'/.build/rector/')
     ->withParallel()
-    ->withoutParallel()
+    // ->withoutParallel()
     // ->withImportNames(importNames: false)
     ->withImportNames(importDocBlockNames: false, importShortClasses: false)
     ->withFluentCallNewLine()
