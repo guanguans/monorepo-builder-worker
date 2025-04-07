@@ -1,7 +1,5 @@
 <?php
 
-/** @noinspection PhpInternalEntityUsedInspection */
-/** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 
 declare(strict_types=1);
@@ -15,7 +13,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Composer\Autoload\ClassLoader;
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\AddNoinspectionsDocCommentToDeclareRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\NewToNewAnonymousImplementsRector;
@@ -39,19 +36,6 @@ use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
 use Rector\Transform\ValueObject\FuncCallToStaticCall;
 use Rector\ValueObject\PhpVersion;
-
-function classes(): array
-{
-    static $classes;
-
-    foreach (spl_autoload_functions() as $loader) {
-        if (\is_array($loader) && $loader[0] instanceof ClassLoader) {
-            return $classes ??= array_keys($loader[0]->getClassMap());
-        }
-    }
-
-    return $classes ??= [];
-}
 
 return RectorConfig::configure()
     ->withPaths([
