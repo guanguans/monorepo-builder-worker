@@ -28,6 +28,7 @@ if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
      */
     function classes(): array
     {
+        /** @var list<list<string>> $classes */
         static $classes = [];
 
         if ($classes) {

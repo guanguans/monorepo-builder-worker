@@ -23,12 +23,15 @@ declare(strict_types=1);
 
 use Composer\Autoload\ClassLoader;
 use Faker\Factory;
+use Guanguans\MonorepoBuilderWorker\Support\ComposerScripts;
 use Guanguans\MonorepoBuilderWorkerTests\TestCase;
 use Illuminate\Support\Collection;
 use Pest\Expectation;
 
 uses(TestCase::class)
-    ->beforeAll(function (): void {})
+    ->beforeAll(function (): void {
+        // ComposerScripts::checkAndFixNamespacePrefix();
+    })
     ->beforeEach(function (): void {})
     ->afterEach(function (): void {})
     ->afterAll(function (): void {})

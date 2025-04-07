@@ -70,11 +70,11 @@ parameters:
 #        - identifier: cast.string
 #        - identifier: encapsedStringPart.nonString
 #        - identifier: logicalAnd.resultUnused
-#        - identifier: method.nonObject
 #        - identifier: missingType.generics
 #        - identifier: missingType.iterableValue
 #        - identifier: return.void
 #        - identifier: symplify.noDynamicName
 #        - identifier: typePerfect.noMixedMethodCaller
         - identifier: argument.type
+        - identifier: method.nonObject
         - identifier: return.type

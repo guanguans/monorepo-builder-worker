@@ -37,8 +37,8 @@ jobs:
       - name: Install dependencies
         run: composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --ansi -v
 
-      # - name: Fix monorepo builder prefix
-      #   run: composer release-patch-dry-run
+      - name: Check and fix namespace prefix
+        run: composer check-and-fix-namespace-prefix
 
       - name: Execute tests
         run: composer test-coverage

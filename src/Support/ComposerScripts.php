@@ -18,8 +18,12 @@ use Rector\Config\RectorConfig;
 use Rector\DependencyInjection\LazyContainerFactory;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * @property \Symfony\Component\Console\Output\OutputInterface $output
+ */
 class ComposerScripts
 {
     /**
@@ -33,7 +37,13 @@ class ComposerScripts
 
         $exitCode = EnvironmentChecker::checkAndFixNamespacePrefix();
 
-        0 === $exitCode and self::makeSymfonyStyle()->success('No errors');
+        if ($event instanceof Event && 0 === $exitCode) {
+            // self::makeSymfonyStyle()->success('No errors');
+            (fn () => $this->output->setVerbosity(OutputInterface::VERBOSITY_VERY_VERBOSE))->call($event->getIO());
+            $event->getIO()->info('');
+            $event->getIO()->info('No errors');
+            $event->getIO()->info('');
+        }
 
         return $exitCode;
     }
@@ -46,7 +56,10 @@ class ComposerScripts
         return (new LazyContainerFactory)->create();
     }
 
-    private static function makeSymfonyStyle(): SymfonyStyle
+    /**
+     * @noinspection PhpUnused
+     */
+    public static function makeSymfonyStyle(): SymfonyStyle
     {
         return new SymfonyStyle(new ArgvInput, new ConsoleOutput);
     }
