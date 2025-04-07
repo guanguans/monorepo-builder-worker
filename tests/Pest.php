@@ -10,6 +10,7 @@
 /** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection PhpUnused */
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -110,5 +111,5 @@ function fake(string $locale = Factory::DEFAULT_LOCALE): Generator
 
 function running_in_github_action(): bool
 {
-    return getenv('GITHUB_ACTIONS') === 'true';
+    return 'true' === getenv('GITHUB_ACTIONS');
 }
