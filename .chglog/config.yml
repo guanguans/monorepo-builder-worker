@@ -1,4 +1,5 @@
 style: github
+# https://github.com/antfu/changelogithub
 # https://github.com/garden-io/garden
 # https://github.com/git-chglog/git-chglog
 # https://github.com/quay/clair
@@ -25,17 +26,18 @@ options:
         - test
   commit_groups:
     title_maps:
-      build: Builds
-      chore: Chores
-      ci: Continuous Integrations
-      docs: Documents
-      feat: Features
-      fix: Bug Fixes
-      perf: Performance Improvements
-      refactor: Code Refactorings
-      revert: Reverts
-      style: Styles
-      test: Tests
+      # https://gitmoji.dev/
+      build: ':building_construction: Builds'
+      chore: ':pencil2: Chores'
+      ci: ':construction_worker: Continuous Integrations'
+      docs: ':memo: Documents'
+      feat: ':sparkles: Features'
+      fix: ':bug: Bug Fixes'
+      perf: ':zap: Performance Improvements'
+      refactor: ':recycle: Code Refactorings'
+      revert: ':rewind: Reverts'
+      style: ':lipstick: Styles'
+      test: ':white_check_mark: Tests'
   header:
     pattern: "^(\\w*)(?:\\(([\\w\\$\\.\\-\\*\\s]*)\\))?\\:\\s(.*)$"
     pattern_maps:
