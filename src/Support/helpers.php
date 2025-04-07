@@ -22,6 +22,7 @@ if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
      * @see \get_declared_classes()
      * @see \get_declared_interfaces()
      * @see \get_declared_traits()
+     * @see \DG\BypassFinals::enable()
      *
      * @return list<class-string>
      */

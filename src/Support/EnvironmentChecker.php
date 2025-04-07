@@ -27,11 +27,7 @@ class EnvironmentChecker
      */
     public static function checks(array $workers): void
     {
-        try {
-            self::createProcessRunner();
-        } catch (\Error) {
-            self::fixNamespacePrefix();
-        }
+        self::checkAndFixNamespacePrefix();
 
         self::createSymfonyStyle()->note('Checking environment...');
 
@@ -58,67 +54,47 @@ class EnvironmentChecker
         }
     }
 
-    public static function fixNamespacePrefix(): void
+    public static function checkAndFixNamespacePrefix(): int
     {
-        self::requireAutoload();
+        try {
+            self::createProcessRunner();
 
+            return 0;
+        } catch (\Error) {
+            self::fixNamespacePrefix();
+
+            return 1;
+        }
+    }
+
+    private static function fixNamespacePrefix(): void
+    {
+        $isPassed = static fn (
+            string $yearMonth
+        ): bool => class_exists("MonorepoBuilderPrefix$yearMonth\\Symfony\\Component\\Console\\Style\\SymfonyStyle");
         $yearMonth = date('Ym');
 
-        while (
-            202310 <= $yearMonth
-            && !class_exists("MonorepoBuilderPrefix$yearMonth\\Symfony\\Component\\Console\\Style\\SymfonyStyle")
-        ) {
+        while (202310 <= $yearMonth && !$isPassed($yearMonth)) {
             $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
         }
 
-        if (!class_exists("MonorepoBuilderPrefix$yearMonth\\Symfony\\Component\\Console\\Style\\SymfonyStyle")) {
-            echo \PHP_EOL, 'The file [vendor/symplify/monorepo-builder/bootstrap.php] is not loaded.', \PHP_EOL;
+        if (!$isPassed($yearMonth)) {
+            echo \PHP_EOL, 'The file [vendor/autoload.php] is not loaded.', \PHP_EOL;
 
             return;
         }
 
-        echo \PHP_EOL, \sprintf('The namespace prefix should be [%s].', $namespace = "MonorepoBuilderPrefix$yearMonth"), \PHP_EOL;
+        echo \PHP_EOL,
+        \sprintf('The namespace prefix should be [%s].', $namespacePrefix = "MonorepoBuilderPrefix$yearMonth"),
+        \PHP_EOL;
 
         foreach (array_map('realpath', glob(__DIR__.'/../../{src,tests}{/,/*/,/*/*/,/*/*/*/}*.php', \GLOB_BRACE)) as $file) {
             $contents = file_get_contents($file);
-            $replacedContents = preg_replace('/MonorepoBuilderPrefix\d{4}\d{2}/', $namespace, $contents);
+            $replacedContents = preg_replace('/MonorepoBuilderPrefix\d{4}\d{2}/', $namespacePrefix, $contents);
 
             if ($replacedContents !== $contents) {
                 file_put_contents($file, $replacedContents);
                 echo "The namespace prefix of the file [$file] has been fixed", \PHP_EOL;
-            }
-        }
-    }
-
-    private static function requireAutoload(): void
-    {
-        $possibleAutoloadPaths = [
-            __DIR__.'/../../vendor/autoload.php',
-            __DIR__.'/../../../../../vendor/autoload.php',
-            // __DIR__.'/../../vendor/symplify/monorepo-builder/bootstrap.php',
-            // __DIR__.'/../../../../../vendor/symplify/monorepo-builder/bootstrap.php',
-        ];
-
-        foreach ($possibleAutoloadPaths as $possibleAutoloadPath) {
-            if (file_exists($possibleAutoloadPath)) {
-                require_once $possibleAutoloadPath;
-
-                break;
-            }
-        }
-
-        $possibleAutoloadPaths = [
-            // __DIR__.'/../../vendor/autoload.php',
-            // __DIR__.'/../../../../../vendor/autoload.php',
-            __DIR__.'/../../vendor/symplify/monorepo-builder/bootstrap.php',
-            __DIR__.'/../../../../../vendor/symplify/monorepo-builder/bootstrap.php',
-        ];
-
-        foreach ($possibleAutoloadPaths as $possibleAutoloadPath) {
-            if (file_exists($possibleAutoloadPath)) {
-                require_once $possibleAutoloadPath;
-
-                break;
             }
         }
     }

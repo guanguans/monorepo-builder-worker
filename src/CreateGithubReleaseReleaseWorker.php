@@ -65,9 +65,7 @@ class CreateGithubReleaseReleaseWorker extends ReleaseWorker
 
         foreach ($classes as $class) {
             /** @var class-string<\Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract> $class */
-            $changelog = $class::getChangelog();
-
-            if (!empty($changelog)) {
+            if ($changelog = $class::getChangelog()) {
                 return $changelog;
             }
         }

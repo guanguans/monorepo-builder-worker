@@ -157,6 +157,7 @@
         "changelog-major": "@changelog --major",
         "changelog-minor": "@changelog --minor",
         "changelog-patch": "@changelog --patch",
+        "check-and-fix-namespace-prefix": "Guanguans\\MonorepoBuilderWorker\\Support\\ComposerScripts::checkAndFixNamespacePrefix",
         "checks": [
             "@composer-normalize",
             "@composer-validate",
@@ -166,6 +167,7 @@
             "@style-lint",
             "@composer-dependency-analyser",
             "@release-patch-dry-run",
+            "@check-and-fix-namespace-prefix",
             "@test",
             "@phpstan",
             "@rector-dry-run"
@@ -192,7 +194,6 @@
         ],
         "facades-lint": "@facades-update -- --lint",
         "facades-update": "/usr/local/opt/php@8.1/bin/php -f ./bin/facades.php",
-        "fix-namespace-prefix": "Guanguans\\MonorepoBuilderWorker\\Support\\EnvironmentChecker::fixNamespacePrefix",
         "infection": "@php ./vendor/bin/infection --test-framework=pest --show-mutations --threads=4 --ansi -v",
         "json-lint": "@php ./vendor/bin/jsonlint *.json .*rc",
         "lint": [
