@@ -17,7 +17,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\SoarPHPTests;
+namespace Guanguans\MonorepoBuilderWorkerTests;
 
 // arch('will not use debugging functions')
 //     ->expect([
