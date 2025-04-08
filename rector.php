@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\AddNoinspectionsDocCommentToDeclareRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\NewToNewAnonymousImplementsRector;
+use Guanguans\MonorepoBuilderWorker\Support\Rectors\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
 use Illuminate\Support\Str;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -103,7 +103,7 @@ return RectorConfig::configure()
         'PhpUnhandledExceptionInspection',
         'StaticClosureCanBeUsedInspection',
     ])
-    ->withConfiguredRule(NewToNewAnonymousImplementsRector::class, [
+    ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [
         'Guanguans\MonorepoBuilderWorker\Contracts\ThrowableContract',
     ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
