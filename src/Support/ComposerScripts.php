@@ -31,13 +31,13 @@ class ComposerScripts
      *
      * @noinspection PhpUnused
      */
-    public static function checkAndFixNamespacePrefix(?Event $event = null): int
+    public static function checkAndFixNamespacePrefix(Event $event): int
     {
         self::requireAutoload($event);
 
         $exitCode = EnvironmentChecker::checkAndFixNamespacePrefix();
 
-        if ($event instanceof Event && 0 === $exitCode) {
+        if (0 === $exitCode) {
             // self::makeSymfonyStyle()->success('No errors');
             (fn () => $this->output->setVerbosity(OutputInterface::VERBOSITY_VERY_VERBOSE))->call($event->getIO());
             $event->getIO()->info('');
@@ -64,7 +64,7 @@ class ComposerScripts
         return new SymfonyStyle(new ArgvInput, new ConsoleOutput);
     }
 
-    private static function requireAutoload(?Event $event = null): void
+    public static function requireAutoload(?Event $event = null): void
     {
         if ($event instanceof Event) {
             require_once $event->getComposer()->getConfig()->get('vendor-dir').'/autoload.php';
