@@ -17,8 +17,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorkerTests\Concerns;
-
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
 use MonorepoBuilderPrefix202408\Symfony\Component\Console\Input\ArgvInput;
 use MonorepoBuilderPrefix202408\Symfony\Component\Console\Output\ConsoleOutput;

@@ -17,8 +17,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorkerTests\Support;
-
 use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 it('can get classes', function (): void {

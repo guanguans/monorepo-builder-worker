@@ -18,17 +18,15 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorkerTests\Support;
-
 use Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract;
 use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 
 it('can batch check environment', function (): void {
-    expect(EnvironmentChecker::checks([\stdClass::class]))->toBeNull();
+    expect(EnvironmentChecker::checks([stdClass::class]))->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can check environment', function (): void {
-    expect(EnvironmentChecker::check(\stdClass::class))->toBeNull()
+    expect(EnvironmentChecker::check(stdClass::class))->toBeNull()
         ->and(EnvironmentChecker::check(
             new class implements EnvironmentCheckerContract {
                 public static function check(): void {}

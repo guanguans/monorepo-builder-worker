@@ -18,8 +18,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorkerTests;
-
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaGoReleaseWorker;
@@ -32,20 +30,20 @@ uses(ConcreteFactory::class);
 
 it('can check', function (): void {
     (function (): void {
-        $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+        $mockProcessRunner = Mockery::mock(ProcessRunner::class);
         $mockProcessRunner->allows('run')->andReturns('output');
 
         self::$runner = $mockProcessRunner;
-    })->call(new CreateGithubReleaseReleaseWorker(\Mockery::mock(ProcessRunner::class)));
+    })->call(new CreateGithubReleaseReleaseWorker(Mockery::mock(ProcessRunner::class)));
 
     expect(CreateGithubReleaseReleaseWorker::check())->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
-    $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
     $mockProcessRunner->allows('run')->andReturns('output');
 
-    $mockVersion = \Mockery::mock(Version::class);
+    $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
     expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner))
@@ -53,15 +51,15 @@ it('can work', function (): void {
 })->group(__DIR__, __FILE__);
 
 it('can get description', function (): void {
-    $mockVersion = \Mockery::mock(Version::class);
+    $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new CreateGithubReleaseReleaseWorker(\Mockery::mock(ProcessRunner::class)))
+    expect(new CreateGithubReleaseReleaseWorker(Mockery::mock(ProcessRunner::class)))
         ->getDescription($mockVersion)->toBeString();
 })->group(__DIR__, __FILE__);
 
 it('can find changelog', function (): void {
-    $mockProcessRunner = \Mockery::mock(ProcessRunner::class);
+    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
 
     (function (): void {
         self::$changelog = '';
@@ -81,7 +79,7 @@ it('can find changelog', function (): void {
             - **Contract:** Add ChangelogInterface
             changelog;
 
-        $mockVersion = \Mockery::mock(Version::class);
+        $mockVersion = Mockery::mock(Version::class);
         $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
         self::$version = $mockVersion;
     })->call(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner));
