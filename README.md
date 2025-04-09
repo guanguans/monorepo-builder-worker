@@ -24,6 +24,11 @@ composer require guanguans/monorepo-builder-worker --prefer-dist --dev -v
 
 ## Usage
 
+### Examples
+
+* [👉 Release](https://github.com/guanguans/monorepo-builder-worker/releases/tag/2.0.3)
+* [CHANGELOG](CHANGELOG.md)
+
 ### [Configuration](./monorepo-builder.php)
 
 ### Run command
@@ -108,8 +113,6 @@ class: Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker
  [OK] Version "2.0.1" is now released!                                                                                  
                                                                                                                         
 ```
-
-### [Example](https://github.com/guanguans/monorepo-builder-worker/releases/tag/2.0.2)
 
 ## Testing
 
