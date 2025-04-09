@@ -202,7 +202,7 @@ $ruleSet = Php80::create()
                 'depends',
                 'group',
                 'internal',
-                // 'method',
+                'method',
                 'mixin',
                 'property',
                 'property-read',

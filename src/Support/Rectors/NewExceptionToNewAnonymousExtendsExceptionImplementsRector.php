@@ -72,6 +72,7 @@ class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends Abstrac
     /**
      * @param \PhpParser\Node\Expr\New_ $node
      *
+     * @see \PhpParser\NodeVisitor::*
      * @see \Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory
      * @see \Rector\Comments\NodeDocBlock\DocBlockUpdater
      * @see \RectorPrefix202503\dump_node()
