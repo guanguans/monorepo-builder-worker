@@ -80,7 +80,7 @@
         "yamadashy/phpstan-friendly-formatter": "^1.2"
     },
     "suggest": {
-        "marcocesarato/php-conventional-changelog": "Required to use the the class [UpdateChangelogViaPhpReleaseWorker]."
+        "marcocesarato/php-conventional-changelog": "Required to use the class [UpdateChangelogViaPhpReleaseWorker]."
     },
     "minimum-stability": "stable",
     "prefer-stable": true,

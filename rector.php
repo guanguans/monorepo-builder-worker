@@ -97,11 +97,11 @@ return RectorConfig::configure()
     ])
     ->withConfiguredRule(AddNoinspectionsDocCommentToDeclareRector::class, [
         'AnonymousFunctionStaticInspection',
-        'NullPointerExceptionInspection',
-        'PhpPossiblePolymorphicInvocationInspection',
         'PhpUndefinedClassInspection',
         'PhpUnhandledExceptionInspection',
         'StaticClosureCanBeUsedInspection',
+        'NullPointerExceptionInspection',
+        'PhpPossiblePolymorphicInvocationInspection',
     ])
     ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [
         'Guanguans\MonorepoBuilderWorker\Contracts\ThrowableContract',

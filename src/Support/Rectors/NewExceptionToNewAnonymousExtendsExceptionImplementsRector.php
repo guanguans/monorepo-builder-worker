@@ -74,7 +74,7 @@ class NewExceptionToNewAnonymousExtendsExceptionImplementsRector extends Abstrac
      *
      * @see \Rector\BetterPhpDocParser\PhpDocInfo\PhpDocInfoFactory
      * @see \Rector\Comments\NodeDocBlock\DocBlockUpdater
-     * @see \RectorPrefix202503\print_node()
+     * @see \RectorPrefix202503\dump_node()
      * @see \RectorPrefix202503\print_node()
      */
     final public function refactor(Node $node): ?Node
