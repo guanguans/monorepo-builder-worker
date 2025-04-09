@@ -7,8 +7,34 @@ All notable changes to this project will be documented in this file.
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="2.0.3"></a>
+## [2.0.3] - 2025-04-09
+### ✨ Features
+- **rector:** add RemoveNamespaceRector to remove namespaces ([19c2ae7](https://github.com/guanguans/monorepo-builder-worker/commit/19c2ae7))
+
+### 🐞 Bug Fixes
+- **ComposerScripts:** Update method visibility and parameters ([dbf81a4](https://github.com/guanguans/monorepo-builder-worker/commit/dbf81a4))
+- **tests:** Correct namespace for ArchTest.php ([677c545](https://github.com/guanguans/monorepo-builder-worker/commit/677c545))
+
+### 📖 Documents
+- **changelog:** Update changelog for version 2.0.1 ([3f90574](https://github.com/guanguans/monorepo-builder-worker/commit/3f90574))
+- **readme:** add changelog example and configuration section ([4d1f1c5](https://github.com/guanguans/monorepo-builder-worker/commit/4d1f1c5))
+
+### 🎨 Styles
+- **tests:** remove unnecessary namespace declarations ([b505dab](https://github.com/guanguans/monorepo-builder-worker/commit/b505dab))
+
+### 💅 Code Refactorings
+- **rector:** Rename Rector and update configuration ([ee1804e](https://github.com/guanguans/monorepo-builder-worker/commit/ee1804e))
+
+### 🏎 Performance Improvements
+- **rector:** Reorder inspections and improve configuration handling ([c9bf68f](https://github.com/guanguans/monorepo-builder-worker/commit/c9bf68f))
+
+### 📦 Builds
+- **dependencies:** Update symplify/phpstan-rules to ^14.6 ([634dd41](https://github.com/guanguans/monorepo-builder-worker/commit/634dd41))
+
 ### ⏪️ Reverts
-- **chglog:** Revert sorting configuration changes ([7061742](https://github.com/guanguans/monorepo-builder-worker/commit/7061742))
+- **chglog:** Revert sorting configuration changes ([7437cb8](https://github.com/guanguans/monorepo-builder-worker/commit/7437cb8))
 
 
 <a name="2.0.2"></a>
@@ -501,7 +527,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.3...HEAD
+[2.0.3]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/1.5.0...2.0.0
