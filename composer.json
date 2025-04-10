@@ -52,6 +52,7 @@
         "ergebnis/rector-rules": "^1.3",
         "guanguans/ai-commit": "dev-main",
         "illuminate/support": "^9.52 || ^10.0 || ^11.0 || ^12.0",
+        "jawira/case-converter": "^3.5",
         "marcocesarato/php-conventional-changelog": "^1.17",
         "mockery/mockery": "^1.6",
         "nette/utils": "^4.0",
