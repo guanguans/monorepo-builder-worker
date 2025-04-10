@@ -279,7 +279,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
             FuncCall::class,
             Identifier::class,
             Name::class,
-            // Variable::class,
+            Variable::class,
         ];
     }
 
@@ -320,6 +320,8 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     }
 
     /**
+     * @see \Rector\NodeNameResolver\NodeNameResolver
+     * @see \Rector\Renaming\Collector\RenamedNameCollector
      * @see https://github.com/rectorphp/rector/issues/7611
      * @see https://github.com/rectorphp/rector/blob/main/UPGRADING.md#1-abstractscopeawarerector-is-removed-use-abstractrector-instead
      *
@@ -329,7 +331,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
      *
      * @param FuncCall|Identifier|Name|Variable $node
      */
-    private function rename(Node $node, callable $renamer): Node
+    private function rename(Node $node, callable $renamer): ?Node
     {
         $renamer = fn (string $name): string => $renamer((function (string $name) use ($node): string {
             if (Str::is($this->except, $name)) {
@@ -356,7 +358,14 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
                 Identifier::class,
             ])
         ) {
-            $node->name = $renamer($node->name);
+            $caseName = $renamer($node->name);
+
+            if ($caseName === $node->name) {
+                // return $node; // It's magical.
+                return null;
+            }
+
+            $node->name = $caseName;
             // $node->setAttribute('scope', ScopeFetcher::fetch($node));
 
             return $node;
