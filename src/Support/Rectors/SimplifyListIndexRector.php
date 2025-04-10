@@ -90,11 +90,16 @@ final class SimplifyListIndexRector extends AbstractRector
             return null;
         }
 
+        $hasChanged = false;
+
         foreach ($node->items as $item) {
-            $item->key instanceof Int_ and $item->key = null;
+            if ($item->key instanceof Int_) {
+                $item->key = null;
+                $hasChanged = true;
+            }
         }
 
-        return $node;
+        return $hasChanged ? null : $node;
     }
 
     private function isList(array $array): bool
@@ -107,14 +112,14 @@ final class SimplifyListIndexRector extends AbstractRector
             return true;
         }
 
-        $current_key = 0;
+        $currentKey = 0;
 
         foreach (array_keys($array) as $key) {
-            if ($key !== $current_key) {
+            if ($key !== $currentKey) {
                 return false;
             }
 
-            ++$current_key;
+            ++$currentKey;
         }
 
         return true;
