@@ -25,9 +25,6 @@ use Webmozart\Assert\Assert;
 
 final class CaseRector extends AbstractRector implements ConfigurableRectorInterface
 {
-    /** @var list<string> */
-    private array $namespaces = [];
-
     /**
      * @throws PoorDocumentationException
      * @throws ShouldNotHappenException
@@ -64,7 +61,6 @@ final class CaseRector extends AbstractRector implements ConfigurableRectorInter
     public function configure(array $configuration): void
     {
         Assert::allStringNotEmpty($configuration);
-        $this->namespaces = $configuration;
     }
 
     public function getNodeTypes(): array

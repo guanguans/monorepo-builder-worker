@@ -118,6 +118,7 @@ return RectorConfig::configure()
     ->registerService(className: ParentConnectingVisitor::class, tag: ScopeResolverNodeVisitorInterface::class)
     ->withConfiguredRule(RenameToPsrNameRector::class, [
         // '*',
+        'MIT',
     ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
         'codeCoverageIgnore',

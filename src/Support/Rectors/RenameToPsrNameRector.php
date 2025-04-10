@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Support\Rectors;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use PhpParser\Error;
 use PhpParser\ErrorHandler\Collecting;
@@ -58,7 +59,9 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
 
     /** @var list<string> */
     private array $except = [
-        // '*::*',
+        '_*',
+        '*_',
+
         'class',
         'false',
         'null',
@@ -276,7 +279,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
             FuncCall::class,
             Identifier::class,
             Name::class,
-            Variable::class,
+            // Variable::class,
         ];
     }
 
@@ -322,6 +325,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
      *
      * @noinspection PhpDocSignatureInspection
      * @noinspection PhpPossiblePolymorphicInvocationInspection
+     * @noinspection PhpStrictTypeCheckingInspection
      *
      * @param FuncCall|Identifier|Name|Variable $node
      */
@@ -384,7 +388,14 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
                 ])
                 && $this->hasFuncCallIndexStringArg($node, 0)
             ) {
-                $node->args[0]->value->value = $renamer($node->args[0]->value->value);
+                $node->args[0]->value->value = Str::of($node->args[0]->value->value)
+                    ->explode('\\')
+                    ->pipe(
+                        static fn (Collection $collection): string => $collection
+                            ->slice(0, -1)
+                            ->push($renamer($collection->last()))
+                            ->implode('\\')
+                    );
             }
 
             if (
@@ -396,7 +407,14 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
                 ])
                 && $this->hasFuncCallIndexStringArg($node, 1)
             ) {
-                $node->args[1]->value->value = $renamer($node->args[1]->value->value);
+                $node->args[1]->value->value = Str::of($node->args[1]->value->value)
+                    ->explode('\\')
+                    ->pipe(
+                        static fn (Collection $collection): string => $collection
+                            ->slice(0, -1)
+                            ->push($renamer($collection->last()))
+                            ->implode('\\')
+                    );
             }
         }
 
@@ -411,7 +429,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     private function shouldLowerSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
-        $grandfather = $parent->getAttribute('parent');
+        $grandfather = $parent?->getAttribute('parent');
 
         // function function_name(){}
         if ($node instanceof Identifier && $parent instanceof Function_) {
@@ -459,7 +477,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         $parent = $node->getAttribute('parent');
 
         /** @noinspection PhpUnusedLocalVariableInspection */
-        $grandfather = $parent->getAttribute('parent');
+        $grandfather = $parent?->getAttribute('parent');
 
         if (
             $node instanceof Identifier
@@ -568,7 +586,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     private function shouldUpperSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
-        $grandfather = $parent->getAttribute('parent');
+        $grandfather = $parent?->getAttribute('parent');
 
         if (
             $node instanceof Identifier
