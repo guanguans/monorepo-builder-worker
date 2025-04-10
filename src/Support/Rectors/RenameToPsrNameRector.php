@@ -39,7 +39,9 @@ use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\TraitUse;
+use PhpParser\Node\Stmt\Use_;
 use PhpParser\Node\Stmt\UseUse;
+use PhpParser\Node\UseItem;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
 use RectorPrefix202503\Symfony\Component\Console\Style\SymfonyStyle;
@@ -123,7 +125,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         if ($this->symfonyStyle->isDebug()) {
             $this->symfonyStyle->comment(
                 collect($this->makeCollecting()->getErrors())
-                    ->map(fn (Error $error): string => $error->getRawMessage())
+                    ->map(static fn (Error $error): string => $error->getRawMessage())
                     ->unique()
                     ->all()
             );
@@ -146,6 +148,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
                         // phpcs:ignoreFile
 
                         // lower snake
+                        use function functionName;
                         function functionName(){}
                         functionName();
                         call_user_func('functionName');
@@ -179,6 +182,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
                         trait_exists('trait_name', true);
 
                         // upper snake
+                        use const constName;
                         class Foo{public const constName = 'const';}
                         Foo::constName;
                         define('constName', 'const');
@@ -401,6 +405,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     private function shouldLowerSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
+        $grandfather = $parent->getAttribute('parent');
 
         // function function_name(){}
         if ($node instanceof Identifier && $parent instanceof Function_) {
@@ -408,7 +413,20 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         }
 
         // function_name();
-        if ($node instanceof Name && $parent instanceof FuncCall) {
+        // use function function_name;
+        if (
+            $node instanceof Name
+            && (
+                $parent instanceof FuncCall
+                || (
+                    $this->isSubclasses($parent, [UseItem::class])
+                    && (
+                        (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_FUNCTION === $parent->type)
+                        || (Use_::TYPE_FUNCTION === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
+                    )
+                )
+            )
+        ) {
             return true;
         }
 
@@ -432,6 +450,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     private function shouldUcfirstCamelName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
+        $grandfather = $parent->getAttribute('parent');
 
         if (
             $node instanceof Identifier
@@ -452,24 +471,35 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         }
 
         if (
-            $node instanceof Name
-            && !$this->isName($node, 'stdClass')
-            && $this->isSubclasses($parent, [
-                // class Foo extends ClassName implements InterfaceName{}
-                Class_::class,
-                // enum Enum implements InterfaceName{}
-                Enum_::class,
+            $node instanceof Name && (
                 // use ClassName;
-                UseUse::class,
-                // use TraitName;
-                TraitUse::class,
-                // ClassName::CONST;
-                ClassConstFetch::class,
-                // ClassName::$property;
-                StaticPropertyFetch::class,
-                // ClassName::method();
-                StaticCall::class,
-            ])
+                /**
+                 * @todo Use_::TYPE_UNKNOWN
+                 */
+                (
+                    $this->isSubclasses($parent, [UseItem::class])
+                    && (
+                        (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_NORMAL === $parent->type)
+                        || (Use_::TYPE_NORMAL === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
+                    )
+                )
+                || $this->isSubclasses($parent, [
+                    // class Foo extends ClassName implements InterfaceName{}
+                    Class_::class,
+                    // enum Enum implements InterfaceName{}
+                    Enum_::class,
+                    // // use ClassName;
+                    // UseUse::class,
+                    // use TraitName;
+                    TraitUse::class,
+                    // ClassName::CONST;
+                    ClassConstFetch::class,
+                    // ClassName::$property;
+                    StaticPropertyFetch::class,
+                    // ClassName::method();
+                    StaticCall::class,
+                ])
+            )
         ) {
             return true;
         }
@@ -531,6 +561,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     private function shouldUpperSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
+        $grandfather = $parent->getAttribute('parent');
 
         if (
             $node instanceof Identifier
@@ -561,9 +592,18 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         }
 
         // CONST_NAME;
+        // use const CONST_NAME;;
         return $node instanceof Name
-        && !$this->isNames($node, ['null', 'true', 'false'])
-        && $parent instanceof ConstFetch;
+            && (
+                $parent instanceof ConstFetch
+                || (
+                    $this->isSubclasses($parent, [UseItem::class])
+                    && (
+                        (Use_::TYPE_UNKNOWN === $grandfather->type && Use_::TYPE_CONSTANT === $parent->type)
+                        || (Use_::TYPE_CONSTANT === $grandfather->type && Use_::TYPE_UNKNOWN === $parent->type)
+                    )
+                )
+            );
     }
 
     /**
@@ -651,23 +691,20 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
             && $funcCall->args[$index]->value instanceof String_;
     }
 
-    /**
-     * @noinspection PhpUnusedPrivateMethodInspection
-     */
-    private function hasFuncCallNameStringArg(FuncCall $funcCall, string $name): bool
-    {
-        foreach ($funcCall->args as $arg) {
-            if (
-                $arg->name instanceof Identifier
-                && $arg->name->name === $name
-                && $arg->value instanceof String_
-            ) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+    // private function hasFuncCallNameStringArg(FuncCall $funcCall, string $name): bool
+    // {
+    //     foreach ($funcCall->args as $arg) {
+    //         if (
+    //             $arg->name instanceof Identifier
+    //             && $arg->name->name === $name
+    //             && $arg->value instanceof String_
+    //         ) {
+    //             return true;
+    //         }
+    //     }
+    //
+    //     return false;
+    // }
 
     private function makeCollecting(): Collecting
     {
