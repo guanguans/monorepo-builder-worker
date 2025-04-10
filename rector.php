@@ -17,6 +17,7 @@ use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\AddNoinspectionsDocCommentToDeclareRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\RemoveNamespaceRector;
+use Guanguans\MonorepoBuilderWorker\Support\Rectors\RenameToPsrNameRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\SimplifyListIndexRector;
 use Illuminate\Support\Str;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
@@ -112,6 +113,9 @@ return RectorConfig::configure()
     ->withConfiguredRule(RemoveNamespaceRector::class, [
         'Guanguans\MonorepoBuilderWorkerTests',
     ])
+    // ->withConfiguredRule(RenameToPsrNameRector::class, [
+    //     // '*',
+    // ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
         'codeCoverageIgnore',
         'phpstan-ignore',
@@ -163,6 +167,9 @@ return RectorConfig::configure()
         AddNoinspectionsDocCommentToDeclareRector::class => [
             __DIR__.'/src/',
             ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
+        ],
+        NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class => [
+            __DIR__.'/src/Support/Rectors/',
         ],
         RemoveNamespaceRector::class => [
             __DIR__.'/src/',

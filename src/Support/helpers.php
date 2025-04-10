@@ -49,3 +49,64 @@ if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
         ));
     }
 }
+
+if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\rescue')) {
+    /**
+     * @see \Composer\Util\Silencer::call()
+     */
+    function rescue(callable $callback, ?callable $rescuer = null): mixed
+    {
+        /** @phpstan-ignore-next-line  */
+        set_error_handler(static function (
+            int $errNo,
+            string $errStr,
+            string $errFile = '',
+            int $errLine = 0
+        ) use ($rescuer, &$result): void {
+            $rescuer and $result = $rescuer($errNo, $errStr, $errFile, $errLine);
+        });
+
+        // set_exception_handler(static function (\Throwable $throwable) use ($rescuer, &$result): void {
+        //     $rescuer and $result = $rescuer($throwable);
+        // });
+
+        try {
+            $result = $callback();
+        } catch (\Throwable $throwable) {
+            $rescuer and $result = $rescuer($throwable);
+        }
+
+        restore_error_handler();
+
+        return $result;
+    }
+}
+
+if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\str_random')) {
+    /**
+     * @throws \Random\RandomException
+     */
+    function str_random(int $length = 16): string
+    {
+        return substr(bin2hex(random_bytes((int) ceil($length / 2))), 0, $length);
+    }
+}
+
+if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\defers')) {
+    /**
+     * @see https://github.com/php-defer/php-defer
+     */
+    function defers(?\SplStack &$context, callable $callback): void
+    {
+        $context ??= new class extends \SplStack {
+            public function __destruct()
+            {
+                while ($this->count() > 0) {
+                    ($this->pop())();
+                }
+            }
+        };
+
+        $context->push($callback);
+    }
+}
