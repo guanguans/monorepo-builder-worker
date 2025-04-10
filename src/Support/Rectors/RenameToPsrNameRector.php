@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
 use PhpParser\Error;
 use PhpParser\ErrorHandler\Collecting;
 use PhpParser\Node;
+use PhpParser\Node\Attribute;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\ConstFetch;
@@ -40,9 +41,9 @@ use PhpParser\Node\Stmt\PropertyProperty;
 use PhpParser\Node\Stmt\Trait_;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\Use_;
-use PhpParser\Node\Stmt\UseUse;
 use PhpParser\Node\UseItem;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
+use Rector\PHPStan\ScopeFetcher;
 use Rector\Rector\AbstractRector;
 use RectorPrefix202503\Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\RuleDocGenerator\Exception\PoorDocumentationException;
@@ -156,6 +157,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
                         function_exists('functionName');
 
                         // ucfirst camel
+                        #[attribute_name()]
                         class class_name{}
                         enum enum_name{}
                         enum Enum{case case_name;}
@@ -315,6 +317,9 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     }
 
     /**
+     * @see https://github.com/rectorphp/rector/issues/7611
+     * @see https://github.com/rectorphp/rector/blob/main/UPGRADING.md#1-abstractscopeawarerector-is-removed-use-abstractrector-instead
+     *
      * @noinspection PhpDocSignatureInspection
      * @noinspection PhpPossiblePolymorphicInvocationInspection
      *
@@ -348,6 +353,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
             ])
         ) {
             $node->name = $renamer($node->name);
+            // $node->setAttribute('scope', ScopeFetcher::fetch($node));
 
             return $node;
         }
@@ -414,6 +420,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
 
         // function_name();
         // use function function_name;
+        /** @noinspection PhpConditionAlreadyCheckedInspection */
         if (
             $node instanceof Name
             && (
@@ -450,6 +457,8 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     private function shouldUcfirstCamelName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
+
+        /** @noinspection PhpUnusedLocalVariableInspection */
         $grandfather = $parent->getAttribute('parent');
 
         if (
@@ -473,9 +482,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         if (
             $node instanceof Name && (
                 // use ClassName;
-                /**
-                 * @todo Use_::TYPE_UNKNOWN
-                 */
+                /** @noinspection PhpConditionAlreadyCheckedInspection */
                 (
                     $this->isSubclasses($parent, [UseItem::class])
                     && (
@@ -484,12 +491,12 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
                     )
                 )
                 || $this->isSubclasses($parent, [
+                    // #[\AttributeName]
+                    Attribute::class,
                     // class Foo extends ClassName implements InterfaceName{}
                     Class_::class,
                     // enum Enum implements InterfaceName{}
                     Enum_::class,
-                    // // use ClassName;
-                    // UseUse::class,
                     // use TraitName;
                     TraitUse::class,
                     // ClassName::CONST;
@@ -593,6 +600,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
 
         // CONST_NAME;
         // use const CONST_NAME;;
+        /** @noinspection PhpConditionAlreadyCheckedInspection */
         return $node instanceof Name
             && (
                 $parent instanceof ConstFetch
