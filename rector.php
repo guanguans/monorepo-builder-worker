@@ -20,6 +20,7 @@ use Guanguans\MonorepoBuilderWorker\Support\Rectors\RemoveNamespaceRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\RenameToPsrNameRector;
 use Guanguans\MonorepoBuilderWorker\Support\Rectors\SimplifyListIndexRector;
 use Illuminate\Support\Str;
+use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
@@ -32,6 +33,7 @@ use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
 use Rector\DowngradePhp81\Rector\Array_\DowngradeArraySpreadStringKeyRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
+use Rector\NodeTypeResolver\PHPStan\Scope\Contract\NodeVisitor\ScopeResolverNodeVisitorInterface;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\AddSeeTestAnnotationRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
@@ -50,7 +52,7 @@ return RectorConfig::configure()
         __DIR__.'/composer-updater',
     ])
     ->withRootFiles()
-    // ->withSkipPath(__DIR__.'/tests.php')
+    ->withSkipPath(__DIR__.'/tests.php')
     ->withSkip([
         '**/__snapshots__/*',
         '**/Fixtures/*',
@@ -113,9 +115,10 @@ return RectorConfig::configure()
     ->withConfiguredRule(RemoveNamespaceRector::class, [
         'Guanguans\MonorepoBuilderWorkerTests',
     ])
-    // ->withConfiguredRule(RenameToPsrNameRector::class, [
-    //     // '*',
-    // ])
+    ->registerService(className: ParentConnectingVisitor::class, tag: ScopeResolverNodeVisitorInterface::class)
+    ->withConfiguredRule(RenameToPsrNameRector::class, [
+        // '*',
+    ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
         'codeCoverageIgnore',
         'phpstan-ignore',

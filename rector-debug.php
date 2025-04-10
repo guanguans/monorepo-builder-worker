@@ -26,6 +26,12 @@ use Rector\Config\RectorConfig;
 use Rector\NodeTypeResolver\PHPStan\Scope\Contract\NodeVisitor\ScopeResolverNodeVisitorInterface;
 use Rector\ValueObject\PhpVersion;
 
+/**
+ * @see https://getrector.com/demo
+ * @see https://getrector.com/find-rule
+ * @see https://getrector.com/documentation
+ * @see https://getrector.com/ast
+ */
 return RectorConfig::configure()
     ->withPaths([
         // __DIR__.'/src/',
@@ -55,8 +61,8 @@ return RectorConfig::configure()
     // ->withConfiguredRule(RemoveNamespaceRector::class, [
     //     'Guanguans\MonorepoBuilderWorkerTests',
     // ])
+    // ->registerService(className: NodeConnectingVisitor::class, tag: ScopeResolverNodeVisitorInterface::class)
     ->registerService(className: ParentConnectingVisitor::class, tag: ScopeResolverNodeVisitorInterface::class)
-    ->registerService(className: NodeConnectingVisitor::class, tag: ScopeResolverNodeVisitorInterface::class)
     ->withConfiguredRule(RenameToPsrNameRector::class, [
         // '*',
     ])

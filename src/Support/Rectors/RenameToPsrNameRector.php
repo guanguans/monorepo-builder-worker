@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\Support\Rectors;
 
 use Illuminate\Support\Str;
+use PhpParser\Error;
+use PhpParser\ErrorHandler\Collecting;
 use PhpParser\Node;
 use PhpParser\Node\Const_;
 use PhpParser\Node\Expr\ClassConstFetch;
@@ -40,6 +42,7 @@ use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\UseUse;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\Rector\AbstractRector;
+use RectorPrefix202503\Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\RuleDocGenerator\Exception\PoorDocumentationException;
 use Symplify\RuleDocGenerator\Exception\ShouldNotHappenException;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;
@@ -48,9 +51,11 @@ use Webmozart\Assert\Assert;
 
 class RenameToPsrNameRector extends AbstractRector implements ConfigurableRectorInterface
 {
+    private static ?Collecting $collecting = null;
+
     /** @var list<string> */
-    protected array $except = [
-        '*::*',
+    private array $except = [
+        // '*::*',
         'class',
         'false',
         'null',
@@ -110,6 +115,20 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
          */
         'php_user_filter',
     ];
+
+    public function __construct(private SymfonyStyle $symfonyStyle) {}
+
+    public function __destruct()
+    {
+        if ($this->symfonyStyle->isDebug()) {
+            $this->symfonyStyle->comment(
+                collect($this->makeCollecting()->getErrors())
+                    ->map(fn (Error $error): string => $error->getRawMessage())
+                    ->unique()
+                    ->all()
+            );
+        }
+    }
 
     /**
      * @throws PoorDocumentationException
@@ -278,39 +297,11 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
             if ($this->shouldLcfirstCamelName($node)) {
                 return $this->rename($node, static fn (string $name): string => Str::lcfirst(Str::camel($name)));
             }
-        } catch (\RuntimeException $runtimeException) {
-            // skip
-            dump($runtimeException->getMessage());
+        } catch (Error $error) {
+            $this->makeCollecting()->handleError($error);
         }
 
         return null;
-    }
-
-    /**
-     * @param iterable<string>|string $patterns
-     */
-    public function isMatches(string $value, iterable|string $patterns): bool
-    {
-        if (!is_iterable($patterns)) {
-            $patterns = [$patterns];
-        }
-
-        foreach ($patterns as $pattern) {
-            $pattern = (string) $pattern;
-
-            if ($pattern === $value) {
-                return true;
-            }
-
-            $pattern = preg_quote($pattern, '#');
-            $pattern = str_replace('\*', '.*', $pattern);
-
-            if (preg_match('#^'.$pattern.'\z#u', $value) === 1) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public function configure(array $configuration): void
@@ -320,12 +311,17 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     }
 
     /**
-     * @param Node\Expr\FuncCall|Node\Expr\Variable|Node\Identifier|Node\Name $node
+     * @noinspection PhpDocSignatureInspection
+     * @noinspection PhpPossiblePolymorphicInvocationInspection
+     *
+     * @param FuncCall|Identifier|Name|Variable $node
      */
-    protected function rename(Node $node, callable $renamer): Node
+    private function rename(Node $node, callable $renamer): Node
     {
-        $renamer = fn (string $name): string => $renamer((function (string $name): string {
-            throw_if($this->isMatches($name, $this->except), new \RuntimeException("The name[$name] is skipped."));
+        $renamer = fn (string $name): string => $renamer((function (string $name) use ($node): string {
+            if (Str::is($this->except, $name)) {
+                throw new Error("The name [$name] is skipped.", $node->getAttributes());
+            }
 
             if (ctype_upper(preg_replace('/[^a-zA-Z]/', '', $name))) {
                 return mb_strtolower($name, 'UTF-8');
@@ -335,7 +331,8 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         })($name));
 
         if ($node instanceof Name) {
-            $node->parts[\count($node->getParts()) - 1] = $renamer($node->getLast());
+            // return Name::concat($node->slice(0, -1), $renamer($node->getLast()));
+            $node->name = Name::concat($node->slice(0, -1), $renamer($node->getLast()))->name;
 
             return $node;
         }
@@ -397,9 +394,11 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     }
 
     /**
-     * @param Node\Expr\FuncCall|Node\Expr\Variable|Node\Identifier|Node\Name $node
+     * @noinspection PhpDocSignatureInspection
+     *
+     * @param FuncCall|Identifier|Name|Variable $node
      */
-    protected function shouldLowerSnakeName(Node $node): bool
+    private function shouldLowerSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
 
@@ -426,9 +425,11 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     }
 
     /**
-     * @param Node\Expr\FuncCall|Node\Expr\Variable|Node\Identifier|Node\Name $node
+     * @noinspection PhpDocSignatureInspection
+     *
+     * @param FuncCall|Identifier|Name|Variable $node
      */
-    protected function shouldUcfirstCamelName(Node $node): bool
+    private function shouldUcfirstCamelName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
 
@@ -523,9 +524,11 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     }
 
     /**
-     * @param Node\Expr\FuncCall|Node\Expr\Variable|Node\Identifier|Node\Name $node
+     * @noinspection PhpDocSignatureInspection
+     *
+     * @param FuncCall|Identifier|Name|Variable $node
      */
-    protected function shouldUpperSnakeName(Node $node): bool
+    private function shouldUpperSnakeName(Node $node): bool
     {
         $parent = $node->getAttribute('parent');
 
@@ -564,9 +567,11 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
     }
 
     /**
-     * @param Node\Expr\FuncCall|Node\Expr\Variable|Node\Identifier|Node\Name $node
+     * @noinspection PhpDocSignatureInspection
+     *
+     * @param FuncCall|Identifier|Name|Variable $node
      */
-    protected function shouldLcfirstCamelName(Node $node): bool
+    private function shouldLcfirstCamelName(Node $node): bool
     {
         // $varName;
         if ($node instanceof Variable && \is_string($node->name)) {
@@ -624,7 +629,7 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         return false;
     }
 
-    protected function isSubclasses(?object $object, array $classes): bool
+    private function isSubclasses(?object $object, array $classes): bool
     {
         if (!\is_object($object)) {
             return false;
@@ -639,14 +644,17 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         return false;
     }
 
-    protected function hasFuncCallIndexStringArg(FuncCall $funcCall, int $index): bool
+    private function hasFuncCallIndexStringArg(FuncCall $funcCall, int $index): bool
     {
         return isset($funcCall->args[$index])
             && null === $funcCall->args[$index]->name
             && $funcCall->args[$index]->value instanceof String_;
     }
 
-    protected function hasFuncCallNameStringArg(FuncCall $funcCall, string $name): bool
+    /**
+     * @noinspection PhpUnusedPrivateMethodInspection
+     */
+    private function hasFuncCallNameStringArg(FuncCall $funcCall, string $name): bool
     {
         foreach ($funcCall->args as $arg) {
             if (
@@ -659,5 +667,10 @@ class RenameToPsrNameRector extends AbstractRector implements ConfigurableRector
         }
 
         return false;
+    }
+
+    private function makeCollecting(): Collecting
+    {
+        return self::$collecting ??= new Collecting;
     }
 }
