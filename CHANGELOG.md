@@ -8,6 +8,21 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="2.0.4"></a>
+## [2.0.4] - 2025-04-11
+### ✨ Features
+- **case-rectors:** implement namespace removal functionality ([07621f4](https://github.com/guanguans/monorepo-builder-worker/commit/07621f4))
+- **rector:** Add support for PHP attributes in RenameToPsrNameRector ([ab0ba37](https://github.com/guanguans/monorepo-builder-worker/commit/ab0ba37))
+- **support:** add `RenameToPsrNameRector` class and `rescue` helper function ([ecad48f](https://github.com/guanguans/monorepo-builder-worker/commit/ecad48f))
+
+### 🐞 Bug Fixes
+- **rename-to-psr-name-rector:** adjust variable handling and nullability ([78fb699](https://github.com/guanguans/monorepo-builder-worker/commit/78fb699))
+- **rename-to-psr-name-rector:** ensure safe access to parent attributes ([00c0f5b](https://github.com/guanguans/monorepo-builder-worker/commit/00c0f5b))
+- **rename-to-psr-name-rector:** handle use statements with unknown type ([109b0b9](https://github.com/guanguans/monorepo-builder-worker/commit/109b0b9))
+- **rename-to-psr-name-rector:** update handling of node renaming ([26751bb](https://github.com/guanguans/monorepo-builder-worker/commit/26751bb))
+- **simplify-list-index:** correct logic to handle integer keys and improve variable naming ([9605494](https://github.com/guanguans/monorepo-builder-worker/commit/9605494))
+
+
 <a name="2.0.3"></a>
 ## [2.0.3] - 2025-04-09
 ### ✨ Features
@@ -527,7 +542,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.3...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.4...HEAD
+[2.0.4]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.0...2.0.1
