@@ -13,6 +13,8 @@ includes:
 #    - vendor/ergebnis/phpstan-rules/rules.neon
 #    - vendor/phpstan/phpstan-strict-rules/rules.neon
 #    - vendor/roave/no-floaters/rules.neon
+#    - vendor/shipmonk/dead-code-detector/rules.neon
+#    - vendor/staabm/phpstan-todo-by/extension.neon
 
     - vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
 #    - vendor/symplify/phpstan-rules/config/configurable-rules.neon
@@ -34,7 +36,8 @@ parameters:
         - tests/Fixtures/
     level: max
 #    level: 10
-    tmpDir: .build/phpstan
+    tmpDir: .build/phpstan/
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
 #    errorFormat: symplify
     errorFormat: friendly
     friendly:
@@ -42,6 +45,13 @@ parameters:
         lineAfter: 3
         editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
     treatPhpDocTypesAsCertain: false
+    cognitive_complexity:
+        class: 50
+        function: 8
+        dependency_tree: 150
+        dependency_tree_types:
+            # only these explicit types are checked, nothing else
+            - Rector\Contract\Rector\RectorInterface
     type_coverage:
         declare: 100
         param_type: 100
