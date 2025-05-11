@@ -102,26 +102,11 @@ final class SimplifyListIndexRector extends AbstractRector
         return $hasChanged ? null : $node;
     }
 
+    /**
+     * @noinspection ArrayIsListCanBeUsedInspection
+     */
     private function isList(array $array): bool
     {
-        if (\function_exists('array_is_list')) {
-            return array_is_list($array);
-        }
-
-        if ([] === $array) {
-            return true;
-        }
-
-        $currentKey = 0;
-
-        foreach (array_keys($array) as $key) {
-            if ($key !== $currentKey) {
-                return false;
-            }
-
-            ++$currentKey;
-        }
-
-        return true;
+        return \function_exists('array_is_list') ? array_is_list($array) : array_values($array) === $array;
     }
 }
