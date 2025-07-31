@@ -19,7 +19,7 @@
 ## Installation
 
 ```bash
-composer require guanguans/monorepo-builder-worker --prefer-dist --dev -v
+composer require guanguans/monorepo-builder-worker --dev -v
 ```
 
 ## Usage
