@@ -19,7 +19,7 @@
 ## Installation
 
 ```bash
-composer require guanguans/monorepo-builder-worker --dev -v
+composer require guanguans/monorepo-builder-worker --dev --ansi -v
 ```
 
 ## Usage
