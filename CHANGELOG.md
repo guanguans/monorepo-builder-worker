@@ -8,6 +8,33 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="2.1.0"></a>
+## [2.1.0] - 2025-11-04
+### 🐞 Bug Fixes
+- **deps:** update Symfony component prefixes to latest versions ([9b329e3](https://github.com/guanguans/monorepo-builder-worker/commit/9b329e3))
+- **docs:** remove --prefer-dist from composer require command in README files ([c54f800](https://github.com/guanguans/monorepo-builder-worker/commit/c54f800))
+
+### 📖 Documents
+- **composer:** update keywords and installation command ([beae622](https://github.com/guanguans/monorepo-builder-worker/commit/beae622))
+
+### 🏎 Performance Improvements
+- **simplify-list-index:** optimize isList method ([073b53f](https://github.com/guanguans/monorepo-builder-worker/commit/073b53f))
+
+### 📦 Builds
+- **dependencies:** update and add PHP dependencies ([a5d6b73](https://github.com/guanguans/monorepo-builder-worker/commit/a5d6b73))
+
+### Pull Requests
+- Merge pull request [#64](https://github.com/guanguans/monorepo-builder-worker/issues/64) from guanguans/dependabot/github_actions/actions/setup-node-6
+- Merge pull request [#63](https://github.com/guanguans/monorepo-builder-worker/issues/63) from guanguans/dependabot/github_actions/stefanzweifel/git-auto-commit-action-7
+- Merge pull request [#62](https://github.com/guanguans/monorepo-builder-worker/issues/62) from guanguans/dependabot/github_actions/actions/labeler-6
+- Merge pull request [#61](https://github.com/guanguans/monorepo-builder-worker/issues/61) from guanguans/dependabot/github_actions/actions/stale-10
+- Merge pull request [#60](https://github.com/guanguans/monorepo-builder-worker/issues/60) from guanguans/dependabot/github_actions/actions/setup-node-5
+- Merge pull request [#59](https://github.com/guanguans/monorepo-builder-worker/issues/59) from guanguans/dependabot/github_actions/actions/checkout-5
+- Merge pull request [#58](https://github.com/guanguans/monorepo-builder-worker/issues/58) from guanguans/dependabot/github_actions/super-linter/super-linter-8
+- Merge pull request [#57](https://github.com/guanguans/monorepo-builder-worker/issues/57) from guanguans/dependabot/github_actions/stefanzweifel/git-auto-commit-action-6
+- Merge pull request [#56](https://github.com/guanguans/monorepo-builder-worker/issues/56) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.4.0
+
+
 <a name="2.0.4"></a>
 ## [2.0.4] - 2025-04-11
 ### ✨ Features
@@ -542,7 +569,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.4...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.1.0...HEAD
+[2.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.4...2.1.0
 [2.0.4]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.1...2.0.2
