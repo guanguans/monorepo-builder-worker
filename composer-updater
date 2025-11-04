@@ -58,7 +58,6 @@ $status = (new SingleCommandApplication)
             private string $composerBinary;
             private array $exceptPackages;
             private array $exceptDependencyVersions;
-            private bool $dryRun;
             private SymfonyStyle $symfonyStyle;
             private Differ $differ;
 
@@ -71,7 +70,7 @@ $status = (new SingleCommandApplication)
                 ?string $composerBinary = null,
                 array $exceptPackages = [],
                 array $exceptDependencyVersions = [],
-                bool $dryRun = false,
+                private bool $dryRun = false,
                 ?SymfonyStyle $symfonyStyle = null,
                 ?Differ $differ = null
             ) {
@@ -93,7 +92,6 @@ $status = (new SingleCommandApplication)
                     '*@*',
                     // '*|*',
                 ], $exceptDependencyVersions);
-                $this->dryRun = $dryRun;
                 $this->symfonyStyle = $symfonyStyle ?? new SymfonyStyle(new ArgvInput, new ConsoleOutput);
                 $this->differ = $differ ?? new Differ;
             }
@@ -167,7 +165,7 @@ $status = (new SingleCommandApplication)
             private function getOutdatedDecodedComposerJson(): array
             {
                 $outdatedComposerPackages = $this->getOutdatedComposerPackages();
-                $decodedComposerJson = json_decode(file_get_contents($this->composerJsonPath), true);
+                $decodedComposerJson = json_decode(file_get_contents($this->composerJsonPath), true, 512, \JSON_THROW_ON_ERROR);
                 InstalledVersions::reload([]);
 
                 foreach ($decodedComposerJson as $name => &$value) {
@@ -209,7 +207,9 @@ $status = (new SingleCommandApplication)
                                 ->getOutput(),
                             (int) strpos($output, '{'.\PHP_EOL)
                         ),
-                        true
+                        true,
+                        512,
+                        \JSON_THROW_ON_ERROR
                     )['installed'],
                     function (array $carry, array $package): array {
                         $lowestArrayVersion = $this->toArrayVersion($package['version']);
@@ -217,10 +217,10 @@ $status = (new SingleCommandApplication)
                         $dependencyVersions = [$this->toDependencyVersion($package['version'])];
 
                         if ($lowestArrayVersion[0] !== $highestArrayVersion[0]) {
-                            $dependencyVersions = array_merge($dependencyVersions, array_map(
+                            $dependencyVersions = [...$dependencyVersions, ...array_map(
                                 static fn (string $major): string => "^$major.0",
                                 range($lowestArrayVersion[0] + 1, $highestArrayVersion[0])
-                            ));
+                            )];
                         }
 
                         $package['dependency_version'] = implode(' || ', $dependencyVersions);

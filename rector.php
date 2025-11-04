@@ -31,7 +31,8 @@ use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
-use Rector\DowngradePhp81\Rector\Array_\DowngradeArraySpreadStringKeyRector;
+use Rector\DowngradePhp74\Rector\Array_\DowngradeArraySpreadRector;
+use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\NodeTypeResolver\PHPStan\Scope\Contract\NodeVisitor\ScopeResolverNodeVisitorInterface;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
@@ -52,11 +53,11 @@ return RectorConfig::configure()
         __DIR__.'/composer-updater',
     ])
     ->withRootFiles()
-    ->withSkipPath(__DIR__.'/tests.php')
+    // ->withSkipPath(__DIR__.'/tests.php')
     ->withSkip([
         '**/__snapshots__/*',
         '**/Fixtures/*',
-        // __FILE__,
+        __FILE__,
     ])
     ->withAutoloadPaths([
         (new ReflectionClass(ReleaseWorkerInterface::class))->getFileName(),
@@ -150,8 +151,9 @@ return RectorConfig::configure()
         )
     )
     ->withSkip([
+        ChangeOrIfContinueToMultiContinueRector::class,
         DisallowedEmptyRuleFixerRector::class,
-        DowngradeArraySpreadStringKeyRector::class,
+        DowngradeArraySpreadRector::class,
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
         LogicalToBooleanRector::class,
@@ -171,6 +173,7 @@ return RectorConfig::configure()
         AddNoinspectionsDocCommentToDeclareRector::class => [
             __DIR__.'/src/',
             ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
+            __DIR__.'/composer-updater',
         ],
         NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class => [
             __DIR__.'/src/Support/Rectors/',

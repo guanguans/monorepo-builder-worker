@@ -18,10 +18,10 @@ declare(strict_types=1);
  */
 
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
-use MonorepoBuilderPrefix202408\Symfony\Component\Console\Input\ArgvInput;
-use MonorepoBuilderPrefix202408\Symfony\Component\Console\Output\ConsoleOutput;
-use MonorepoBuilderPrefix202408\Symfony\Component\Console\Style\SymfonyStyle;
-use MonorepoBuilderPrefix202408\Symfony\Component\Process\ExecutableFinder;
+use MonorepoBuilderPrefix202507\Symfony\Component\Console\Input\ArgvInput;
+use MonorepoBuilderPrefix202507\Symfony\Component\Console\Output\ConsoleOutput;
+use MonorepoBuilderPrefix202507\Symfony\Component\Console\Style\SymfonyStyle;
+use MonorepoBuilderPrefix202507\Symfony\Component\Process\ExecutableFinder;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 uses(ConcreteFactory::class);

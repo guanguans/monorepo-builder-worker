@@ -46,7 +46,7 @@ use PhpParser\Node\UseItem;
 use Rector\Contract\Rector\ConfigurableRectorInterface;
 use Rector\PHPStan\ScopeFetcher;
 use Rector\Rector\AbstractRector;
-use RectorPrefix202503\Symfony\Component\Console\Style\SymfonyStyle;
+use RectorPrefix202510\Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\RuleDocGenerator\Exception\PoorDocumentationException;
 use Symplify\RuleDocGenerator\Exception\ShouldNotHappenException;
 use Symplify\RuleDocGenerator\ValueObject\CodeSample\ConfiguredCodeSample;

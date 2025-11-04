@@ -28,6 +28,7 @@ return (new Configuration)
     ])
     ->ignoreErrorsOnPackages(
         [
+            'composer/semver',
             'phar-io/version',
         ],
         [ErrorType::SHADOW_DEPENDENCY],

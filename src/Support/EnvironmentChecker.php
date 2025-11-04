@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
+use Composer\InstalledVersions;
+use Composer\Semver\Comparator;
 use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract;
 
@@ -69,24 +71,30 @@ class EnvironmentChecker
 
     private static function fixNamespacePrefix(): void
     {
-        $isPassed = static fn (
-            string $yearMonth
-        ): bool => class_exists("MonorepoBuilderPrefix$yearMonth\\Symfony\\Component\\Console\\Style\\SymfonyStyle");
-        $yearMonth = date('Ym');
+        $namespacePrefix = (static function (): string {
+            if (Comparator::greaterThanOrEqualTo(InstalledVersions::getPrettyVersion('symplify/monorepo-builder'), '12')) {
+                return '';
+            }
 
-        while (202310 <= $yearMonth && !$isPassed($yearMonth)) {
-            $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
-        }
+            $isPassed = static fn (
+                string $yearMonth
+            ): bool => class_exists("MonorepoBuilderPrefix$yearMonth\\Symfony\\Component\\Console\\Style\\SymfonyStyle");
+            $yearMonth = date('Ym');
 
-        if (!$isPassed($yearMonth)) {
-            echo \PHP_EOL, 'The file [vendor/autoload.php] is not loaded.', \PHP_EOL;
+            while (202310 <= $yearMonth && !$isPassed($yearMonth)) {
+                $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
+            }
 
-            return;
-        }
+            if (!$isPassed($yearMonth)) {
+                echo \PHP_EOL, 'The file [vendor/autoload.php] is not loaded.', \PHP_EOL;
 
-        echo \PHP_EOL,
-        \sprintf('The namespace prefix should be [%s].', $namespacePrefix = "MonorepoBuilderPrefix$yearMonth"),
-        \PHP_EOL;
+                exit(1);
+            }
+
+            return "MonorepoBuilderPrefix$yearMonth";
+        })();
+
+        echo \PHP_EOL, "The namespace prefix should be [$namespacePrefix].", \PHP_EOL;
 
         foreach (array_map('realpath', glob(__DIR__.'/../../{src,tests}{/,/*/,/*/*/,/*/*/*/}*.php', \GLOB_BRACE)) as $file) {
             $contents = file_get_contents($file);

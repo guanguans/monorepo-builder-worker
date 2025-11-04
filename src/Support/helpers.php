@@ -91,22 +91,3 @@ if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\str_random')) {
         return substr(bin2hex(random_bytes((int) ceil($length / 2))), 0, $length);
     }
 }
-
-if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\defers')) {
-    /**
-     * @see https://github.com/php-defer/php-defer
-     */
-    function defers(?\SplStack &$context, callable $callback): void
-    {
-        $context ??= new class extends \SplStack {
-            public function __destruct()
-            {
-                while ($this->count() > 0) {
-                    ($this->pop())();
-                }
-            }
-        };
-
-        $context->push($callback);
-    }
-}
