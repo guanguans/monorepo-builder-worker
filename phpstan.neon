@@ -34,7 +34,6 @@ parameters:
         - vendor/composer/InstalledVersions.php
     excludePaths:
         - tests/Fixtures/
-        - src/Support/Rectors/
     level: max
 #    level: 10
     tmpDir: .build/phpstan/

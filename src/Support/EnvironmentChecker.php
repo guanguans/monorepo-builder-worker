@@ -29,7 +29,7 @@ class EnvironmentChecker
      */
     public static function checks(array $workers): void
     {
-        self::checkAndFixNamespacePrefix();
+        // self::checkAndFixNamespacePrefix();
 
         self::createSymfonyStyle()->note('Checking environment...');
 
@@ -41,7 +41,7 @@ class EnvironmentChecker
     }
 
     /**
-     * @param callable|class-string<EnvironmentCheckerContract>|EnvironmentCheckerContract $worker
+     * @param callable|class-string<EnvironmentCheckerContract>|\Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract $worker
      *
      * @throws \Throwable
      */
@@ -59,7 +59,7 @@ class EnvironmentChecker
     public static function checkAndFixNamespacePrefix(): int
     {
         try {
-            self::createProcessRunner();
+            // self::createProcessRunner();
 
             return 0;
         } catch (\Error) {
@@ -69,7 +69,7 @@ class EnvironmentChecker
         }
     }
 
-    private static function fixNamespacePrefix(): void
+    protected static function fixNamespacePrefix(): void
     {
         $namespacePrefix = (static function (): string {
             if (Comparator::greaterThanOrEqualTo(InstalledVersions::getPrettyVersion('symplify/monorepo-builder'), '12')) {

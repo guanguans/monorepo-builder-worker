@@ -16,37 +16,55 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
 use Composer\Autoload\ClassLoader;
+use Illuminate\Support\Collection;
 
 if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
     /**
+     * @see https://github.com/illuminate/collections
+     * @see https://github.com/alekitto/class-finder
+     * @see https://github.com/ergebnis/classy
+     * @see https://gitlab.com/hpierce1102/ClassFinder
+     * @see https://packagist.org/packages/haydenpierce/class-finder
      * @see \get_declared_classes()
      * @see \get_declared_interfaces()
      * @see \get_declared_traits()
      * @see \DG\BypassFinals::enable()
+     * @see \Composer\Util\ErrorHandler
+     * @see \Monolog\ErrorHandler
+     * @see \PhpCsFixer\ExecutorWithoutErrorHandler
+     * @see \Phrity\Util\ErrorHandler
      *
-     * @return list<class-string>
+     * @template TObject of object
+     *
+     * @internal
+     *
+     * @param null|(callable(class-string<TObject>, string): bool) $filter
+     *
+     * @return \Illuminate\Support\Collection<class-string<TObject>, \ReflectionClass<TObject>|\Throwable>
+     *
+     * @noinspection PhpUndefinedNamespaceInspection
      */
-    function classes(): array
+    function classes(?callable $filter = null): Collection
     {
-        /** @var list<list<string>> $classes */
-        static $classes = [];
+        $filter ??= static fn (string $class, string $file): bool => true;
 
-        if ($classes) {
-            return $classes;
-        }
+        /** @var null|\Illuminate\Support\Collection<string, class-string> $classes */
+        static $classes;
+        $classes ??= collect(spl_autoload_functions())->flatMap(
+            static fn (callable $loader): array => \is_array($loader) && $loader[0] instanceof ClassLoader
+                ? $loader[0]->getClassMap()
+                : []
+        );
 
-        foreach (spl_autoload_functions() as $loader) {
-            if (\is_array($loader) && $loader[0] instanceof ClassLoader) {
-                $classes[] = array_keys($loader[0]->getClassMap());
-            }
-        }
-
-        return array_unique(array_merge(
-            get_declared_classes(),
-            get_declared_interfaces(),
-            get_declared_traits(),
-            ...$classes
-        ));
+        return $classes
+            ->filter(static fn (string $file, string $class): bool => $filter($class, $file))
+            ->mapWithKeys(static function (string $file, string $class): array {
+                try {
+                    return [$class => new \ReflectionClass($class)];
+                } catch (\Throwable $throwable) {
+                    return [$class => $throwable];
+                }
+            });
     }
 }
 

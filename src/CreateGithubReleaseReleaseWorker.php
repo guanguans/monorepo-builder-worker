@@ -22,12 +22,17 @@ use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 class CreateGithubReleaseReleaseWorker extends ReleaseWorker
 {
-    public function __construct(private ProcessRunner $processRunner) {}
+    public function __construct(private readonly ProcessRunner $processRunner) {}
 
     public static function check(): void
     {
         self::createProcessRunner()->run('gh auth status');
         self::createProcessRunner()->run('gh release list --limit 1');
+    }
+
+    final public function getDescription(Version $version): string
+    {
+        return "Create github release \"{$version->getOriginalString()}\"";
     }
 
     final public function work(Version $version): void
@@ -40,11 +45,6 @@ class CreateGithubReleaseReleaseWorker extends ReleaseWorker
             '--verify-tag',
             ...($changelog ? ['--notes', $changelog] : ['--generate-notes']),
         ]);
-    }
-
-    final public function getDescription(Version $version): string
-    {
-        return "Create github release \"{$version->getOriginalString()}\"";
     }
 
     final public function findChangelog(): string

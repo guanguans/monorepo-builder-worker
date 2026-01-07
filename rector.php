@@ -1,7 +1,8 @@
 <?php
 
+/** @noinspection PhpInternalEntityUsedInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
-
+/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -14,11 +15,13 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\AddNoinspectionsDocCommentToDeclareRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\RemoveNamespaceRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\RenameToPsrNameRector;
-use Guanguans\MonorepoBuilderWorker\Support\Rectors\SimplifyListIndexRector;
+use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
+use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
+use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
+use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
+use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
+use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
+use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
 use Illuminate\Support\Str;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
@@ -29,52 +32,46 @@ use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
+use Rector\CodingStyle\Rector\FuncCall\FunctionFirstClassCallableRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
-use Rector\DowngradePhp74\Rector\Array_\DowngradeArraySpreadRector;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
-use Rector\NodeTypeResolver\PHPStan\Scope\Contract\NodeVisitor\ScopeResolverNodeVisitorInterface;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
-use Rector\PHPUnit\CodeQuality\Rector\Class_\AddSeeTestAnnotationRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
-use Rector\Transform\Rector\FuncCall\FuncCallToStaticCallRector;
-use Rector\Transform\ValueObject\FuncCallToStaticCall;
+use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
+use Rector\Transform\ValueObject\StaticCallToFuncCall;
 use Rector\ValueObject\PhpVersion;
-use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
+use Rector\ValueObject\Visibility;
+use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
+use Rector\Visibility\ValueObject\ChangeMethodVisibility;
+use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/src/',
         __DIR__.'/tests/',
-        ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
-        __DIR__.'/composer-updater',
+        __DIR__.'/composer-bump',
     ])
     ->withRootFiles()
-    // ->withSkipPath(__DIR__.'/tests.php')
     ->withSkip([
-        '**/__snapshots__/*',
         '**/Fixtures/*',
-        __FILE__,
-    ])
-    ->withAutoloadPaths([
-        (new ReflectionClass(ReleaseWorkerInterface::class))->getFileName(),
-    ])
-    ->withBootstrapFiles([
-        // __DIR__.'/vendor/symplify/monorepo-builder/vendor/autoload.php',
-        // __DIR__.'/vendor/symplify/monorepo-builder/vendor/scoper-autoload.php',
+        __DIR__.'/_ide_helper.php',
+        __DIR__.'/tests.php',
     ])
     ->withCache(__DIR__.'/.build/rector/')
-    ->withParallel()
     // ->withoutParallel()
-    // ->withImportNames(importNames: false)
+    ->withParallel()
     ->withImportNames(importDocBlockNames: false, importShortClasses: false)
+    // ->withImportNames(importNames: false)
+    // ->withEditorUrl()
     ->withFluentCallNewLine()
+    ->withTreatClassesAsFinal()
     ->withAttributesSets(phpunit: true, all: true)
-    ->withComposerBased(phpunit: true)
+    ->withComposerBased(phpunit: true/* , laravel: true */)
     ->withPhpVersion(PhpVersion::PHP_82)
     ->withDowngradeSets(php82: true)
     ->withPhpSets(php82: true)
@@ -83,108 +80,97 @@ return RectorConfig::configure()
         codeQuality: true,
         codingStyle: true,
         typeDeclarations: true,
+        typeDeclarationDocblocks: true,
         privatization: true,
         naming: true,
         instanceOf: true,
         earlyReturn: true,
         // carbon: true,
-        rectorPreset: true,
-        phpunitCodeQuality: true,
     )
     ->withSets([
-        PHPUnitSetList::PHPUNIT_90,
+        PHPUnitSetList::PHPUNIT_110,
     ])
     ->withRules([
-        AddSeeTestAnnotationRector::class,
-        ArraySpreadInsteadOfArrayMergeRector::class,
-        JsonThrowOnErrorRector::class,
+        RemoveNamespaceRector::class,
         SimplifyListIndexRector::class,
         SortAssociativeArrayByKeyRector::class,
+        SortFileFirstStmtDocblockRector::class,
+        UpdateRectorRefactorParamDocblockFromNodeTypesRector::class,
+
+        ArraySpreadInsteadOfArrayMergeRector::class,
+        JsonThrowOnErrorRector::class,
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
     ])
-    ->withConfiguredRule(AddNoinspectionsDocCommentToDeclareRector::class, [
-        'AnonymousFunctionStaticInspection',
-        'PhpUndefinedClassInspection',
-        'PhpUnhandledExceptionInspection',
-        'StaticClosureCanBeUsedInspection',
-        'NullPointerExceptionInspection',
-        'PhpPossiblePolymorphicInvocationInspection',
+    ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
+        '*/tests/*' => [
+            'AnonymousFunctionStaticInspection',
+            'NullPointerExceptionInspection',
+            'PhpPossiblePolymorphicInvocationInspection',
+            'PhpUndefinedClassInspection',
+            'PhpUnhandledExceptionInspection',
+            'PhpVoidFunctionResultUsedInspection',
+            'StaticClosureCanBeUsedInspection',
+        ],
     ])
-    ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [
-        'Guanguans\MonorepoBuilderWorker\Contracts\ThrowableContract',
-    ])
-    ->withConfiguredRule(RemoveNamespaceRector::class, [
-        'Guanguans\MonorepoBuilderWorkerTests',
-    ])
-    ->registerService(className: ParentConnectingVisitor::class, tag: ScopeResolverNodeVisitorInterface::class)
+    // ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [Throwable::class])
+    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToPsrNameRector::class, [
-        // '*',
         'MIT',
     ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
         'codeCoverageIgnore',
+        'inheritDoc',
         'phpstan-ignore',
         'phpstan-ignore-next-line',
         'psalm-suppress',
     ])
-    ->withConfiguredRule(FuncCallToStaticCallRector::class, [
-        new FuncCallToStaticCall('str', Str::class, 'of'),
+    ->withConfiguredRule(StaticCallToFuncCallRector::class, [
+        new StaticCallToFuncCall(Str::class, 'of', 'str'),
     ])
     ->withConfiguredRule(
-        RenameFunctionRector::class,
-        [
-            'Pest\Faker\fake' => 'fake',
-            'Pest\Faker\faker' => 'faker',
-            'faker' => 'fake',
-            'test' => 'it',
-        ] + array_reduce(
-            [
-                'classes',
-            ],
-            static function (array $carry, string $func): array {
-                /** @see https://github.com/laravel/framework/blob/11.x/src/Illuminate/Support/functions.php */
-                $carry[$func] = "Guanguans\\MonorepoBuilderWorker\\Support\\$func";
-
-                return $carry;
-            },
-            []
-        )
+        ChangeMethodVisibilityRector::class,
+        classes(static fn (string $class, string $file): bool => str_starts_with($class, 'Guanguans\MonorepoBuilderWorker'))
+            ->filter(static fn (ReflectionClass $reflectionClass): bool => $reflectionClass->isTrait())
+            ->map(
+                static fn (ReflectionClass $reflectionClass): array => collect($reflectionClass->getMethods(ReflectionMethod::IS_PRIVATE))
+                    ->reject(static fn (ReflectionMethod $reflectionMethod): bool => $reflectionMethod->isFinal() || $reflectionMethod->isInternal())
+                    ->map(static fn (ReflectionMethod $reflectionMethod): ChangeMethodVisibility => new ChangeMethodVisibility(
+                        $reflectionClass->getName(),
+                        $reflectionMethod->getName(),
+                        Visibility::PROTECTED
+                    ))
+                    ->all()
+            )
+            ->flatten()
+            // ->dd()
+            ->all(),
     )
+    ->withConfiguredRule(RenameFunctionRector::class, [
+        'Pest\Faker\fake' => 'fake',
+        'Pest\Faker\faker' => 'fake',
+        'test' => 'it',
+    ])
     ->withSkip([
+        FunctionFirstClassCallableRector::class,
+
         ChangeOrIfContinueToMultiContinueRector::class,
         DisallowedEmptyRuleFixerRector::class,
-        DowngradeArraySpreadRector::class,
         EncapsedStringsToSprintfRector::class,
         ExplicitBoolCompareRector::class,
         LogicalToBooleanRector::class,
-        NewlineAfterStatementRector::class,
         NewlineAfterStatementRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
         ReturnBinaryOrToEarlyReturnRector::class,
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        SortAssociativeArrayByKeyRector::class => [
+            __DIR__.'/src/',
+            __DIR__.'/tests/',
+        ],
         StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
-            __DIR__.'/tests',
+            __DIR__.'/tests/',
         ],
         StaticClosureRector::class => $staticClosureSkipPaths,
-        SortAssociativeArrayByKeyRector::class => [
-            __DIR__.'/src',
-            __DIR__.'/tests',
-        ],
-        AddNoinspectionsDocCommentToDeclareRector::class => [
-            __DIR__.'/src/',
-            ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
-            __DIR__.'/composer-updater',
-        ],
-        NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class => [
-            __DIR__.'/src/Support/Rectors/',
-        ],
-        RemoveNamespaceRector::class => [
-            __DIR__.'/src/',
-            ...glob(__DIR__.'/{*,.*}.php', \GLOB_BRACE),
-            __DIR__.'/tests/Faker.php',
-            __DIR__.'/tests/TestCase.php',
-        ],
     ]);

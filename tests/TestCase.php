@@ -5,7 +5,9 @@
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
+/** @noinspection PhpMissingParentCallCommonInspection */
 declare(strict_types=1);
 
 /**
@@ -21,17 +23,13 @@ namespace Guanguans\MonorepoBuilderWorkerTests;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use phpmock\phpunit\PHPMock;
+use PHPUnit\Framework\Attributes\Small;
 use Spatie\Snapshots\MatchesSnapshots;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
-/**
- * @coversNothing
- *
- * @small
- */
+#[Small]
 class TestCase extends \PHPUnit\Framework\TestCase
 {
-    use Faker;
     use MatchesSnapshots;
     use MockeryPHPUnitIntegration;
     use PHPMock;
@@ -50,22 +48,30 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * This method is called before each test.
      */
-    protected function setUp(): void {}
+    protected function setUp(): void
+    {
+        // \DG\BypassFinals::enable(bypassReadOnly: false);
+    }
+
+    /**
+     * Performs assertions shared by all tests of a test case.
+     *
+     * This method is called between setUp() and test.
+     */
+    protected function assertPreConditions(): void {}
+
+    // /**
+    //  * Performs assertions shared by all tests of a test case.
+    //  *
+    //  * This method is called between test and tearDown().
+    //  *
+    //  * @see \Mockery\Adapter\Phpunit\MockeryPHPUnitIntegrationAssertPostConditions::assertPostConditions()
+    //  * @see \Mockery\Adapter\Phpunit\MockeryTestCase
+    //  */
+    // protected function assertPostConditions(): void {}
 
     /**
      * This method is called after each test.
      */
-    protected function tearDown(): void
-    {
-        $this->finish();
-        $this->closeMockery();
-    }
-
-    /**
-     * Run extra tear down code.
-     */
-    protected function finish(): void
-    {
-        // call more tear down methods
-    }
+    protected function tearDown(): void {}
 }

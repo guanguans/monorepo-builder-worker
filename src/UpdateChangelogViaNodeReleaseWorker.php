@@ -24,11 +24,24 @@ class UpdateChangelogViaNodeReleaseWorker extends ReleaseWorker implements Chang
 {
     private static ?string $changelog = null;
 
-    public function __construct(private ProcessRunner $processRunner) {}
+    public function __construct(private readonly ProcessRunner $processRunner) {}
 
     public static function check(): void
     {
         self::createProcessRunner()->run('conventional-changelog --help');
+    }
+
+    final public function getDescription(Version $version): string
+    {
+        return \sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
+    }
+
+    final public function work(Version $version): void
+    {
+        $this->processRunner->run('conventional-changelog -p angular -i CHANGELOG.md -s -r 1');
+        $this->processRunner->run("git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
+
+        self::$changelog = $this->processRunner->run('conventional-changelog -p angular -r 1');
     }
 
     public static function getChangelog(): string
@@ -46,18 +59,5 @@ class UpdateChangelogViaNodeReleaseWorker extends ReleaseWorker implements Chang
         }
 
         return trim($lines);
-    }
-
-    final public function work(Version $version): void
-    {
-        $this->processRunner->run('conventional-changelog -p angular -i CHANGELOG.md -s -r 1');
-        $this->processRunner->run("git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
-
-        self::$changelog = $this->processRunner->run('conventional-changelog -p angular -r 1');
-    }
-
-    final public function getDescription(Version $version): string
-    {
-        return \sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
     }
 }

@@ -25,12 +25,31 @@ class UpdateChangelogViaPhpReleaseWorker extends ReleaseWorker implements Change
 {
     private static ?string $changelog = null;
 
-    public function __construct(private ProcessRunner $processRunner) {}
+    public function __construct(private readonly ProcessRunner $processRunner) {}
 
     public static function check(): void
     {
         Assert::isEmpty(self::createProcessRunner()->run('git status --short'));
         self::createProcessRunner()->run('./vendor/bin/conventional-changelog -V');
+    }
+
+    final public function getDescription(Version $version): string
+    {
+        return \sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
+    }
+
+    final public function work(Version $version): void
+    {
+        $originalString = $version->getOriginalString();
+        $previousTag = $this->toPreviousTag($originalString);
+
+        $this->processRunner->run(\sprintf(
+            "./vendor/bin/conventional-changelog %s --to-tag=$originalString --ver=$originalString --ansi -v",
+            $previousTag ? "--from-tag=$previousTag" : '--first-release'
+        ));
+        $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $originalString\" --no-verify && git push");
+
+        self::$changelog = $this->processRunner->run('git show');
     }
 
     public static function getChangelog(): string
@@ -51,25 +70,6 @@ class UpdateChangelogViaPhpReleaseWorker extends ReleaseWorker implements Change
         }
 
         return trim($lines);
-    }
-
-    final public function work(Version $version): void
-    {
-        $originalString = $version->getOriginalString();
-        $previousTag = $this->toPreviousTag($originalString);
-
-        $this->processRunner->run(\sprintf(
-            "./vendor/bin/conventional-changelog %s --to-tag=$originalString --ver=$originalString --ansi -v",
-            $previousTag ? "--from-tag=$previousTag" : '--first-release'
-        ));
-        $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $originalString\" --no-verify && git push");
-
-        self::$changelog = $this->processRunner->run('git show');
-    }
-
-    final public function getDescription(Version $version): string
-    {
-        return \sprintf('Update changelog "%s (%s)"', $version->getOriginalString(), date('Y-m-d'));
     }
 
     private function toPreviousTag(string $tag): string

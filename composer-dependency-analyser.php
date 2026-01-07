@@ -22,14 +22,17 @@ return (new Configuration)
         false
     )
     ->addPathsToExclude([
-        __DIR__.'/src/Support/Rectors/',
         __DIR__.'/src/Support/ComposerScripts.php',
         __DIR__.'/tests/',
     ])
     ->ignoreErrorsOnPackages(
         [
             'composer/semver',
+            'illuminate/collections',
             'phar-io/version',
+            'symfony/console',
+            'symfony/process',
+            'webmozart/assert',
         ],
         [ErrorType::SHADOW_DEPENDENCY],
     );

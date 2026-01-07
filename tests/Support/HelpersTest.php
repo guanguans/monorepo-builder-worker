@@ -5,6 +5,7 @@
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
+/** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
 declare(strict_types=1);
 
@@ -17,9 +18,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
+use Illuminate\Support\Collection;
 use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 it('can get classes', function (): void {
-    expect(classes())->toBeArray()->toBeTruthy()
-        ->and(classes())->toBeArray()->toBeTruthy();
+    expect(classes(fn (string $class): bool => str($class)->startsWith('Illuminate\Support')))
+        ->toBeInstanceOf(Collection::class)
+        ->groupBy(fn (object $object): bool => $object instanceof ReflectionClass)
+        ->toHaveCount(2);
 })->group(__DIR__, __FILE__);

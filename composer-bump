@@ -4,12 +4,12 @@
 declare(strict_types=1);
 
 /**
- * Copyright (c) 2025-2026 guanguans<ityaozm@gmail.com>
+ * Copyright (c) 2023-2026 guanguans<ityaozm@gmail.com>
  *
  * For the full copyright and license information, please view
  * the LICENSE file that was distributed with this source code.
  *
- * @see https://github.com/guanguans/rector-rules
+ * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
 use Composer\InstalledVersions;
@@ -57,32 +57,16 @@ $statusCode = (new SingleCommandApplication)
 
 exit($statusCode);
 
-final class ComposerBump
+final readonly class ComposerBump
 {
-    /** @readonly */
-    private SymfonyStyle $symfonyStyle;
-
-    /** @readonly */
     private string $composerJsonPath;
-
-    /** @readonly */
     private string $composer;
-
-    /** @readonly */
     private string $highestComposer;
 
-    /**
-     * @var list<string>
-     *
-     * @readonly
-     */
+    /** @var list<string> */
     private array $exceptPackages;
 
-    /**
-     * @var list<string>
-     *
-     * @readonly
-     */
+    /** @var list<string> */
     private array $exceptVersions;
 
     /**
@@ -95,18 +79,16 @@ final class ComposerBump
         ?string $composerBinary = null,
         array $exceptPackages = [],
         array $exceptVersions = [],
-        ?SymfonyStyle $symfonyStyle = null
-    ) {
-        $symfonyStyle ??= new SymfonyStyle(
+        private SymfonyStyle $symfonyStyle = new SymfonyStyle(
             new ArgvInput,
             new ConsoleOutput
-        );
-        $this->symfonyStyle = $symfonyStyle;
+        )
+    ) {
         $this->composerJsonPath = realpath($composerJsonPath);
         $this->composer = $this->composerFor($composerBinary, $phpBinary);
         $this->highestComposer = $this->composerFor($composerBinary, $highestPhpBinary);
-        $this->exceptPackages = array_merge(['ext-*', 'php', 'psr/*'], $exceptPackages);
-        $this->exceptVersions = array_merge(['\*', '*-*', '*@*'], $exceptVersions);
+        $this->exceptPackages = ['ext-*', 'php', 'psr/*', ...$exceptPackages];
+        $this->exceptVersions = ['\*', '*-*', '*@*', ...$exceptVersions];
     }
 
     /**
@@ -209,7 +191,7 @@ final class ComposerBump
 
         return $outdatedComposerPackages ??= array_reduce(
             json_decode(
-                (string) substr(
+                substr(
                     $output = $this
                         ->mustRunCommand("$this->highestComposer outdated --format=json --direct")
                         ->getOutput(),
@@ -222,29 +204,21 @@ final class ComposerBump
             function (array $carry, array $package): array {
                 $lowestArrayVersion = $this->arrayVersionFor($package['version']);
                 $highestArrayVersion = $this->arrayVersionFor($package['latest']);
-                $dependencyVersions = array_merge(
-                    [$this->dependencyVersionFor($package['version'])],
-                    (static function () use ($lowestArrayVersion, $highestArrayVersion): array {
-                        if (
-                            $lowestArrayVersion[0] === $highestArrayVersion[0]
-                            && $lowestArrayVersion[1] < $highestArrayVersion[1]
-                        ) {
-                            return array_map(
-                                static fn (string $minor): string => "^$lowestArrayVersion[0].$minor",
-                                range($lowestArrayVersion[1] + 1, $highestArrayVersion[1])
-                            );
-                        }
-
-                        if ($lowestArrayVersion[0] < $highestArrayVersion[0]) {
-                            return array_map(
-                                static fn (string $major): string => "^$major.0",
-                                range($lowestArrayVersion[0] + 1, $highestArrayVersion[0])
-                            );
-                        }
-
-                        return [];
-                    })()
-                );
+                $dependencyVersions = [
+                    $this->dependencyVersionFor($package['version']),
+                    ...match (true) {
+                        $lowestArrayVersion[0] === $highestArrayVersion[0]
+                        && $lowestArrayVersion[1] < $highestArrayVersion[1] => array_map(
+                            static fn (string $minor): string => "^$lowestArrayVersion[0].$minor",
+                            range($lowestArrayVersion[1] + 1, $highestArrayVersion[1])
+                        ),
+                        $lowestArrayVersion[0] < $highestArrayVersion[0] => array_map(
+                            static fn (string $major): string => "^$major.0",
+                            range($lowestArrayVersion[0] + 1, $highestArrayVersion[0])
+                        ),
+                        default => []
+                    },
+                ];
 
                 sort($dependencyVersions, \SORT_NUMERIC);
 
@@ -277,17 +251,14 @@ final class ComposerBump
     }
 
     /**
-     * @param list<null|scalar>|string $command
-     * @param mixed $input
-     *
      * @noinspection PhpSameParameterValueInspection
      * @noinspection LongLine
      */
     private function mustRunCommand(
-        string $command,
+        array|string $command,
         ?string $cwd = null,
         array $env = [],
-        $input = null,
+        mixed $input = null,
         ?float $timeout = 600
     ): Process {
         $options = [
@@ -303,8 +274,10 @@ final class ComposerBump
             'XDEBUG_MODE' => 'off',
         ];
 
-        // $process = new Process(array_merge($command, $options), $cwd, $env, $input, $timeout);
-        $process = Process::fromShellCommandline(implode(' ', array_merge([$command], $options)), $cwd, $env, $input, $timeout);
+        $process = \is_string($command)
+            ? Process::fromShellCommandline(implode(' ', [$command, ...$options]), $cwd, $env, $input, $timeout)
+            : new Process([...$command, ...$options], $cwd, $env, $input, $timeout);
+
         $this->symfonyStyle->warning("The command [{$process->getCommandLine()}] is running in the working directory [$cwd] .");
 
         return $process->mustRun(function (string $type, string $buffer): void {
