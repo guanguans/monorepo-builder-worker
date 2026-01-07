@@ -19,7 +19,6 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorkerTests;
 
-use DG\BypassFinals;
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use phpmock\phpunit\PHPMock;
 use Spatie\Snapshots\MatchesSnapshots;
@@ -51,10 +50,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
     /**
      * This method is called before each test.
      */
-    protected function setUp(): void
-    {
-        BypassFinals::enable(bypassReadOnly: false);
-    }
+    protected function setUp(): void {}
 
     /**
      * This method is called after each test.

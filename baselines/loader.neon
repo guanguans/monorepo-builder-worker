@@ -1,5 +1,4 @@
-# total 2 errors
+# total 1 error
 
 includes:
     - property.notFound.neon
-    - throws.notThrowable.neon

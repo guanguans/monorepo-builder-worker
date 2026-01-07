@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker;
 
 use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
-use MonorepoBuilderPrefix202507\Webmozart\Assert\Assert;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
+use Webmozart\Assert\Assert;
 
 /**
  * @see https://github.com/marcocesarato/php-conventional-changelog

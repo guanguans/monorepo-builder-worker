@@ -13,12 +13,12 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Concerns;
 
-use MonorepoBuilderPrefix202507\Symfony\Component\Console\Input\ArgvInput;
-use MonorepoBuilderPrefix202507\Symfony\Component\Console\Input\InputInterface;
-use MonorepoBuilderPrefix202507\Symfony\Component\Console\Output\ConsoleOutput;
-use MonorepoBuilderPrefix202507\Symfony\Component\Console\Output\OutputInterface;
-use MonorepoBuilderPrefix202507\Symfony\Component\Console\Style\SymfonyStyle;
-use MonorepoBuilderPrefix202507\Symfony\Component\Process\ExecutableFinder;
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Process\ExecutableFinder;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 trait ConcreteFactory

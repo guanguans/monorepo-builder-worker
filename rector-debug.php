@@ -40,7 +40,7 @@ return RectorConfig::configure()
         // __DIR__.'/composer-updater',
         __DIR__.'/tests.php',
     ])
-    ->withPhpVersion(PhpVersion::PHP_80)
+    ->withPhpVersion(PhpVersion::PHP_82)
     ->withoutParallel()
     // ->withImportNames(importNames: false)
     ->withImportNames(importDocBlockNames: false, importShortClasses: false)
