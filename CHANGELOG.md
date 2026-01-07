@@ -8,6 +8,20 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="2.2.0"></a>
+## [2.2.0] - 2026-01-07
+### 🎨 Styles
+- apply php-cs-fixer ([2708e64](https://github.com/guanguans/monorepo-builder-worker/commit/2708e64))
+
+### 📦 Builds
+- **deps:** update development dependencies to latest versions ([4bd866e](https://github.com/guanguans/monorepo-builder-worker/commit/4bd866e))
+
+### Pull Requests
+- Merge pull request [#67](https://github.com/guanguans/monorepo-builder-worker/issues/67) from guanguans/dependabot/github_actions/dependabot/fetch-metadata-2.5.0
+- Merge pull request [#66](https://github.com/guanguans/monorepo-builder-worker/issues/66) from guanguans/dependabot/github_actions/actions/cache-5
+- Merge pull request [#65](https://github.com/guanguans/monorepo-builder-worker/issues/65) from guanguans/dependabot/github_actions/actions/checkout-6
+
+
 <a name="2.1.0"></a>
 ## [2.1.0] - 2025-11-04
 ### 🐞 Bug Fixes
@@ -569,7 +583,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.2.0...HEAD
+[2.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.4...2.1.0
 [2.0.4]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.3...2.0.4
 [2.0.3]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.2...2.0.3
