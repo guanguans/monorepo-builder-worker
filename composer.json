@@ -388,8 +388,6 @@
         "rector:process-dry-run": "@rector:process --dry-run",
         "rector:process-only": "@rector:process-clear-cache --only=Guanguans\\MonorepoBuilderWorker\\Support\\Rectors\\AddHasOptionsDocCommentRector",
         "rector:process-only-dry-run": "@rector:process-only --dry-run",
-        "rector:process-options": "@rector:process-clear-cache --config=rector-options.php",
-        "rector:process-options-dry-run": "@rector:process-options --dry-run",
         "rule-doc-generator": "@php rule-doc-generator --ansi -vv",
         "rule-doc-generator:generate": "@rule-doc-generator generate src/Support/Rectors/ --output-file=src/Support/Rectors/rules-overview.md",
         "rule-doc-generator:validate": "@rule-doc-generator validate src/Support/Rectors/",
