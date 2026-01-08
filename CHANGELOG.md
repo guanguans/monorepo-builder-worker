@@ -7,6 +7,23 @@ All notable changes to this project will be documented in this file.
 <a name="unreleased"></a>
 ## [Unreleased]
 
+### ✨ Features
+- **deps:** require PHP version 8.2 or higher ([4cf84d2](https://github.com/guanguans/monorepo-builder-worker/commit/4cf84d2))
+
+### 🐞 Bug Fixes
+- **helpers:** improve error handling in rescue function ([aa08e57](https://github.com/guanguans/monorepo-builder-worker/commit/aa08e57))
+
+### 🎨 Styles
+- apply php-cs-fixer ([9074988](https://github.com/guanguans/monorepo-builder-worker/commit/9074988))
+
+### 💅 Code Refactorings
+- **EnvironmentChecker:** Enhance method visibility and documentation ([96eec25](https://github.com/guanguans/monorepo-builder-worker/commit/96eec25))
+- **class:** Rename classes ([29e1a0e](https://github.com/guanguans/monorepo-builder-worker/commit/29e1a0e))
+- **helpers:** Remove unused functions and classes ([22fec21](https://github.com/guanguans/monorepo-builder-worker/commit/22fec21))
+
+### 🤖 Continuous Integrations
+- **config:** Update config files ([59778cc](https://github.com/guanguans/monorepo-builder-worker/commit/59778cc))
+
 
 <a name="2.2.0"></a>
 ## [2.2.0] - 2026-01-07

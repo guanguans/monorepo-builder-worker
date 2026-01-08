@@ -39,7 +39,7 @@ use Symplify\MonorepoBuilder\Release\ReleaseWorker\UpdateReplaceReleaseWorker;
 return static function (MBConfig $mbConfig): void {
     require __DIR__.'/vendor/autoload.php';
     $mbConfig->defaultBranch('main');
-    MBConfig::disableDefaultWorkers();
+    // MBConfig::disableDefaultWorkers();
 
     // $services = $mbConfig->services();
     // $services->set(BranchAwareTagResolver::class);
@@ -54,8 +54,8 @@ return static function (MBConfig $mbConfig): void {
         // UpdateReplaceReleaseWorker::class,
         // SetCurrentMutualDependenciesReleaseWorker::class,
         // AddTagToChangelogReleaseWorker::class,
-        TagVersionReleaseWorker::class,
-        PushTagReleaseWorker::class,
+        // TagVersionReleaseWorker::class,
+        // PushTagReleaseWorker::class,
         UpdateChangelogViaGoReleaseWorker::class,
         // UpdateChangelogViaNodeReleaseWorker::class,
         // UpdateChangelogViaPhpReleaseWorker::class,
