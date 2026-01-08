@@ -13,8 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
-use Composer\InstalledVersions;
-use Composer\Semver\Comparator;
 use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract;
 
@@ -29,8 +27,6 @@ class EnvironmentChecker
      */
     public static function checks(array $workers): void
     {
-        // self::checkAndFixNamespacePrefix();
-
         self::createSymfonyStyle()->note('Checking environment...');
 
         foreach ($workers as $worker) {
@@ -53,57 +49,6 @@ class EnvironmentChecker
 
         if (\is_callable($worker)) {
             $worker(self::class);
-        }
-    }
-
-    public static function checkAndFixNamespacePrefix(): int
-    {
-        try {
-            // self::createProcessRunner();
-
-            return 0;
-        } catch (\Error) {
-            self::fixNamespacePrefix();
-
-            return 1;
-        }
-    }
-
-    protected static function fixNamespacePrefix(): void
-    {
-        $namespacePrefix = (static function (): string {
-            if (Comparator::greaterThanOrEqualTo(InstalledVersions::getPrettyVersion('symplify/monorepo-builder'), '12')) {
-                return '';
-            }
-
-            $isPassed = static fn (
-                string $yearMonth
-            ): bool => class_exists("MonorepoBuilderPrefix$yearMonth\\Symfony\\Component\\Console\\Style\\SymfonyStyle");
-            $yearMonth = date('Ym');
-
-            // while (202310 <= $yearMonth && !$isPassed($yearMonth)) {
-            //     $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
-            // }
-
-            if (!$isPassed($yearMonth)) {
-                echo \PHP_EOL, 'The file [vendor/autoload.php] is not loaded.', \PHP_EOL;
-
-                exit(1);
-            }
-
-            return "MonorepoBuilderPrefix$yearMonth";
-        })();
-
-        echo \PHP_EOL, "The namespace prefix should be [$namespacePrefix].", \PHP_EOL;
-
-        foreach (array_map('realpath', glob(__DIR__.'/../../{src,tests}{/,/*/,/*/*/,/*/*/*/}*.php', \GLOB_BRACE)) as $file) {
-            $contents = file_get_contents($file);
-            $replacedContents = preg_replace('/MonorepoBuilderPrefix\d{4}\d{2}/', $namespacePrefix, $contents);
-
-            if ($replacedContents !== $contents) {
-                file_put_contents($file, $replacedContents);
-                echo "The namespace prefix of the file [$file] has been fixed", \PHP_EOL;
-            }
         }
     }
 }

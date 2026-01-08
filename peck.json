@@ -2,6 +2,7 @@
     "preset": "base",
     "ignore": {
         "words": [
+            "argv",
             "autoload"
         ],
         "paths": []

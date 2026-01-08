@@ -60,13 +60,14 @@ if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
                 : []
         );
 
-        /** @var null|array{class: class-string, line: int} $context */
+        /** @var null|array{class: class-string<TObject>, line: int} $context */
         static $context = null;
         static $registered = false;
 
         if (!$registered) {
             register_shutdown_function(
                 static function (string $func) use (&$context): void {
+                    // @codeCoverageIgnoreStart
                     if (
                         null === $context
                         || null === ($error = error_get_last())
@@ -85,6 +86,7 @@ if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
                         $context['line'],
                         new \ErrorException($error['message'], 0, $error['type'], $error['file'], $error['line'])
                     );
+                    // @codeCoverageIgnoreEnd
                 },
                 __FUNCTION__
             );
@@ -105,48 +107,5 @@ if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\classes')) {
                     $context = null;
                 }
             });
-    }
-}
-
-if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\rescue')) {
-    /**
-     * @see \Composer\Util\Silencer::call()
-     * @see \Illuminate\Foundation\Bootstrap\HandleExceptions::bootstrap()
-     */
-    function rescue(callable $callback, ?callable $rescuer = null): mixed
-    {
-        /** @phpstan-ignore-next-line  */
-        set_error_handler(static function (
-            int $errNo,
-            string $errStr,
-            string $errFile = '',
-            int $errLine = 0
-        ) use ($rescuer, &$result): void {
-            $rescuer and $result = $rescuer(new \ErrorException($errStr, 0, $errNo, $errFile, $errLine));
-        });
-
-        // set_exception_handler(static function (\Throwable $throwable) use ($rescuer, &$result): void {
-        //     $rescuer and $result = $rescuer($throwable);
-        // });
-
-        try {
-            $result = $callback();
-        } catch (\Throwable $throwable) {
-            $rescuer and $result = $rescuer($throwable);
-        } finally {
-            restore_error_handler();
-        }
-
-        return $result;
-    }
-}
-
-if (!\function_exists('Guanguans\MonorepoBuilderWorker\Support\str_random')) {
-    /**
-     * @throws \Random\RandomException
-     */
-    function str_random(int $length = 16): string
-    {
-        return substr(bin2hex(random_bytes((int) ceil($length / 2))), 0, $length);
     }
 }

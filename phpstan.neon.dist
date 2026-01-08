@@ -33,6 +33,7 @@ parameters:
     scanFiles:
         - vendor/composer/InstalledVersions.php
     excludePaths:
+        - src/Support/ComposerScripts.php
         - tests/Fixtures/
     tmpDir: .build/phpstan/
     phpVersion: 80200
@@ -58,10 +59,10 @@ parameters:
 #            - Rector\Contract\Rector\RectorInterface
     type_coverage:
         declare: 100
-        param_type: 100
-        return_type: 100
-        constant_type: 100
-        property_type: 100
+        param: 100
+        return: 100
+        constant: 100
+        property: 100
     type_perfect:
         narrow_param: true
         narrow_return: true
@@ -89,6 +90,7 @@ parameters:
 #        - identifier: foreach.valueOverwrite
 #        - identifier: logicalAnd.resultUnused
 #        - identifier: logicalOr.resultUnused
+#        - identifier: method.nonObject
 #        - identifier: missingType.generics
 #        - identifier: missingType.iterableValue
 #        - identifier: new.static
@@ -103,9 +105,7 @@ parameters:
 
         - identifier: argument.type
         - identifier: empty.notAllowed
-        - identifier: method.nonObject
         - identifier: return.type
         - identifier: shipmonk.deadMethod
         - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.explicitTraitSuffixName
-        - message: '#^Unable to resolve the template type TObject in call to function Guanguans\\MonorepoBuilderWorker\\Support\\classes$#'

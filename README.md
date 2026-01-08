@@ -2,6 +2,7 @@
 
 [简体中文](README-zh_CN.md) | [ENGLISH](README.md)
 
+> [!NOTE]
 > List of release worker collections for [symplify/monorepo-builder](https://github.com/symplify/monorepo-builder).
 
 [![tests](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/tests.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/tests.yml)
@@ -18,7 +19,7 @@
 
 ## Installation
 
-```bash
+```shell
 composer require guanguans/monorepo-builder-worker --dev --ansi -v
 ```
 
@@ -26,10 +27,29 @@ composer require guanguans/monorepo-builder-worker --dev --ansi -v
 
 ### Examples
 
-* [👉 Release](https://github.com/guanguans/monorepo-builder-worker/releases/tag/2.0.3)
-* [CHANGELOG](CHANGELOG.md)
+* [:monocle_face: Releases](https://github.com/guanguans/monorepo-builder-worker/releases)
+* [:monocle_face: CHANGELOG.md](CHANGELOG.md)
 
-### [Configuration](./monorepo-builder.php)
+### In your `monorepo-builder` [configuration](monorepo-builder.php) register workers
+
+```php
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
+use Symplify\MonorepoBuilder\Config\MBConfig;
+
+return static function (MBConfig $mbConfig): void {
+    require __DIR__.'/vendor/autoload.php';
+
+    $mbConfig->workers($workers = [
+        UpdateChangelogViaGoReleaseWorker::class,
+        CreateGithubReleaseReleaseWorker::class,
+        // Other release workers...
+    ]);
+
+    EnvironmentChecker::checks($workers);
+};
+```
 
 ### Run command
 

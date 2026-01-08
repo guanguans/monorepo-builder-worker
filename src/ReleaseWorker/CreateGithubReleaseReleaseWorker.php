@@ -49,12 +49,18 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 
     final public function findChangelog(): string
     {
-        /** @var \Illuminate\Support\Collection<int, class-string<\Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract>> $classes */
-        $classes = classes(
-            static fn (string $class): bool => str_starts_with($class, __NAMESPACE__)
-                && is_subclass_of($class, ChangelogContract::class)
-                && !str_ends_with($class, 'UpdateChangelogViaRustReleaseWorker')
-        )->keys();
+        // $classes = classes(
+        //     static fn (string $class): bool => str_starts_with($class, __NAMESPACE__)
+        //         && is_subclass_of($class, ChangelogContract::class)
+        //         && !str_ends_with($class, 'UpdateChangelogViaRustReleaseWorker')
+        // )->keys();
+
+        /** @var list<class-string<\Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract>> $classes */
+        $classes = [
+            UpdateChangelogViaGoReleaseWorker::class,
+            UpdateChangelogViaNodeReleaseWorker::class,
+            UpdateChangelogViaPhpReleaseWorker::class,
+        ];
 
         foreach ($classes as $class) {
             if ($changelog = $class::getChangelog()) {

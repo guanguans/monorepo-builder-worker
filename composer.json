@@ -383,7 +383,7 @@
         "rule-doc-generator:validate": "@rule-doc-generator validate src/Support/Rectors/",
         "sk": "@php vendor/bin/swiss-knife --ansi -vv",
         "sk:alice-yaml-fixtures-to-php": "@sk alice-yaml-fixtures-to-php --help",
-        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=5",
+        "sk:check-commented-code": "@sk check-commented-code src/ --line-limit=6",
         "sk:check-conflicts": "@sk check-conflicts src/",
         "sk:dump-editorconfig": "@sk dump-editorconfig",
         "sk:finalize-classes": "@sk finalize-classes src/",

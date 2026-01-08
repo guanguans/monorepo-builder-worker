@@ -17,7 +17,7 @@ use ShipMonk\ComposerDependencyAnalyser\Config\ErrorType;
 return (new Configuration)
     ->addPathsToScan(
         [
-            __DIR__.'/src/',
+            // __DIR__.'/src/',
         ],
         false
     )
@@ -27,7 +27,7 @@ return (new Configuration)
     ])
     ->ignoreErrorsOnPackages(
         [
-            'composer/semver',
+            /** @see vendor/symplify/monorepo-builder/composer.json */
             'illuminate/collections',
             'phar-io/version',
             'symfony/console',

@@ -34,11 +34,3 @@ it('can check environment', function (): void {
         ))->toBeNull()
         ->and(EnvironmentChecker::check(function (): void {}))->toBeNull();
 })->group(__DIR__, __FILE__);
-
-it('can fix namespace prefix', function (): void {
-    expect(
-        (function (): void {
-            self::fixNamespacePrefix();
-        })->call(new EnvironmentChecker)
-    )->toBeNull();
-})->group(__DIR__, __FILE__);
