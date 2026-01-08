@@ -15,8 +15,8 @@ namespace Guanguans\MonorepoBuilderWorker\Support;
 
 use Composer\InstalledVersions;
 use Composer\Semver\Comparator;
-use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract;
+use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract;
 
 class EnvironmentChecker
 {
@@ -41,7 +41,7 @@ class EnvironmentChecker
     }
 
     /**
-     * @param callable|class-string<EnvironmentCheckerContract>|\Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract $worker
+     * @param callable|class-string<EnvironmentCheckerContract>|\Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract $worker
      *
      * @throws \Throwable
      */

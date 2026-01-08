@@ -18,8 +18,8 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaPhpReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaNodeReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -28,30 +28,39 @@ pest()->use(ConcreteFactory::class);
 it('can check', function (): void {
     (function (): void {
         $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-        $mockProcessRunner->allows('run')->andReturns('');
+        $mockProcessRunner->allows('run')->andReturns('output');
 
         self::$runner = $mockProcessRunner;
-    })->call(new UpdateChangelogViaPhpReleaseWorker(Mockery::mock(ProcessRunner::class)));
+    })->call(new UpdateChangelogViaNodeReleaseWorker(Mockery::mock(ProcessRunner::class)));
 
-    expect(UpdateChangelogViaPhpReleaseWorker::check())->toBeNull();
+    expect(UpdateChangelogViaNodeReleaseWorker::check())->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can get changelog', function (): void {
     $mockProcessRunner = Mockery::mock(ProcessRunner::class);
     (function (): void {
         self::$changelog = <<<'changelog'
-            +### Feat
+            #  (2023-07-22)
+
+            ##  (2023-07-22)
+
+            ### Bug Fixes
             changelog;
-    })->call(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner));
-    expect(UpdateChangelogViaPhpReleaseWorker::getChangelog())->toBeEmpty();
+    })->call(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner));
+    expect(UpdateChangelogViaNodeReleaseWorker::getChangelog())->toBeEmpty();
 
     (function (): void {
         self::$changelog = <<<'changelog'
-            +### Feat
-            +* **Contract:** Add ChangelogInterface
+            #  (2023-07-22)
+
+            ##  (2023-07-22)
+
+            ### Bug Fixes
+
+            * **config:** Add missing newline in config.yml ([22802b1](https://github.com/guanguans/monorepo-builder-worker/commit/22802b1ac9d0701d719278e224386dfbdc67eb8e))
             changelog;
-    })->call(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner));
-    expect(UpdateChangelogViaPhpReleaseWorker::getChangelog())->toBeTruthy();
+    })->call(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner));
+    expect(UpdateChangelogViaNodeReleaseWorker::getChangelog())->toBeTruthy();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
@@ -61,7 +70,7 @@ it('can work', function (): void {
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner))
+    expect(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner))
         ->work($mockVersion)->toBeNull();
 })->group(__DIR__, __FILE__);
 
@@ -69,6 +78,6 @@ it('can get description', function (): void {
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new UpdateChangelogViaPhpReleaseWorker(Mockery::mock(ProcessRunner::class)))
-        ->getDescription($mockVersion)->toBeString();
+    expect(new UpdateChangelogViaNodeReleaseWorker(Mockery::mock(ProcessRunner::class)))
+        ->getDescription($mockVersion)->toBeTruthy();
 })->group(__DIR__, __FILE__);

@@ -11,12 +11,10 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorker\Contracts;
+namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
 /**
- * @see https://github.com/marcocesarato/php-conventional-changelog
+ * @see https://github.com/orhun/git-cliff
+ * @see https://github.com/tempestphp/tempest-framework/blob/main/cliff.toml
  */
-interface ChangelogContract
-{
-    public static function getChangelog(): string;
-}
+class UpdateChangelogViaRustReleaseWorker {}

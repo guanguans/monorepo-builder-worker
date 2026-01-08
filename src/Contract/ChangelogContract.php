@@ -11,12 +11,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorker\Contracts;
+namespace Guanguans\MonorepoBuilderWorker\Contract;
 
-interface EnvironmentCheckerContract
+/**
+ * @see https://github.com/marcocesarato/php-conventional-changelog
+ */
+interface ChangelogContract
 {
-    /**
-     * @throws \Throwable
-     */
-    public static function check(): void;
+    public static function getChangelog(): string;
 }

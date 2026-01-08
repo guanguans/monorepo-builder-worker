@@ -18,7 +18,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;

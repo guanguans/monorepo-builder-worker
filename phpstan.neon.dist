@@ -95,6 +95,7 @@ parameters:
 #        - identifier: offsetAccess.nonOffsetAccessible
 #        - identifier: paramOut.type
 #        - identifier: return.void
+#        - identifier: symplify.explicitAbstractPrefixName
 #        - identifier: symplify.noDynamicName
 #        - identifier: symplify.noReference
 #        - identifier: trait.unused
@@ -105,6 +106,6 @@ parameters:
         - identifier: method.nonObject
         - identifier: return.type
         - identifier: shipmonk.deadMethod
-        - identifier: symplify.explicitAbstractPrefixName
         - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.explicitTraitSuffixName
+        - message: '#^Unable to resolve the template type TObject in call to function Guanguans\\MonorepoBuilderWorker\\Support\\classes$#'

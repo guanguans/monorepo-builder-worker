@@ -11,13 +11,13 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorker;
+namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
-use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract;
+use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 
-abstract class ReleaseWorker implements EnvironmentCheckerContract, ReleaseWorkerInterface
+abstract class AbstractReleaseWorker implements EnvironmentCheckerContract, ReleaseWorkerInterface
 {
     use ConcreteFactory;
 }

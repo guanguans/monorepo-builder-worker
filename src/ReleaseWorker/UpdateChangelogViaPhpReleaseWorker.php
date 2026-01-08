@@ -11,9 +11,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorker;
+namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
+use Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 use Webmozart\Assert\Assert;
@@ -21,7 +21,7 @@ use Webmozart\Assert\Assert;
 /**
  * @see https://github.com/marcocesarato/php-conventional-changelog
  */
-class UpdateChangelogViaPhpReleaseWorker extends ReleaseWorker implements ChangelogContract
+class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker implements ChangelogContract
 {
     private static ?string $changelog = null;
 

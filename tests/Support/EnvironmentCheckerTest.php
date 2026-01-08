@@ -18,7 +18,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Guanguans\MonorepoBuilderWorker\Contracts\EnvironmentCheckerContract;
+use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract;
 use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 
 it('can batch check environment', function (): void {

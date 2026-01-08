@@ -11,7 +11,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorker\Concerns;
+namespace Guanguans\MonorepoBuilderWorker\Concern;
 
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Input\InputInterface;

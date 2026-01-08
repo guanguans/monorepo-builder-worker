@@ -18,11 +18,11 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Guanguans\MonorepoBuilderWorker\Concerns\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\CreateGithubReleaseReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaGoReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaNodeReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaPhpReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaNodeReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaPhpReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 

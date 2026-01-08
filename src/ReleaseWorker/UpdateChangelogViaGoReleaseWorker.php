@@ -11,24 +11,25 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-namespace Guanguans\MonorepoBuilderWorker;
+namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contracts\ChangelogContract;
+use Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 /**
- * @see https://github.com/conventional-changelog/conventional-changelog
+ * @see https://github.com/git-chglog/git-chglog
  */
-class UpdateChangelogViaNodeReleaseWorker extends ReleaseWorker implements ChangelogContract
+class UpdateChangelogViaGoReleaseWorker extends AbstractReleaseWorker implements ChangelogContract
 {
     private static ?string $changelog = null;
+    private static ?Version $version = null;
 
     public function __construct(private readonly ProcessRunner $processRunner) {}
 
     public static function check(): void
     {
-        self::createProcessRunner()->run('conventional-changelog --help');
+        self::createProcessRunner()->run('git-chglog -v');
     }
 
     final public function getDescription(Version $version): string
@@ -38,23 +39,26 @@ class UpdateChangelogViaNodeReleaseWorker extends ReleaseWorker implements Chang
 
     final public function work(Version $version): void
     {
-        $this->processRunner->run('conventional-changelog -p angular -i CHANGELOG.md -s -r 1');
+        $this->processRunner->run('git-chglog --output CHANGELOG.md');
         $this->processRunner->run("git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
 
-        self::$changelog = $this->processRunner->run('conventional-changelog -p angular -r 1');
+        self::$version = $version;
+        self::$changelog = $this->processRunner->run("git-chglog {$version->getOriginalString()}");
     }
 
     public static function getChangelog(): string
     {
-        if (empty(self::$changelog)) {
+        if (empty(self::$changelog) || !self::$version instanceof Version) {
             return '';
         }
 
-        $lines = array_filter(explode(\PHP_EOL, self::$changelog), static fn (string $line): bool => !str_starts_with($line, '# ') && !str_starts_with($line, '## '));
+        $tagPos = strpos(self::$changelog, \sprintf('<a name="%s"></a>', self::$version->getOriginalString()));
+        $subChangelog = substr(self::$changelog, (int) $tagPos, \strlen(self::$changelog));
+        $lines = array_filter(explode(\PHP_EOL, $subChangelog), static fn (string $line): bool => !str_starts_with($line, '# ') && !str_starts_with($line, '[Unreleased]: '));
 
         $lines = implode(\PHP_EOL, $lines);
 
-        if (!str_contains($lines, '### ') || !str_contains($lines, '* ')) {
+        if (!str_contains($lines, '### ') || !str_contains($lines, '- ')) {
             return '';
         }
 
