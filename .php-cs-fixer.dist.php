@@ -69,6 +69,7 @@ return Factory::fromRuleSet(Php82::create()
             ->ignoreVCS(true)
             ->ignoreVCSIgnored(true)
             ->append([
+                __DIR__.'/.changelog',
                 __DIR__.'/composer-bump',
                 __DIR__.'/rule-doc-generator',
             ])

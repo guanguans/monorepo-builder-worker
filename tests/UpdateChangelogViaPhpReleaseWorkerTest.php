@@ -23,7 +23,7 @@ use Guanguans\MonorepoBuilderWorker\UpdateChangelogViaPhpReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
-uses(ConcreteFactory::class);
+pest()->use(ConcreteFactory::class);
 
 it('can check', function (): void {
     (function (): void {

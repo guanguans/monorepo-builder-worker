@@ -4,11 +4,11 @@
 
 > List of release worker collections for [symplify/monorepo-builder](https://github.com/symplify/monorepo-builder).
 
-[![tests](https://github.com/guanguans/monorepo-builder-worker/workflows/tests/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions)
-[![check & fix styling](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions)
-[![codecov](https://codecov.io/gh/guanguans/monorepo-builder-worker/branch/main/graph/badge.svg?token=URGFAWS6S4)](https://codecov.io/gh/guanguans/monorepo-builder-worker)
+[![tests](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/tests.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/tests.yml)
+[![php-cs-fixer](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/php-cs-fixer.yml)
+[![codecov](https://codecov.io/gh/guanguans/monorepo-builder-worker/graph/badge.svg?token=0RtgSGom4K)](https://codecov.io/gh/guanguans/monorepo-builder-worker)
 [![Latest Stable Version](https://poser.pugx.org/guanguans/monorepo-builder-worker/v)](https://packagist.org/packages/guanguans/monorepo-builder-worker)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/guanguans/monorepo-builder-worker)
+[![GitHub release (with filter)](https://img.shields.io/github/v/release/guanguans/monorepo-builder-worker)](https://github.com/guanguans/monorepo-builder-worker/releases)
 [![Total Downloads](https://poser.pugx.org/guanguans/monorepo-builder-worker/downloads)](https://packagist.org/packages/guanguans/monorepo-builder-worker)
 [![License](https://poser.pugx.org/guanguans/monorepo-builder-worker/license)](https://packagist.org/packages/guanguans/monorepo-builder-worker)
 
@@ -114,9 +114,11 @@ class: Guanguans\MonorepoBuilderWorker\CreateGithubReleaseWorker
                                                                                                                         
 ```
 
-## 测试
+## Composer 脚本
 
-```bash
+```shell
+composer checks:required
+composer php-cs-fixer:fix
 composer test
 ```
 

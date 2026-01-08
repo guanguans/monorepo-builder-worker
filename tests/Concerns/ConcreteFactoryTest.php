@@ -25,7 +25,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\ExecutableFinder;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
-uses(ConcreteFactory::class);
+pest()->use(ConcreteFactory::class);
 
 it('can create executable finder', function (): void {
     expect($this::createExecutableFinder())->toBeInstanceOf(ExecutableFinder::class);
@@ -40,5 +40,5 @@ it('can create symfony style', function (): void {
         $this::createSymfonyStyle(),
         $this::createSymfonyStyle(new ArgvInput),
         $this::createSymfonyStyle(null, new ConsoleOutput),
-    ])->each->toBeInstanceOf(SymfonyStyle::class);
+    ])->toContainOnlyInstancesOf(SymfonyStyle::class);
 })->group(__DIR__, __FILE__);

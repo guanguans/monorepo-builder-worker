@@ -81,9 +81,9 @@ class EnvironmentChecker
             ): bool => class_exists("MonorepoBuilderPrefix$yearMonth\\Symfony\\Component\\Console\\Style\\SymfonyStyle");
             $yearMonth = date('Ym');
 
-            while (202310 <= $yearMonth && !$isPassed($yearMonth)) {
-                $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
-            }
+            // while (202310 <= $yearMonth && !$isPassed($yearMonth)) {
+            //     $yearMonth = date('Ym', strtotime('-1 month', strtotime("{$yearMonth}10")));
+            // }
 
             if (!$isPassed($yearMonth)) {
                 echo \PHP_EOL, 'The file [vendor/autoload.php] is not loaded.', \PHP_EOL;

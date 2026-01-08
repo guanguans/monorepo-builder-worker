@@ -75,7 +75,7 @@ class UpdateChangelogViaPhpReleaseWorker extends ReleaseWorker implements Change
     private function toPreviousTag(string $tag): string
     {
         $tags = explode(\PHP_EOL, $this->processRunner->run('git tag --sort=-committerdate'));
-        $previousTagIndex = array_search($tag, $tags, true) + 1;
+        $previousTagIndex = (int) array_search($tag, $tags, true) + 1;
 
         return $tags[$previousTagIndex] ?? '';
     }

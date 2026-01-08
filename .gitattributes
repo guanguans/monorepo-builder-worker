@@ -31,7 +31,7 @@
 *.phar   binary
 *.mp4    binary
 
-# Remove files for archives generated using `git archive --format=zip --output=laravel-soar.zip master -v`
+# Remove files for archives generated using `git archive --format=zip --output=monorepo-builder-worker.zip main -v`
 # Ignore all test and documentation with "export-ignore".
 /.*/           export-ignore
 /baselines/    export-ignore
@@ -49,13 +49,15 @@
 /.*                                 export-ignore
 /CHANGELOG-*.md                     export-ignore
 /CHANGELOG.md                       export-ignore
+/composer-bump                      export-ignore
 /composer-dependency-analyser.php   export-ignore
-/composer-updater                   export-ignore
 /monorepo-builder.php               export-ignore
-/phpbench.json                      export-ignore
-/phpstan.neon                       export-ignore
+/peck.json                          export-ignore
+/phpbench.json.dist                 export-ignore
+/phpstan.neon.dist                  export-ignore
 /phpunit.xml.dist                   export-ignore
 /rector-*.php                       export-ignore
 /rector.php                         export-ignore
+/rule-doc-generator                 export-ignore
 /testbench.yaml                     export-ignore
 /tests.*                            export-ignore

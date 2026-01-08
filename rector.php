@@ -48,17 +48,21 @@ use Rector\ValueObject\PhpVersion;
 use Rector\ValueObject\Visibility;
 use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
 use Rector\Visibility\ValueObject\ChangeMethodVisibility;
+use RectorPest\Rules\EnsureTypeChecksFirstRector;
+use RectorPest\Set\PestLevelSetList;
+use RectorPest\Set\PestSetList;
 use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/src/',
         __DIR__.'/tests/',
+        __DIR__.'/.changelog',
         __DIR__.'/composer-bump',
     ])
     ->withRootFiles()
     ->withSkip([
-        '**/Fixtures/*',
+        '*/Fixtures/*',
         __DIR__.'/_ide_helper.php',
         __DIR__.'/tests.php',
     ])
@@ -88,6 +92,8 @@ return RectorConfig::configure()
         // carbon: true,
     )
     ->withSets([
+        PestLevelSetList::UP_TO_PEST_30,
+        PestSetList::PEST_CODE_QUALITY,
         PHPUnitSetList::PHPUNIT_110,
     ])
     ->withRules([
@@ -152,6 +158,7 @@ return RectorConfig::configure()
         'test' => 'it',
     ])
     ->withSkip([
+        EnsureTypeChecksFirstRector::class,
         FunctionFirstClassCallableRector::class,
 
         ChangeOrIfContinueToMultiContinueRector::class,
