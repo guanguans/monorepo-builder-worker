@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 <a name="unreleased"></a>
 ## [Unreleased]
 
+
+<a name="3.0.0"></a>
+## [3.0.0] - 2026-01-08
 ### ✨ Features
 - **deps:** require PHP version 8.2 or higher ([4cf84d2](https://github.com/guanguans/monorepo-builder-worker/commit/4cf84d2))
 
@@ -600,7 +603,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/2.2.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...HEAD
+[3.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.2.0...3.0.0
 [2.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.4...2.1.0
 [2.0.4]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.3...2.0.4
