@@ -70,8 +70,7 @@ it('can find changelog', function (): void {
     (function (): void {
         self::$changelog = '';
     })->call(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner));
-    expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner))
-        ->findChangelog()->toBeEmpty();
+    expect((fn (): string => $this->findChangelog())->call(new CreateGithubReleaseReleaseWorker($mockProcessRunner)))->toBeEmpty();
 
     (function (): void {
         self::$changelog = <<<'changelog'
@@ -83,6 +82,5 @@ it('can find changelog', function (): void {
         $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
         self::$version = $mockVersion;
     })->call(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner));
-    expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner))
-        ->findChangelog()->toBeTruthy();
+    expect((fn (): string => $this->findChangelog())->call(new CreateGithubReleaseReleaseWorker($mockProcessRunner)))->toBeTruthy();
 })->group(__DIR__, __FILE__);

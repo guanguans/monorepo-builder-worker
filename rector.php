@@ -26,6 +26,7 @@ use Illuminate\Support\Str;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
+use Rector\CodingStyle\Rector\ArrowFunction\ArrowFunctionDelegatingCallToFirstClassCallableRector;
 use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
@@ -159,6 +160,7 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         EnsureTypeChecksFirstRector::class,
+        ArrowFunctionDelegatingCallToFirstClassCallableRector::class,
         FunctionFirstClassCallableRector::class,
 
         ChangeOrIfContinueToMultiContinueRector::class,

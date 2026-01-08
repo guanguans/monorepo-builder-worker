@@ -22,15 +22,11 @@ use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract;
 use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 
 it('can batch check environment', function (): void {
-    expect(EnvironmentChecker::checks([stdClass::class]))->toBeNull();
-})->group(__DIR__, __FILE__);
-
-it('can check environment', function (): void {
-    expect(EnvironmentChecker::check(stdClass::class))->toBeNull()
-        ->and(EnvironmentChecker::check(
-            new class implements EnvironmentCheckerContract {
-                public static function check(): void {}
-            }
-        ))->toBeNull()
-        ->and(EnvironmentChecker::check(function (): void {}))->toBeNull();
+    expect(EnvironmentChecker::checks([
+        stdClass::class,
+        new class implements EnvironmentCheckerContract {
+            public static function check(): void {}
+        },
+        function (): void {},
+    ]))->toBeNull();
 })->group(__DIR__, __FILE__);

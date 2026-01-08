@@ -24,6 +24,8 @@ class EnvironmentChecker
      * @param list<callable|class-string<EnvironmentCheckerContract>|EnvironmentCheckerContract> $workers
      *
      * @throws \Throwable
+     *
+     * @api
      */
     public static function checks(array $workers): void
     {
@@ -41,7 +43,7 @@ class EnvironmentChecker
      *
      * @throws \Throwable
      */
-    public static function check(callable|EnvironmentCheckerContract|string $worker): void
+    private static function check(callable|EnvironmentCheckerContract|string $worker): void
     {
         if (is_subclass_of($worker, EnvironmentCheckerContract::class)) {
             $worker::check();

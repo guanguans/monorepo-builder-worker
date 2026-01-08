@@ -47,7 +47,7 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
         ]);
     }
 
-    final public function findChangelog(): string
+    private function findChangelog(): string
     {
         // $classes = classes(
         //     static fn (string $class): bool => str_starts_with($class, __NAMESPACE__)

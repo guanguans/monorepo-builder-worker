@@ -30,7 +30,7 @@ class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker implement
     public static function check(): void
     {
         Assert::isEmpty(self::createProcessRunner()->run('git status --short'));
-        self::createProcessRunner()->run('./vendor/bin/conventional-changelog -V');
+        self::createProcessRunner()->run('vendor/bin/conventional-changelog -V');
     }
 
     final public function getDescription(Version $version): string
@@ -44,7 +44,7 @@ class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker implement
         $previousTag = $this->toPreviousTag($originalString);
 
         $this->processRunner->run(\sprintf(
-            "./vendor/bin/conventional-changelog %s --to-tag=$originalString --ver=$originalString --ansi -v",
+            "vendor/bin/conventional-changelog %s --to-tag=$originalString --ver=$originalString --ansi -v",
             $previousTag ? "--from-tag=$previousTag" : '--first-release'
         ));
         $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $originalString\" --no-verify && git push");

@@ -54,7 +54,7 @@ return static function (MBConfig $mbConfig): void {
 ### 运行命令
 
 ```shell
-╰─ ./vendor/bin/monorepo-builder release patch --ansi -v                                                            ─╯
+╰─ vendor/bin/monorepo-builder release patch --ansi -v                                                              ─╯
 
  ! [NOTE] Checking environment...                                                                                       
 

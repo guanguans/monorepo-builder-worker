@@ -70,6 +70,13 @@ parameters:
         no_mixed: false
         no_mixed_property: true
         no_mixed_caller: false
+    unused_public:
+        constants: true
+        properties: true
+        methods: true
+        local_methods: true
+        template_paths:
+#            - resources/views/
     disallowedFunctionCalls:
         -
             function: 'env()'
