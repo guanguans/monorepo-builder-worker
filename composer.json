@@ -1,6 +1,6 @@
 {
     "name": "guanguans/monorepo-builder-worker",
-    "description": "List of release worker collections for symplify/monorepo-builder.",
+    "description": "A set of additional release workers for symplify/monorepo-builder.",
     "license": "MIT",
     "type": "library",
     "keywords": [

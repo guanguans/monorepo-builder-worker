@@ -3,7 +3,7 @@
 [简体中文](README-zh_CN.md) | [ENGLISH](README.md)
 
 > [!NOTE]
-> List of release worker collections for [symplify/monorepo-builder](https://github.com/symplify/monorepo-builder).
+> A set of additional release workers for [symplify/monorepo-builder](https://github.com/symplify/monorepo-builder).
 
 [![tests](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/tests.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/tests.yml)
 [![php-cs-fixer](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/guanguans/monorepo-builder-worker/actions/workflows/php-cs-fixer.yml)
@@ -39,8 +39,6 @@ use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 
 return static function (MBConfig $mbConfig): void {
-    require __DIR__.'/vendor/autoload.php';
-
     $mbConfig->workers($workers = [
         UpdateChangelogViaGoReleaseWorker::class,
         CreateGithubReleaseReleaseWorker::class,
