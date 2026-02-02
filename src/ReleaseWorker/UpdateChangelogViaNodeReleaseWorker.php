@@ -13,17 +13,14 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 /**
  * @see https://github.com/conventional-changelog/conventional-changelog
  */
-class UpdateChangelogViaNodeReleaseWorker extends AbstractReleaseWorker implements ChangelogContract
+class UpdateChangelogViaNodeReleaseWorker extends AbstractReleaseWorker
 {
-    private static ?string $changelog = null;
-
     public function __construct(private readonly ProcessRunner $processRunner) {}
 
     public static function check(): void
@@ -41,16 +38,13 @@ class UpdateChangelogViaNodeReleaseWorker extends AbstractReleaseWorker implemen
         $this->processRunner->run('conventional-changelog -p angular -i CHANGELOG.md -s -r 1');
         $this->processRunner->run("git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
 
-        self::$changelog = $this->processRunner->run('conventional-changelog -p angular -r 1');
+        $changelog = $this->processRunner->run('conventional-changelog -p angular -r 1');
+        CreateGithubReleaseReleaseWorker::setChangelog($this->sanitizeChangelog($changelog));
     }
 
-    public static function getChangelog(): string
+    private function sanitizeChangelog(string $changelog): string
     {
-        if (empty(self::$changelog)) {
-            return '';
-        }
-
-        $lines = array_filter(explode(\PHP_EOL, self::$changelog), static fn (string $line): bool => !str_starts_with($line, '# ') && !str_starts_with($line, '## '));
+        $lines = array_filter(explode(\PHP_EOL, $changelog), static fn (string $line): bool => !str_starts_with($line, '# ') && !str_starts_with($line, '## '));
 
         $lines = implode(\PHP_EOL, $lines);
 

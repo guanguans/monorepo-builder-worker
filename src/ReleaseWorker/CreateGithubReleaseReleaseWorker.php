@@ -45,7 +45,10 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
         ]);
     }
 
-    public static function setChangelog(?string $changelog): void
+    /**
+     * @param non-empty-string $changelog
+     */
+    public static function setChangelog(string $changelog): void
     {
         self::$changelog = $changelog;
     }

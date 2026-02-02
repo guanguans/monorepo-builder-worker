@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 use Webmozart\Assert\Assert;
@@ -21,10 +20,8 @@ use Webmozart\Assert\Assert;
 /**
  * @see https://github.com/marcocesarato/php-conventional-changelog
  */
-class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker implements ChangelogContract
+class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker
 {
-    private static ?string $changelog = null;
-
     public function __construct(private readonly ProcessRunner $processRunner) {}
 
     public static function check(): void
@@ -49,27 +46,8 @@ class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker implement
         ));
         $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $originalString\" --no-verify && git push");
 
-        self::$changelog = $this->processRunner->run('git show');
-    }
-
-    public static function getChangelog(): string
-    {
-        if (empty(self::$changelog)) {
-            return '';
-        }
-
-        $lines = array_filter(explode(\PHP_EOL, self::$changelog), static fn (string $line): bool => str_starts_with($line, '+')
-                && !str_starts_with($line, '+++')
-                && !str_starts_with($line, '+# ')
-                && !str_starts_with($line, '+## '));
-
-        $lines = implode(\PHP_EOL, array_map(static fn (string $line): string => ltrim($line, '+'), $lines));
-
-        if (!str_contains($lines, '### ') || !str_contains($lines, '* ')) {
-            return '';
-        }
-
-        return trim($lines);
+        $changelog = $this->processRunner->run('git show');
+        CreateGithubReleaseReleaseWorker::setChangelog($this->sanitizeChangelog($changelog));
     }
 
     private function toPreviousTag(string $tag): string
@@ -78,5 +56,21 @@ class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker implement
         $previousTagIndex = (int) array_search($tag, $tags, true) + 1;
 
         return $tags[$previousTagIndex] ?? '';
+    }
+
+    private function sanitizeChangelog(string $changelog): string
+    {
+        $lines = array_filter(explode(\PHP_EOL, $changelog), static fn (string $line): bool => str_starts_with($line, '+')
+            && !str_starts_with($line, '+++')
+            && !str_starts_with($line, '+# ')
+            && !str_starts_with($line, '+## '));
+
+        $lines = implode(\PHP_EOL, array_map(static fn (string $line): string => ltrim($line, '+'), $lines));
+
+        if (!str_contains($lines, '### ') || !str_contains($lines, '* ')) {
+            return '';
+        }
+
+        return trim($lines);
     }
 }

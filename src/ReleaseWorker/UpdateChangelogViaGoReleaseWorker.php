@@ -39,10 +39,10 @@ class UpdateChangelogViaGoReleaseWorker extends AbstractReleaseWorker
         $this->processRunner->run("git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
 
         $changelog = $this->processRunner->run("git-chglog {$version->getOriginalString()}");
-        CreateGithubReleaseReleaseWorker::setChangelog(self::sanitizeChangelog($changelog, $version));
+        CreateGithubReleaseReleaseWorker::setChangelog($this->sanitizeChangelog($changelog, $version));
     }
 
-    public static function sanitizeChangelog(string $changelog, Version $version): string
+    private function sanitizeChangelog(string $changelog, Version $version): string
     {
         $tagPos = strpos($changelog, \sprintf('<a name="%s"></a>', $version->getOriginalString()));
         $subChangelog = substr($changelog, (int) $tagPos, \strlen($changelog));

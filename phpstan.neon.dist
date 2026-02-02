@@ -117,7 +117,7 @@ parameters:
 #        - identifier: typePerfect.noMixedMethodCaller
 
         - identifier: argument.type
-        - identifier: empty.notAllowed
+#        - identifier: empty.notAllowed
 #        - identifier: return.type
         - identifier: shipmonk.deadMethod
         - identifier: symplify.explicitInterfaceSuffixName
