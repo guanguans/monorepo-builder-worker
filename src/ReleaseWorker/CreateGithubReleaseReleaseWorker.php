@@ -20,6 +20,8 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 {
+    private static ?string $changelog = null;
+
     public function __construct(private readonly ProcessRunner $processRunner) {}
 
     public static function check(): void
@@ -35,31 +37,16 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 
     final public function work(Version $version): void
     {
-        $changelog = $this->findChangelog();
-
         $this->processRunner->run([
             'gh', 'release', 'create', $version->getOriginalString(),
             '--title', $version->getOriginalString(),
             '--verify-tag',
-            ...($changelog ? ['--notes', $changelog] : ['--generate-notes']),
+            ...(self::$changelog ? ['--notes', self::$changelog] : ['--generate-notes']),
         ]);
     }
 
-    private function findChangelog(): string
+    public static function setChangelog(?string $changelog): void
     {
-        /** @var list<class-string<\Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract>> $classes */
-        $classes = [
-            UpdateChangelogViaGoReleaseWorker::class,
-            UpdateChangelogViaNodeReleaseWorker::class,
-            UpdateChangelogViaPhpReleaseWorker::class,
-        ];
-
-        foreach ($classes as $class) {
-            if ($changelog = $class::getChangelog()) {
-                return $changelog;
-            }
-        }
-
-        return '';
+        self::$changelog = $changelog;
     }
 }
