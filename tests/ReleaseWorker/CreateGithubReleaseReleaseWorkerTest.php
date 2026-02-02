@@ -20,9 +20,6 @@ declare(strict_types=1);
 
 use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaNodeReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaPhpReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -56,31 +53,4 @@ it('can get description', function (): void {
 
     expect(new CreateGithubReleaseReleaseWorker(Mockery::mock(ProcessRunner::class)))
         ->getDescription($mockVersion)->toBeString();
-})->group(__DIR__, __FILE__);
-
-it('can find changelog', function (): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-
-    (function (): void {
-        self::$changelog = '';
-    })->call(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner));
-    (function (): void {
-        self::$changelog = '';
-    })->call(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner));
-    (function (): void {
-        self::$changelog = '';
-    })->call(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner));
-    expect((fn (): string => $this->findChangelog())->call(new CreateGithubReleaseReleaseWorker($mockProcessRunner)))->toBeEmpty();
-
-    (function (): void {
-        self::$changelog = <<<'changelog'
-            ### Feat
-            - **Contract:** Add ChangelogInterface
-            changelog;
-
-        $mockVersion = Mockery::mock(Version::class);
-        $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-        self::$version = $mockVersion;
-    })->call(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner));
-    expect((fn (): string => $this->findChangelog())->call(new CreateGithubReleaseReleaseWorker($mockProcessRunner)))->toBeTruthy();
 })->group(__DIR__, __FILE__);

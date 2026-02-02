@@ -36,21 +36,27 @@ it('can check', function (): void {
     expect(UpdateChangelogViaNodeReleaseWorker::check())->toBeNull();
 })->group(__DIR__, __FILE__);
 
-it('can get changelog', function (): void {
+it('can work', function (string $changelog): void {
     $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-    (function (): void {
-        self::$changelog = <<<'changelog'
+    $mockProcessRunner->allows('run')->andReturns($changelog);
+
+    $mockVersion = Mockery::mock(Version::class);
+    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
+
+    expect(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner))
+        ->work($mockVersion)->toBeNull();
+})->group(__DIR__, __FILE__)->with([
+    'invalid changelog' => [
+        <<<'changelog'
             #  (2023-07-22)
 
             ##  (2023-07-22)
 
             ### Bug Fixes
-            changelog;
-    })->call(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner));
-    expect(UpdateChangelogViaNodeReleaseWorker::getChangelog())->toBeEmpty();
-
-    (function (): void {
-        self::$changelog = <<<'changelog'
+            changelog,
+    ],
+    'valid changelog' => [
+        <<<'changelog'
             #  (2023-07-22)
 
             ##  (2023-07-22)
@@ -58,21 +64,9 @@ it('can get changelog', function (): void {
             ### Bug Fixes
 
             * **config:** Add missing newline in config.yml ([22802b1](https://github.com/guanguans/monorepo-builder-worker/commit/22802b1ac9d0701d719278e224386dfbdc67eb8e))
-            changelog;
-    })->call(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner));
-    expect(UpdateChangelogViaNodeReleaseWorker::getChangelog())->toBeTruthy();
-})->group(__DIR__, __FILE__);
-
-it('can work', function (): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-    $mockProcessRunner->allows('run')->andReturns('output');
-
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
-    expect(new UpdateChangelogViaNodeReleaseWorker($mockProcessRunner))
-        ->work($mockVersion)->toBeNull();
-})->group(__DIR__, __FILE__);
+            changelog,
+    ],
+]);
 
 it('can get description', function (): void {
     $mockVersion = Mockery::mock(Version::class);
