@@ -50,6 +50,12 @@ parameters:
         allRules: true
         booleansInConditions: false
         disallowedShortTernary: false
+    guanguans:
+        exceptionMustImplementNativeThrowable:
+            enabled: false
+            nativeThrowable: Guanguans\MonorepoBuilderWorker\Contract\ThrowableContract
+        forbiddenSideEffects:
+            enabled: false
     cognitive_complexity:
         class: 42
         function: 8
@@ -112,7 +118,7 @@ parameters:
 
         - identifier: argument.type
         - identifier: empty.notAllowed
-        - identifier: return.type
+#        - identifier: return.type
         - identifier: shipmonk.deadMethod
         - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.explicitTraitSuffixName

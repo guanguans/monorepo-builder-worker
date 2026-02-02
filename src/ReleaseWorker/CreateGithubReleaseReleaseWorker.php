@@ -15,10 +15,8 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
-use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 {
@@ -49,12 +47,6 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 
     private function findChangelog(): string
     {
-        // $classes = classes(
-        //     static fn (string $class): bool => str_starts_with($class, __NAMESPACE__)
-        //         && is_subclass_of($class, ChangelogContract::class)
-        //         && !str_ends_with($class, 'UpdateChangelogViaRustReleaseWorker')
-        // )->keys();
-
         /** @var list<class-string<\Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract>> $classes */
         $classes = [
             UpdateChangelogViaGoReleaseWorker::class,

@@ -15,14 +15,9 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\RectorRules\Rector\Array_\SimplifyListIndexRector;
-use Guanguans\RectorRules\Rector\Class_\UpdateRectorRefactorParamDocblockFromNodeTypesRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
-use Guanguans\RectorRules\Rector\File\SortFileFirstStmtDocblockRector;
-use Guanguans\RectorRules\Rector\Name\RenameToPsrNameRector;
-use Guanguans\RectorRules\Rector\Namespace_\RemoveNamespaceRector;
-use Guanguans\RectorRules\Rector\New_\NewExceptionToNewAnonymousExtendsExceptionImplementsRector;
-use Illuminate\Support\Str;
+use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
+use Guanguans\RectorRules\Set\SetList;
 use PhpParser\NodeVisitor\ParentConnectingVisitor;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
@@ -33,7 +28,6 @@ use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
 use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
 use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
 use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
-use Rector\CodingStyle\Rector\FuncCall\FunctionFirstClassCallableRector;
 use Rector\CodingStyle\Rector\Stmt\NewlineAfterStatementRector;
 use Rector\Config\RectorConfig;
 use Rector\DeadCode\Rector\ClassLike\RemoveAnnotationRector;
@@ -41,18 +35,10 @@ use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\PHPUnit\Set\PHPUnitSetList;
-use Rector\Renaming\Rector\FuncCall\RenameFunctionRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
-use Rector\Transform\Rector\StaticCall\StaticCallToFuncCallRector;
-use Rector\Transform\ValueObject\StaticCallToFuncCall;
 use Rector\ValueObject\PhpVersion;
-use Rector\ValueObject\Visibility;
-use Rector\Visibility\Rector\ClassMethod\ChangeMethodVisibilityRector;
-use Rector\Visibility\ValueObject\ChangeMethodVisibility;
-use RectorPest\Rules\EnsureTypeChecksFirstRector;
 use RectorPest\Set\PestLevelSetList;
 use RectorPest\Set\PestSetList;
-use function Guanguans\MonorepoBuilderWorker\Support\classes;
 
 return RectorConfig::configure()
     ->withPaths([
@@ -93,19 +79,15 @@ return RectorConfig::configure()
         // carbon: true,
     )
     ->withSets([
+        SetList::ALL,
         PestLevelSetList::UP_TO_PEST_30,
         PestSetList::PEST_CODE_QUALITY,
         PHPUnitSetList::PHPUNIT_110,
     ])
     ->withRules([
-        RemoveNamespaceRector::class,
-        SimplifyListIndexRector::class,
-        SortAssociativeArrayByKeyRector::class,
-        SortFileFirstStmtDocblockRector::class,
-        UpdateRectorRefactorParamDocblockFromNodeTypesRector::class,
-
         ArraySpreadInsteadOfArrayMergeRector::class,
         JsonThrowOnErrorRector::class,
+        SortAssociativeArrayByKeyRector::class,
         StaticArrowFunctionRector::class,
         StaticClosureRector::class,
     ])
@@ -120,9 +102,8 @@ return RectorConfig::configure()
             'StaticClosureCanBeUsedInspection',
         ],
     ])
-    // ->withConfiguredRule(NewExceptionToNewAnonymousExtendsExceptionImplementsRector::class, [Throwable::class])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-    ->withConfiguredRule(RenameToPsrNameRector::class, [
+    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, [
         'MIT',
     ])
     ->withConfiguredRule(RemoveAnnotationRector::class, [
@@ -132,37 +113,7 @@ return RectorConfig::configure()
         'phpstan-ignore-next-line',
         'psalm-suppress',
     ])
-    ->withConfiguredRule(StaticCallToFuncCallRector::class, [
-        new StaticCallToFuncCall(Str::class, 'of', 'str'),
-    ])
-    ->withConfiguredRule(
-        ChangeMethodVisibilityRector::class,
-        classes(static fn (string $class, string $file): bool => str_starts_with($class, 'Guanguans\MonorepoBuilderWorker'))
-            ->filter(static fn (ReflectionClass $reflectionClass): bool => $reflectionClass->isTrait())
-            ->map(
-                static fn (ReflectionClass $reflectionClass): array => collect($reflectionClass->getMethods(ReflectionMethod::IS_PRIVATE))
-                    ->reject(static fn (ReflectionMethod $reflectionMethod): bool => $reflectionMethod->isFinal() || $reflectionMethod->isInternal())
-                    ->map(static fn (ReflectionMethod $reflectionMethod): ChangeMethodVisibility => new ChangeMethodVisibility(
-                        $reflectionClass->getName(),
-                        $reflectionMethod->getName(),
-                        Visibility::PROTECTED
-                    ))
-                    ->all()
-            )
-            ->flatten()
-            // ->dd()
-            ->all(),
-    )
-    ->withConfiguredRule(RenameFunctionRector::class, [
-        'Pest\Faker\fake' => 'fake',
-        'Pest\Faker\faker' => 'fake',
-        'test' => 'it',
-    ])
     ->withSkip([
-        EnsureTypeChecksFirstRector::class,
-        ArrowFunctionDelegatingCallToFirstClassCallableRector::class,
-        FunctionFirstClassCallableRector::class,
-
         ChangeOrIfContinueToMultiContinueRector::class,
         DisallowedEmptyRuleFixerRector::class,
         EncapsedStringsToSprintfRector::class,
@@ -174,6 +125,9 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        ArrowFunctionDelegatingCallToFirstClassCallableRector::class => [
+            __DIR__.'/tests/ReleaseWorker/CreateGithubReleaseReleaseWorkerTest.php',
+        ],
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/src/',
             __DIR__.'/tests/',

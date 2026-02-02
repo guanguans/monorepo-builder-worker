@@ -28,7 +28,6 @@ return (new Configuration)
     ->ignoreErrorsOnPackages(
         [
             /** @see vendor/symplify/monorepo-builder/composer.json */
-            'illuminate/collections',
             'phar-io/version',
             'symfony/console',
             'symfony/process',
