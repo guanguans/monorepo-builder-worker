@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.1.0"></a>
+## [3.1.0] - 2026-02-03
+### 💅 Code Refactorings
+- **UpdateChangelogViaGoReleaseWorkerTest:** Enhance test cases for changelog handling ([7485e89](https://github.com/guanguans/monorepo-builder-worker/commit/7485e89))
+- **config:** Remove autoload requirement from configuration files ([72e9988](https://github.com/guanguans/monorepo-builder-worker/commit/72e9988))
+- **github-release:** Refactor changelog handling in release worker ([448236d](https://github.com/guanguans/monorepo-builder-worker/commit/448236d))
+- **release-worker:** Simplify changelog handling in Node release worker ([daea719](https://github.com/guanguans/monorepo-builder-worker/commit/daea719))
+- **release-worker:** Simplify changelog handling in UpdateChangelogViaGoReleaseWorker ([f4441e8](https://github.com/guanguans/monorepo-builder-worker/commit/f4441e8))
+
+### 📦 Builds
+- **dependencies:** Update development dependencies in composer.json ([82ef3e7](https://github.com/guanguans/monorepo-builder-worker/commit/82ef3e7))
+
+### 🤖 Continuous Integrations
+- **config:** Update config files ([29da548](https://github.com/guanguans/monorepo-builder-worker/commit/29da548))
+
+
 <a name="3.0.0"></a>
 ## [3.0.0] - 2026-01-08
 ### ✨ Features
@@ -603,7 +619,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...HEAD
+[3.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.2.0...3.0.0
 [2.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.1.0...2.2.0
 [2.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.0.4...2.1.0
