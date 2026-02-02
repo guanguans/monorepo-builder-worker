@@ -13,18 +13,14 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
-use Guanguans\MonorepoBuilderWorker\Contract\ChangelogContract;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 /**
  * @see https://github.com/git-chglog/git-chglog
  */
-class UpdateChangelogViaGoReleaseWorker extends AbstractReleaseWorker implements ChangelogContract
+class UpdateChangelogViaGoReleaseWorker extends AbstractReleaseWorker
 {
-    private static ?string $changelog = null;
-    private static ?Version $version = null;
-
     public function __construct(private readonly ProcessRunner $processRunner) {}
 
     public static function check(): void
@@ -42,18 +38,14 @@ class UpdateChangelogViaGoReleaseWorker extends AbstractReleaseWorker implements
         $this->processRunner->run('git-chglog --output CHANGELOG.md');
         $this->processRunner->run("git add CHANGELOG.md && git commit -m \"chore(release): {$version->getOriginalString()}\" --no-verify && git push");
 
-        self::$version = $version;
-        self::$changelog = $this->processRunner->run("git-chglog {$version->getOriginalString()}");
+        $changelog = $this->processRunner->run("git-chglog {$version->getOriginalString()}");
+        CreateGithubReleaseReleaseWorker::setChangelog(self::sanitizeChangelog($changelog, $version));
     }
 
-    public static function getChangelog(): string
+    public static function sanitizeChangelog(string $changelog, Version $version): string
     {
-        if (empty(self::$changelog) || !self::$version instanceof Version) {
-            return '';
-        }
-
-        $tagPos = strpos(self::$changelog, \sprintf('<a name="%s"></a>', self::$version->getOriginalString()));
-        $subChangelog = substr(self::$changelog, (int) $tagPos, \strlen(self::$changelog));
+        $tagPos = strpos($changelog, \sprintf('<a name="%s"></a>', $version->getOriginalString()));
+        $subChangelog = substr($changelog, (int) $tagPos, \strlen($changelog));
         $lines = array_filter(explode(\PHP_EOL, $subChangelog), static fn (string $line): bool => !str_starts_with($line, '# ') && !str_starts_with($line, '[Unreleased]: '));
 
         $lines = implode(\PHP_EOL, $lines);
