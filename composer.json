@@ -62,7 +62,7 @@
         "illuminate/support": "^12.49",
         "marcocesarato/php-conventional-changelog": "^1.17",
         "mockery/mockery": "^1.6",
-        "mrpunyapal/rector-pest": "^0.1",
+        "mrpunyapal/rector-pest": "^0.1 || ^0.2",
         "nette/utils": "^4.1",
         "peckphp/peck": "^0.2",
         "pestphp/pest": "^3.8 || ^4.0",
