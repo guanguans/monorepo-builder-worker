@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.1.1"></a>
+## [3.1.1] - 2026-03-19
+### 📦 Builds
+- **deps:** update dependencies in composer.json ([99a0045](https://github.com/guanguans/monorepo-builder-worker/commit/99a0045))
+
+### Pull Requests
+- Merge pull request [#69](https://github.com/guanguans/monorepo-builder-worker/issues/69) from guanguans/dependabot/composer/shipmonk/dead-code-detector-tw-0.14or-tw-0.15
+- Merge pull request [#68](https://github.com/guanguans/monorepo-builder-worker/issues/68) from guanguans/dependabot/composer/mrpunyapal/rector-pest-tw-0.1or-tw-0.2
+
+
 <a name="3.1.0"></a>
 ## [3.1.0] - 2026-02-03
 ### 💅 Code Refactorings
@@ -619,7 +629,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...HEAD
+[3.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.2.0...3.0.0
 [2.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.1.0...2.2.0
