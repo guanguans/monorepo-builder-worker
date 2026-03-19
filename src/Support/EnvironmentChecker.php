@@ -21,11 +21,11 @@ class EnvironmentChecker
     use ConcreteFactory;
 
     /**
+     * @api
+     *
      * @param list<callable|class-string<EnvironmentCheckerContract>|EnvironmentCheckerContract> $workers
      *
      * @throws \Throwable
-     *
-     * @api
      */
     public static function checks(array $workers): void
     {
