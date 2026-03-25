@@ -33,6 +33,7 @@ use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
 use Rector\Config\RectorConfig;
 use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
 use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
+use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
 use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
@@ -121,6 +122,12 @@ return RectorConfig::configure()
         WrapEncapsedVariableInCurlyBracesRector::class,
     ])
     ->withSkip([
+        JsonThrowOnErrorRector::class => [
+            __DIR__.'/tests/Pest.php',
+        ],
+        RenameParamToMatchTypeRector::class => [
+            __DIR__.'/tests/Pest.php',
+        ],
         SortAssociativeArrayByKeyRector::class => [
             __DIR__.'/src/',
             __DIR__.'/tests/',

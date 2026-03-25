@@ -1,0 +1,18 @@
+{
+    "require-dev": {
+        "php": ">=8.2",
+        "ergebnis/composer-normalize": "^2.50",
+        "peckphp/peck": "^0.2",
+        "symplify/rule-doc-generator": "^12.2"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "ergebnis/composer-normalize": true,
+            "theofidry/composer-inheritance-plugin": false,
+            "wikimedia/composer-merge-plugin": false
+        },
+        "sort-packages": true
+    }
+}
