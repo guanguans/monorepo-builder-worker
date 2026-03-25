@@ -8,6 +8,16 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.1.2"></a>
+## [3.1.2] - 2026-03-25
+### 📦 Builds
+- **deps:** add new PHPStan rules and update existing dependencies ([7b03438](https://github.com/guanguans/monorepo-builder-worker/commit/7b03438))
+
+### 🤖 Continuous Integrations
+- **config:** Update github config files ([219142b](https://github.com/guanguans/monorepo-builder-worker/commit/219142b))
+- **config:** Update CI config files ([8390e62](https://github.com/guanguans/monorepo-builder-worker/commit/8390e62))
+
+
 <a name="3.1.1"></a>
 ## [3.1.1] - 2026-03-19
 ### 📦 Builds
@@ -629,7 +639,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...HEAD
+[3.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...3.1.2
 [3.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/guanguans/monorepo-builder-worker/compare/2.2.0...3.0.0
