@@ -5,6 +5,9 @@
             "argv",
             "autoload"
         ],
-        "paths": []
+        "paths": [
+            "vendor/",
+            "vendor-bin/"
+        ]
     }
 }

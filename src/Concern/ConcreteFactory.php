@@ -27,6 +27,9 @@ trait ConcreteFactory
     protected static ?ProcessRunner $runner = null;
     protected static ?SymfonyStyle $symfonyStyle = null;
 
+    /**
+     * @api
+     */
     public static function createExecutableFinder(): ExecutableFinder
     {
         if (!self::$executableFinder instanceof ExecutableFinder) {
