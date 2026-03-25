@@ -42,7 +42,7 @@ trait ConcreteFactory
     public static function createProcessRunner(?SymfonyStyle $symfonyStyle = null): ProcessRunner
     {
         if (!self::$runner instanceof ProcessRunner || $symfonyStyle instanceof SymfonyStyle) {
-            self::$runner = new ProcessRunner($symfonyStyle ?: self::createSymfonyStyle());
+            self::$runner = new ProcessRunner($symfonyStyle ?? self::createSymfonyStyle());
         }
 
         return self::$runner;

@@ -56,8 +56,6 @@ final class ComposerScripts
     {
         $enableDebugging ??= (new ArgvInput)->hasParameterOption('-vvv', true);
         $enableDebugging and $event->getIO()->enableDebugging(microtime(true));
-        // (new \ReflectionObject($event->getIO()))->getProperty('output')->getValue($event->getIO())->setVerbosity(OutputInterface::VERBOSITY_DEBUG);
-        // (fn () => $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG))->bindTo($event->getIO(), $event->getIO()::class)();
         (fn () => $this->output->setVerbosity(OutputInterface::VERBOSITY_DEBUG))->call($event->getIO());
 
         require_once $event->getComposer()->getConfig()->get('vendor-dir').\DIRECTORY_SEPARATOR.'autoload.php';
