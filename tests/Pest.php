@@ -35,7 +35,7 @@ use Pest\Expectation;
 //     ->timeout(10000);
 // pest()->only();
 // pest()->printer()->compact();
-pest()->project()->github('guanguans/notify');
+pest()->project()->github('guanguans/monorepo-builder-worker');
 pest()
     ->extend(TestCase::class)
     ->beforeAll(function (): void {})
