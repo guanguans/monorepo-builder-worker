@@ -8,6 +8,22 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.2.0"></a>
+## [3.2.0] - 2026-04-06
+### ✨ Features
+- **release-worker:** Add BuildLaravelZeroAppReleaseWorker and PhpSubprocessRunner ([700e669](https://github.com/guanguans/monorepo-builder-worker/commit/700e669))
+
+### 💅 Code Refactorings
+- **concrete-factory:** Rename static property runner to staticProcessRunner for consistency ([f9caaa0](https://github.com/guanguans/monorepo-builder-worker/commit/f9caaa0))
+
+### 📦 Builds
+- **deps:** Remove deprecated PHPStan and Rector dependencies ([9b308d8](https://github.com/guanguans/monorepo-builder-worker/commit/9b308d8))
+
+### 🤖 Continuous Integrations
+- **config:** Update config files ([9708681](https://github.com/guanguans/monorepo-builder-worker/commit/9708681))
+- **config:** Update config files ([3ace26d](https://github.com/guanguans/monorepo-builder-worker/commit/3ace26d))
+
+
 <a name="3.1.2"></a>
 ## [3.1.2] - 2026-03-25
 ### 📦 Builds
@@ -639,7 +655,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...HEAD
+[3.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...3.2.0
 [3.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...3.1.2
 [3.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.0.0...3.1.0
