@@ -15,7 +15,6 @@ namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
 use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
 use PharIo\Version\Version;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\ExecutableFinder;
 
 final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
@@ -24,7 +23,6 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
 
     public function __construct(private readonly PhpSubprocessRunner $phpSubprocessRunner) {}
 
-    #[\Override]
     public static function check(): void
     {
         \assert(
@@ -68,17 +66,6 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
         );
     }
 
-    public static function createPhpSubprocessRunner(?SymfonyStyle $symfonyStyle = null): PhpSubprocessRunner
-    {
-        static $phpSubprocessRunner;
-
-        if (!$phpSubprocessRunner instanceof PhpSubprocessRunner || $symfonyStyle instanceof SymfonyStyle) {
-            $phpSubprocessRunner = new PhpSubprocessRunner($symfonyStyle ?? self::createSymfonyStyle());
-        }
-
-        return $phpSubprocessRunner;
-    }
-
     /**
      * @see \Illuminate\Console\Application::artisanBinary()
      * @see \Illuminate\Console\Application::phpBinary()
@@ -88,8 +75,9 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
      */
     private static function findComposer(): string
     {
+        /** @var null|string $composer */
         static $composer;
 
-        return $composer ??= (new ExecutableFinder)->find('composer', 'composer');
+        return $composer ??= (new ExecutableFinder)->find('composer', 'composer') ?? 'composer';
     }
 }

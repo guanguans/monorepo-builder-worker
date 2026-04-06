@@ -179,4 +179,5 @@ parameters:
         - identifier: symplify.forbiddenNode
 
         - identifier: argument.type
+        - message: '#^Unused Guanguans\\MonorepoBuilderWorker\\Concern\\ConcreteFactory\:\:create.*$#'
         - message: '#^Unused Guanguans\\MonorepoBuilderWorker\\ReleaseWorker\\.*\:\:__construct$#'

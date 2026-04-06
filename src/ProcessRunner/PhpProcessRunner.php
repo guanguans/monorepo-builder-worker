@@ -27,6 +27,9 @@ final readonly class PhpProcessRunner
 
     public function __construct(private SymfonyStyle $symfonyStyle) {}
 
+    /**
+     * @api
+     */
     public function run(string $script, ?string $cwd = null): string
     {
         $phpProcess = $this->createPhpProcess($script, $cwd);

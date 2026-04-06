@@ -3,7 +3,8 @@
     "ignore": {
         "words": [
             "argv",
-            "autoload"
+            "autoload",
+            "subprocess"
         ],
         "paths": [
             "vendor/",

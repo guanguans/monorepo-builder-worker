@@ -1,0 +1,8 @@
+# total 1 error
+
+parameters:
+    ignoreErrors:
+        -
+            message: '#^The statement contains side effects\: \[unknown_class\]\.$#'
+            count: 1
+            path: ../src/ReleaseWorker/BuildLaravelZeroAppReleaseWorker.php

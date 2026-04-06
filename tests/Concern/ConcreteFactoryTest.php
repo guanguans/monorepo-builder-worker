@@ -19,10 +19,13 @@ declare(strict_types=1);
  */
 
 use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
+use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpProcessRunner;
+use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\ExecutableFinder;
+use Symfony\Component\Process\PhpExecutableFinder;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 pest()->use(ConcreteFactory::class);
@@ -31,8 +34,20 @@ it('can create executable finder', function (): void {
     expect($this::createExecutableFinder())->toBeInstanceOf(ExecutableFinder::class);
 })->group(__DIR__, __FILE__);
 
+it('can create php executable finder', function (): void {
+    expect($this::createPhpExecutableFinder())->toBeInstanceOf(PhpExecutableFinder::class);
+})->group(__DIR__, __FILE__);
+
 it('can create process runner', function (): void {
     expect($this::createProcessRunner())->toBeInstanceOf(ProcessRunner::class);
+})->group(__DIR__, __FILE__);
+
+it('can create php process runner', function (): void {
+    expect($this::createPhpProcessRunner())->toBeInstanceOf(PhpProcessRunner::class);
+})->group(__DIR__, __FILE__);
+
+it('can create php subprocess runner', function (): void {
+    expect($this::createPhpSubprocessRunner())->toBeInstanceOf(PhpSubprocessRunner::class);
 })->group(__DIR__, __FILE__);
 
 it('can create symfony style', function (): void {

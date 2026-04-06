@@ -30,7 +30,7 @@ it('can check', function (): void {
         $mockProcessRunner = Mockery::mock(ProcessRunner::class);
         $mockProcessRunner->allows('run')->andReturns('output');
 
-        self::$runner = $mockProcessRunner;
+        self::$staticProcessRunner = $mockProcessRunner;
     })->call(new UpdateChangelogViaNodeReleaseWorker(Mockery::mock(ProcessRunner::class)));
 
     expect(UpdateChangelogViaNodeReleaseWorker::check())->toBeNull();

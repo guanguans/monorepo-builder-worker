@@ -28,6 +28,8 @@ final readonly class PhpSubprocessRunner
     public function __construct(private SymfonyStyle $symfonyStyle) {}
 
     /**
+     * @api
+     *
      * @param list<string> $commandLine
      */
     public function run(array $commandLine, ?string $cwd = null): string
