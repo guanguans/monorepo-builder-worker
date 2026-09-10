@@ -22,7 +22,6 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorkerTests;
 
 use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
-use phpmock\phpunit\PHPMock;
 use PHPUnit\Framework\Attributes\Small;
 use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 
@@ -30,7 +29,6 @@ use Symfony\Component\VarDumper\Test\VarDumperTestTrait;
 class TestCase extends \PHPUnit\Framework\TestCase
 {
     use MockeryPHPUnitIntegration;
-    use PHPMock;
     use VarDumperTestTrait;
 
     /**

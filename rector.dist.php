@@ -1,6 +1,7 @@
 <?php
 
 /** @noinspection PhpInternalEntityUsedInspection */
+/** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
@@ -14,29 +15,19 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Ergebnis\Rector\Rules\Arrays\SortAssociativeArrayByKeyRector;
+use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
 use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
 use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
+use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Guanguans\RectorRules\Set\SetList;
-use PhpParser\NodeVisitor\ParentConnectingVisitor;
-use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
-use Rector\CodingStyle\Rector\ArrowFunction\StaticArrowFunctionRector;
+use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
-use Rector\CodingStyle\Rector\Closure\StaticClosureRector;
-use Rector\CodingStyle\Rector\Encapsed\EncapsedStringsToSprintfRector;
-use Rector\CodingStyle\Rector\Encapsed\WrapEncapsedVariableInCurlyBracesRector;
-use Rector\CodingStyle\Rector\Enum_\EnumCaseToPascalCaseRector;
-use Rector\CodingStyle\Rector\FuncCall\ArraySpreadInsteadOfArrayMergeRector;
 use Rector\Config\RectorConfig;
-use Rector\EarlyReturn\Rector\If_\ChangeOrIfContinueToMultiContinueRector;
-use Rector\EarlyReturn\Rector\Return_\ReturnBinaryOrToEarlyReturnRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
-use Rector\Php73\Rector\FuncCall\JsonThrowOnErrorRector;
-use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
-use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
+use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\ValueObject\PhpVersion;
 use RectorPest\Set\PestLevelSetList;
 use RectorPest\Set\PestSetList;
@@ -53,11 +44,12 @@ return RectorConfig::configure()
     ->withCache(__DIR__.'/.build/rector/')
     // ->withoutParallel()
     ->withParallel()
-    ->withImportNames(importDocBlockNames: false, importShortClasses: false)
-    // ->withImportNames(importNames: false)
+    ->withImportNames(importDocBlockNames: false, importShortClasses: false, removeUnusedImports: false)
+    // ->withImportNames(true, false, false, false)
     // ->withEditorUrl()
     ->withFluentCallNewLine()
     ->withTreatClassesAsFinal()
+    ->withTypeGuardedClasses([])
     ->withAttributesSets(phpunit: true, all: true)
     ->withComposerBased(phpunit: true/* , laravel: true */)
     ->withPhpVersion(PhpVersion::PHP_82)
@@ -71,12 +63,12 @@ return RectorConfig::configure()
         typeDeclarationDocblocks: true,
         privatization: true,
         naming: true,
-        instanceOf: true,
-        earlyReturn: true,
-        // strictBooleans: true,
+        // namedArgs: true,
         // carbon: true,
         rectorPreset: true,
         phpunitCodeQuality: true,
+        phpunitNarrowAsserts: true,
+        phpunitMockToStub: true,
     )
     ->withSets([
         SetList::ALL,
@@ -84,14 +76,8 @@ return RectorConfig::configure()
         PestSetList::PEST_CODE_QUALITY,
     ])
     ->withRules([
-        ArraySpreadInsteadOfArrayMergeRector::class,
-        EnumCaseToPascalCaseRector::class,
         GeneratorPropertyFetchToMethodCallRector::class,
-        JsonThrowOnErrorRector::class,
-        SafeDeclareStrictTypesRector::class,
         SortAssociativeArrayByKeyRector::class,
-        StaticArrowFunctionRector::class,
-        StaticClosureRector::class,
     ])
     ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/tests/*' => [
@@ -112,19 +98,12 @@ return RectorConfig::configure()
         ],
     ])
     ->withSkip([
-        ChangeOrIfContinueToMultiContinueRector::class,
-        DisallowedEmptyRuleFixerRector::class,
-        EncapsedStringsToSprintfRector::class,
-        ExplicitBoolCompareRector::class,
         LogicalToBooleanRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
-        ReturnBinaryOrToEarlyReturnRector::class,
-        WrapEncapsedVariableInCurlyBracesRector::class,
+        PreferPHPUnitThisCallRector::class,
+        SplitDoubleAssignRector::class,
     ])
     ->withSkip([
-        JsonThrowOnErrorRector::class => [
-            __DIR__.'/tests/Pest.php',
-        ],
         RenameParamToMatchTypeRector::class => [
             __DIR__.'/tests/Pest.php',
         ],
@@ -132,9 +111,4 @@ return RectorConfig::configure()
             __DIR__.'/src/',
             __DIR__.'/tests/',
         ],
-        StaticArrowFunctionRector::class => $staticClosureSkipPaths = [
-            __DIR__.'/tests/*Test.php',
-            __DIR__.'/tests/Pest.php',
-        ],
-        StaticClosureRector::class => $staticClosureSkipPaths,
     ]);

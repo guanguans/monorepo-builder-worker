@@ -23,14 +23,12 @@ use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 arch()
     ->group(__DIR__, __FILE__)
     // ->skip()
-    ->preset()->php()->ignoring([
-    ]);
+    ->preset()->php()->ignoring([]);
 
 arch()
     ->group(__DIR__, __FILE__)
     ->skip()
-    ->preset()->laravel()->ignoring([
-    ]);
+    ->preset()->laravel()->ignoring([]);
 
 arch()
     ->group(__DIR__, __FILE__)
@@ -42,14 +40,12 @@ arch()
 arch()
     ->group(__DIR__, __FILE__)
     ->skip()
-    ->preset()->strict()->ignoring([
-    ]);
+    ->preset()->strict()->ignoring([]);
 
 arch()
     ->group(__DIR__, __FILE__)
     ->skip()
-    ->preset()->relaxed()->ignoring([
-    ]);
+    ->preset()->relaxed()->ignoring([]);
 
 arch('will not use debugging functions')
     ->group(__DIR__, __FILE__)
