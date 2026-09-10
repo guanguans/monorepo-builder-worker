@@ -8,6 +8,20 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.2.1"></a>
+## [3.2.1] - 2026-09-10
+### 📦 Builds
+- **deps:** Update composer dependencies and configuration files ([b577f58](https://github.com/guanguans/monorepo-builder-worker/commit/b577f58))
+
+### Pull Requests
+- Merge pull request [#86](https://github.com/guanguans/monorepo-builder-worker/issues/86) from guanguans/dependabot/github_actions/github/codeql-action-4.37.9
+- Merge pull request [#85](https://github.com/guanguans/monorepo-builder-worker/issues/85) from guanguans/dependabot/github_actions/github/codeql-action-4.37.8
+- Merge pull request [#84](https://github.com/guanguans/monorepo-builder-worker/issues/84) from guanguans/dependabot/github_actions/github/codeql-action-4.37.7
+- Merge pull request [#83](https://github.com/guanguans/monorepo-builder-worker/issues/83) from guanguans/dependabot/github_actions/github/codeql-action-4.37.6
+- Merge pull request [#81](https://github.com/guanguans/monorepo-builder-worker/issues/81) from guanguans/dependabot/github_actions/github/codeql-action-4.37.4
+- Merge pull request [#80](https://github.com/guanguans/monorepo-builder-worker/issues/80) from guanguans/dependabot/github_actions/github/codeql-action-4.37.3
+
+
 <a name="3.2.0"></a>
 ## [3.2.0] - 2026-04-06
 ### ✨ Features
@@ -655,7 +669,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...HEAD
+[3.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...3.2.0
 [3.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...3.1.2
 [3.1.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.0...3.1.1
