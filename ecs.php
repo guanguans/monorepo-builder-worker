@@ -1,6 +1,7 @@
 <?php
 
-/** @noinspection PhpDeprecationInspection */
+/** @noinspection PhpUndefinedClassInspection */
+/** @noinspection PhpUndefinedNamespaceInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 declare(strict_types=1);
 
@@ -13,78 +14,62 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use PhpCsFixer\Fixer\Basic\BracesPositionFixer;
-use PhpCsFixer\Fixer\Basic\SingleLineEmptyBodyFixer;
-use PhpCsFixer\Fixer\ClassNotation\ClassAttributesSeparationFixer;
-use PhpCsFixer\Fixer\ClassNotation\ClassDefinitionFixer;
-use PhpCsFixer\Fixer\ControlStructure\TrailingCommaInMultilineFixer;
-use PhpCsFixer\Fixer\ControlStructure\YodaStyleFixer;
-use PhpCsFixer\Fixer\FunctionNotation\FunctionDeclarationFixer;
-use PhpCsFixer\Fixer\Import\NoUnusedImportsFixer;
-use PhpCsFixer\Fixer\Operator\ConcatSpaceFixer;
-use PhpCsFixer\Fixer\Operator\NewWithBracesFixer;
-use PhpCsFixer\Fixer\Operator\NewWithParenthesesFixer;
-use PhpCsFixer\Fixer\Operator\NotOperatorWithSuccessorSpaceFixer;
-use PhpCsFixer\Fixer\Operator\OperatorLinebreakFixer;
-use PhpCsFixer\Fixer\Phpdoc\PhpdocLineSpanFixer;
-use PhpCsFixer\Fixer\StringNotation\ExplicitStringVariableFixer;
-use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
-use PhpCsFixer\Fixer\Whitespace\ArrayIndentationFixer;
-use PhpCsFixer\Fixer\Whitespace\BlankLineBetweenImportGroupsFixer;
-use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayListItemNewlineFixer;
-use Symplify\CodingStandard\Fixer\ArrayNotation\ArrayOpenerAndCloserNewlineFixer;
-use Symplify\CodingStandard\Fixer\Spacing\StandaloneLinePromotedPropertyFixer;
+use Ergebnis\License\Holder;
+use Ergebnis\License\Range;
+use Ergebnis\License\Type\MIT;
+use Ergebnis\License\Url;
+use Ergebnis\License\Year;
+use Guanguans\PhpCsFixerCustomFixers\Set\SetList;
+use PhpCsFixer\Finder as PhpCsFixerFinder;
+use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
 return ECSConfig::configure()
-    ->withPaths([
-        __DIR__.'/src/',
-        __DIR__.'/tests/',
-        __DIR__.'/.changelog',
-        __DIR__.'/composer-bump',
-    ])
-    ->withRootFiles()
-    ->withSkip([
-        '*/Fixtures/*',
-        __DIR__.'/_ide_helper.php',
-        __DIR__.'/tests.php',
-        BracesPositionFixer::class,
-        SingleLineEmptyBodyFixer::class,
-        ClassAttributesSeparationFixer::class,
-        ClassDefinitionFixer::class,
-        TrailingCommaInMultilineFixer::class,
-        YodaStyleFixer::class,
-        FunctionDeclarationFixer::class,
-        ConcatSpaceFixer::class,
-        NewWithBracesFixer::class,
-        NewWithParenthesesFixer::class,
-        NotOperatorWithSuccessorSpaceFixer::class,
-        OperatorLinebreakFixer::class,
-        PhpdocLineSpanFixer::class,
-        ExplicitStringVariableFixer::class,
-        SingleQuoteFixer::class,
-        ArrayIndentationFixer::class,
-        BlankLineBetweenImportGroupsFixer::class,
-        ArrayListItemNewlineFixer::class,
-        ArrayOpenerAndCloserNewlineFixer::class,
-        StandaloneLinePromotedPropertyFixer::class,
-    ])
-    ->withCache(__DIR__.'/.build/ecs/')
-    ->withEditorConfig()
     // ->withoutParallel()
-    ->withParallel()
-    ->withPhpCsFixerSets(
-        auto: true,
-        autoRisky: true,
-        autoPHPMigration: true,
-        autoPHPMigrationRisky: true,
-        autoPHPUnitMigrationRisky: true,
-    )
-    ->withPreparedSets(
-        psr12: true,
-        common: true,
-    )
-    // ->withConfiguredRule()
-    ->withRules([
-        NoUnusedImportsFixer::class,
+    ->withPaths(array_keys(iterator_to_array(
+        PhpCsFixerFinder::create()
+            ->in(getcwd())
+            ->exclude([
+                'Fixtures/',
+                'vendor-bin/',
+            ])
+            ->notPath([
+                // '/lang\/.*\.json$/',
+            ])
+            ->notName([
+                '/\.blade\.php$/',
+            ])
+            ->ignoreDotFiles(false)->ignoreUnreadableDirs(false)->ignoreVCS(true)->ignoreVCSIgnored(true)
+            ->append(
+                Finder::create()->files()->in(getcwd())->depth(0)
+                    ->ignoreDotFiles(false)->ignoreUnreadableDirs(false)->ignoreVCS(true)->ignoreVCSIgnored(true)
+                    ->filter(static fn (SplFileInfo $file): bool => str_starts_with(
+                        $file->getContents(),
+                        '#!/usr/bin/env php'
+                    ))
+            )
+    )))
+    ->withSkip([])
+    ->withSets([SetList::GUANGUANS])
+    ->withConfiguredRule(HeaderCommentFixer::class, [
+        'comment_type' => 'PHPDoc',
+        'header' => (static function (): string {
+            $mit = MIT::text(
+                __DIR__.'/LICENSE',
+                Range::since(
+                    Year::fromString('2023'),
+                    new DateTimeZone('Asia/Shanghai'),
+                ),
+                Holder::fromString('guanguans<ityaozm@gmail.com>'),
+                Url::fromString('https://github.com/guanguans/monorepo-builder-worker'),
+            );
+
+            $mit->save();
+
+            return trim($mit->header());
+        })(),
+        'location' => 'after_declare_strict',
+        'separate' => 'both',
     ]);

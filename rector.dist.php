@@ -32,6 +32,8 @@ use Rector\ValueObject\PhpVersion;
 use RectorPest\Set\PestLevelSetList;
 use RectorPest\Set\PestSetList;
 
+error_reporting(\E_ALL & ~\E_DEPRECATED & ~\E_USER_DEPRECATED);
+
 return RectorConfig::configure()
     ->withPaths([
         __DIR__.'/src/',
