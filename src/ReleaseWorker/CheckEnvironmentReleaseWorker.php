@@ -18,6 +18,7 @@ use PharIo\Version\Version;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
+use Webmozart\Assert\Assert;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
@@ -34,13 +35,17 @@ class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
 
     /**
      * @see \Symplify\MonorepoBuilder\Config\MBConfig::workers()
+     *
+     * @api
      */
     public static function configure(MBConfig $mbConfig): void
     {
+        /** @var non-empty-list<class-string<ReleaseWorkerInterface>> $workerClasses */
         $workerClasses = MBConfig::getUserWorkerClasses();
 
-        \assert(
-            self::class === $workerClasses[array_key_first($workerClasses)],
+        Assert::eq(
+            $workerClasses[array_key_first($workerClasses)],
+            self::class,
             \sprintf('The first release worker must be "%s".', self::class)
         );
 
@@ -65,11 +70,10 @@ class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
      */
     public function work(Version $version): void
     {
-        \assert(
-            \count($this->releaseWorkers) > 0,
-            \sprintf('The property "%s::$releaseWorkers" must be set by calling the method "configure".', self::class)
-        );
-
+        // Assert::notEmpty(
+        //     $this->releaseWorkers,
+        //     \sprintf('The property "%s::$releaseWorkers" must be set by calling the method "configure".', self::class)
+        // );
         foreach ($this->releaseWorkers as $releaseWorker) {
             $this->symfonyStyle->comment(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
             $releaseWorker->check();

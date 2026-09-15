@@ -49,6 +49,7 @@ parameters:
 #        - vendor/rector/rector/vendor/symplify/rule-doc-generator-contracts/
     scanFiles:
         - vendor/composer/InstalledVersions.php
+        - vendor/symfony/dependency-injection/Loader/Configurator/ContainerConfigurator.php
     excludePaths:
         - src/Support/ComposerScripts.php
         - tests/Fixtures/
@@ -174,15 +175,12 @@ parameters:
 #        - message: '#^Unused Guanguans\\Notify\\Rector\\.*\\.*\:\:__construct$#'
 
         - identifier: ergebnis.final
-        - identifier: ergebnis.finalInAbstractClass
         - identifier: ergebnis.noExtends
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue
         - identifier: shipmonk.variableTypeOverwritten
         - identifier: symplify.explicitInterfaceSuffixName
-        - identifier: symplify.explicitTraitSuffixName
         - identifier: symplify.forbiddenNode
 
         - identifier: argument.type
-        - message: '#^Unused Guanguans\\MonorepoBuilderWorker\\Concern\\ConcreteFactory\:\:create.*$#'
-        - message: '#^Unused Guanguans\\MonorepoBuilderWorker\\ReleaseWorker\\.*\:\:__construct$#'
+        - message: '#^Unused Guanguans\\MonorepoBuilderWorker\\.*\:\:__construct$#'

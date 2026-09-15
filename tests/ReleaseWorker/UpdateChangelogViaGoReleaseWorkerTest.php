@@ -18,12 +18,9 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
 use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
-
-pest()->use(ConcreteFactory::class);
 
 it('can check', function (): void {
     $mockProcessRunner = Mockery::mock(ProcessRunner::class);

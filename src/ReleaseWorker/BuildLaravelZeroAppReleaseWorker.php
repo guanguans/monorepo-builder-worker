@@ -31,7 +31,7 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
         );
         $this->phpSubprocessRunner->run(['-v']);
         $this->phpSubprocessRunner->run([self::$appName, '--version', '--ansi', '-v']);
-        $this->phpSubprocessRunner->run([self::findComposer(), '--version', '--ansi', '-v']);
+        $this->phpSubprocessRunner->run([$this->findComposer(), '--version', '--ansi', '-v']);
     }
 
     /**
@@ -52,10 +52,10 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
     public function work(Version $version): void
     {
         register_shutdown_function(function (): void {
-            $this->phpSubprocessRunner->run([self::findComposer(), 'install', '--ansi', '-v']);
+            $this->phpSubprocessRunner->run([$this->findComposer(), 'install', '--ansi', '-v']);
             $this->phpSubprocessRunner->run([self::$appName, '--version', '--ansi', '-v']);
         });
-        $this->phpSubprocessRunner->run([self::findComposer(), 'install', '--no-dev', '--no-scripts', '--ansi', '-v']);
+        $this->phpSubprocessRunner->run([$this->findComposer(), 'install', '--no-dev', '--no-scripts', '--ansi', '-v']);
         $this->phpSubprocessRunner->run([self::$appName, 'app:build', self::$appName, '--build-version', $version->getOriginalString(), '--ansi']);
         \assert(
             str_contains(
@@ -73,7 +73,7 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
      *
      * @noinspection PhpUndefinedNamespaceInspection
      */
-    private static function findComposer(): string
+    private function findComposer(): string
     {
         /** @var null|string $composer */
         static $composer;

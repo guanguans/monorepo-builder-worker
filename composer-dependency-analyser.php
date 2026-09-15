@@ -20,6 +20,9 @@ return (new Configuration)
         __DIR__.'/src/Support/ComposerScripts.php',
         __DIR__.'/tests/',
     ])
+    ->ignoreUnknownFunctions([
+        'Symfony\Component\DependencyInjection\Loader\Configurator\service',
+    ])
     ->ignoreErrorsOnPackages(
         [
             /** @see vendor/symplify/monorepo-builder/composer.json */
