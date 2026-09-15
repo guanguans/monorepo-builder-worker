@@ -18,14 +18,14 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract;
+use Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentContract;
 use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 
 it('can batch check environment', function (): void {
     expect(EnvironmentChecker::checks([
         stdClass::class,
-        new class implements EnvironmentCheckerContract {
-            public static function check(): void {}
+        new class implements CheckEnvironmentContract {
+            public function check(): void {}
         },
         function (): void {},
     ]))->toBeNull();

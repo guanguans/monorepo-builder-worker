@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
 use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
-use Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract;
+use Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentContract;
 
 class EnvironmentChecker
 {
@@ -23,7 +23,7 @@ class EnvironmentChecker
     /**
      * @api
      *
-     * @param list<callable|class-string<EnvironmentCheckerContract>|EnvironmentCheckerContract> $workers
+     * @param list<callable|CheckEnvironmentContract|class-string<CheckEnvironmentContract>> $workers
      *
      * @throws \Throwable
      */
@@ -39,13 +39,13 @@ class EnvironmentChecker
     }
 
     /**
-     * @param callable|class-string<EnvironmentCheckerContract>|\Guanguans\MonorepoBuilderWorker\Contract\EnvironmentCheckerContract $worker
+     * @param callable|class-string<CheckEnvironmentContract>|\Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentContract $worker
      *
      * @throws \Throwable
      */
-    private static function check(callable|EnvironmentCheckerContract|string $worker): void
+    private static function check(callable|CheckEnvironmentContract|string $worker): void
     {
-        if (is_subclass_of($worker, EnvironmentCheckerContract::class)) {
+        if (is_subclass_of($worker, CheckEnvironmentContract::class)) {
             $worker::check();
         }
 

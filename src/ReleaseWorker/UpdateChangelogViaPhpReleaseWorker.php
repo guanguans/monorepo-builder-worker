@@ -24,7 +24,7 @@ class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker
 {
     public function __construct(private readonly ProcessRunner $processRunner) {}
 
-    public static function check(): void
+    public function check(): void
     {
         Assert::isEmpty(self::createProcessRunner()->run('git status --short'));
         self::createProcessRunner()->run('vendor/bin/conventional-changelog -V');

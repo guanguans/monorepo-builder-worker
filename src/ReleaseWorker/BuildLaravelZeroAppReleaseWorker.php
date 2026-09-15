@@ -23,7 +23,7 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
 
     public function __construct(private readonly PhpSubprocessRunner $phpSubprocessRunner) {}
 
-    public static function check(): void
+    public function check(): void
     {
         \assert(
             \is_string(self::$appName),

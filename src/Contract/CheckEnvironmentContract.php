@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Contract;
 
-interface EnvironmentCheckerContract
+interface CheckEnvironmentContract
 {
     /**
      * @throws \Throwable
      */
-    public static function check(): void;
+    public function check(): void;
 }

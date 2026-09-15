@@ -13,6 +13,7 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CheckEnvironmentReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaNodeReleaseWorker;
@@ -49,11 +50,12 @@ return static function (MBConfig $mbConfig): void {
      * @see https://github.com/symplify/monorepo-builder#6-release-flow
      */
     $mbConfig->workers($workers = [
+        CheckEnvironmentReleaseWorker::class,
         // UpdateReplaceReleaseWorker::class,
         // SetCurrentMutualDependenciesReleaseWorker::class,
         // AddTagToChangelogReleaseWorker::class,
-        // TagVersionReleaseWorker::class,
-        // PushTagReleaseWorker::class,
+        TagVersionReleaseWorker::class,
+        PushTagReleaseWorker::class,
         UpdateChangelogViaGoReleaseWorker::class,
         // UpdateChangelogViaNodeReleaseWorker::class,
         // UpdateChangelogViaPhpReleaseWorker::class,
@@ -63,15 +65,16 @@ return static function (MBConfig $mbConfig): void {
         // PushNextDevReleaseWorker::class,
     ]);
 
-    if (!(new ArgvInput)->hasParameterOption('--dry-run', true)) {
-        (new PhpSubprocess([(new ExecutableFinder)->find('composer'), 'run', 'checks:required', '--ansi']))
-            ->setEnv(['COMPOSER_MEMORY_LIMIT' => -1])
-            ->setTimeout(600)
-            ->mustRun(static function (string $_, string $buffer): void {
-                $symfonyStyle ??= new SymfonyStyle(new ArgvInput, new ConsoleOutput);
-                $symfonyStyle->write($buffer);
-            });
-    }
+    // if (!(new ArgvInput)->hasParameterOption('--dry-run', true)) {
+    //     (new PhpSubprocess([(new ExecutableFinder)->find('composer'), 'run', 'checks:required', '--ansi']))
+    //         ->setEnv(['COMPOSER_MEMORY_LIMIT' => -1])
+    //         ->setTimeout(600)
+    //         ->mustRun(static function (string $_, string $buffer): void {
+    //             $symfonyStyle ??= new SymfonyStyle(new ArgvInput, new ConsoleOutput);
+    //             $symfonyStyle->write($buffer);
+    //         });
+    // }
 
-    EnvironmentChecker::checks($workers);
+    CheckEnvironmentReleaseWorker::configure($mbConfig);
+    // EnvironmentChecker::checks($workers);
 };

@@ -23,7 +23,7 @@ class UpdateChangelogViaGoReleaseWorker extends AbstractReleaseWorker
 {
     public function __construct(private readonly ProcessRunner $processRunner) {}
 
-    public static function check(): void
+    public function check(): void
     {
         self::createProcessRunner()->run('git-chglog -v');
     }
