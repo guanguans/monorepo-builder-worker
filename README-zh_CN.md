@@ -33,9 +33,9 @@ composer require guanguans/monorepo-builder-worker --dev --ansi -v
 ### 在你的 `monorepo-builder` [配置](monorepo-builder.php)中注册工作者
 
 ```php
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CheckEnvironmentReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 
 return static function (MBConfig $mbConfig): void {
@@ -45,7 +45,7 @@ return static function (MBConfig $mbConfig): void {
         // Other release workers...
     ]);
 
-    EnvironmentChecker::checks($workers);
+    //CheckEnvironmentReleaseWorker::configure($mbConfig);
 };
 ```
 
