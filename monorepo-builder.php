@@ -16,6 +16,7 @@ declare(strict_types=1);
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\BuildLaravelZeroAppReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CheckEnvironmentReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\RunComposerScriptsReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaNodeReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaPhpReleaseWorker;
@@ -51,10 +52,11 @@ return static function (MBConfig $mbConfig): void {
      */
     $mbConfig->workers([
         CheckEnvironmentReleaseWorker::class,
+        RunComposerScriptsReleaseWorker::class,
         // UpdateReplaceReleaseWorker::class,
         // SetCurrentMutualDependenciesReleaseWorker::class,
         // AddTagToChangelogReleaseWorker::class,
-        BuildLaravelZeroAppReleaseWorker::class,
+        // BuildLaravelZeroAppReleaseWorker::class,
         TagVersionReleaseWorker::class,
         PushTagReleaseWorker::class,
         UpdateChangelogViaGoReleaseWorker::class,
@@ -76,7 +78,8 @@ return static function (MBConfig $mbConfig): void {
     //         });
     // }
 
-    BuildLaravelZeroAppReleaseWorker::configure($mbConfig, 'app-name');
+    // BuildLaravelZeroAppReleaseWorker::configure($mbConfig, 'app-name');
     CheckEnvironmentReleaseWorker::configure($mbConfig);
+    RunComposerScriptsReleaseWorker::configure($mbConfig, 'checks:required');
     UpdateChangelogViaPhpReleaseWorker::configure($mbConfig);
 };

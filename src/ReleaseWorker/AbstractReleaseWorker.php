@@ -14,6 +14,21 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
 use Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentContract;
+use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
+use Webmozart\Assert\Assert;
 
-abstract class AbstractReleaseWorker implements CheckEnvironmentContract, ReleaseWorkerInterface {}
+abstract class AbstractReleaseWorker implements CheckEnvironmentContract, ReleaseWorkerInterface
+{
+    final protected static function getIndexOfReleaseWorker(): int
+    {
+        $index = array_find_key(
+            MBConfig::getUserWorkerClasses(),
+            static fn (string $workerClass): bool => static::class === $workerClass
+        );
+        Assert::notNull($index, \sprintf('The release worker "%s" must be registered in the configuration.', static::class));
+        Assert::integer($index);
+
+        return $index;
+    }
+}
