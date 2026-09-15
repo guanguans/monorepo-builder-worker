@@ -29,9 +29,9 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
             \is_string(self::$appName),
             \sprintf('The property "%s::$appName" must be set by calling the method "setAppName".', self::class)
         );
-        self::createPhpSubprocessRunner()->run(['-v']);
-        self::createPhpSubprocessRunner()->run([self::$appName, '--version', '--ansi', '-v']);
-        self::createPhpSubprocessRunner()->run([self::findComposer(), '--version', '--ansi', '-v']);
+        $this->phpSubprocessRunner->run(['-v']);
+        $this->phpSubprocessRunner->run([self::$appName, '--version', '--ansi', '-v']);
+        $this->phpSubprocessRunner->run([self::findComposer(), '--version', '--ansi', '-v']);
     }
 
     /**

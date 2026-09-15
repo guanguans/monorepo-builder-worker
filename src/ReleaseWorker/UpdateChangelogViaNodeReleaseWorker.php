@@ -25,7 +25,7 @@ class UpdateChangelogViaNodeReleaseWorker extends AbstractReleaseWorker
 
     public function check(): void
     {
-        self::createProcessRunner()->run('conventional-changelog --help');
+        $this->processRunner->run('conventional-changelog --help');
     }
 
     final public function getDescription(Version $version): string

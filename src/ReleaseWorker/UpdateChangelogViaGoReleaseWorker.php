@@ -25,7 +25,7 @@ class UpdateChangelogViaGoReleaseWorker extends AbstractReleaseWorker
 
     public function check(): void
     {
-        self::createProcessRunner()->run('git-chglog -v');
+        $this->processRunner->run('git-chglog -v');
     }
 
     final public function getDescription(Version $version): string

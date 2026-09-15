@@ -13,23 +13,24 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
-use Guanguans\MonorepoBuilderWorker\Concern\ConcreteFactory;
 use Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentContract;
 use PharIo\Version\Version;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
 {
-    use ConcreteFactory;
-
     /**
      * @see \Symplify\MonorepoBuilder\Release\ReleaseWorkerProvider
      *
      * @param list<CheckEnvironmentContract&ReleaseWorkerInterface> $releaseWorkers
      */
-    public function __construct(private readonly array $releaseWorkers) {}
+    public function __construct(
+        private readonly array $releaseWorkers,
+        private readonly SymfonyStyle $symfonyStyle
+    ) {}
 
     /**
      * @see \Symplify\MonorepoBuilder\Config\MBConfig::workers()
@@ -70,7 +71,7 @@ class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
         );
 
         foreach ($this->releaseWorkers as $releaseWorker) {
-            self::createSymfonyStyle()->comment(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
+            $this->symfonyStyle->comment(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
             $releaseWorker->check();
         }
     }

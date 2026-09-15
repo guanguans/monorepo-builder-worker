@@ -26,14 +26,11 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 pest()->use(ConcreteFactory::class);
 
 it('can check', function (): void {
-    (function (): void {
-        $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-        $mockProcessRunner->allows('run')->andReturns('output');
+    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
+    $mockProcessRunner->allows('run')->andReturns('output');
 
-        self::$staticProcessRunner = $mockProcessRunner;
-    })->call(new UpdateChangelogViaGoReleaseWorker(Mockery::mock(ProcessRunner::class)));
-
-    expect(UpdateChangelogViaGoReleaseWorker::check())->toBeNull();
+    expect(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner))
+        ->check()->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (string $changelog): void {

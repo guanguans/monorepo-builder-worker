@@ -26,8 +26,8 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 
     public function check(): void
     {
-        self::createProcessRunner()->run('gh auth status');
-        self::createProcessRunner()->run('gh release list --limit 1');
+        $this->processRunner->run('gh auth status');
+        $this->processRunner->run('gh release list --limit 1');
     }
 
     final public function getDescription(Version $version): string
