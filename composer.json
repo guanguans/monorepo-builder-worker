@@ -43,6 +43,8 @@
     ],
     "require": {
         "php": ">=8.2",
+        "symfony/polyfill-php84": "^1.38",
+        "symfony/polyfill-php85": "^1.41",
         "symplify/monorepo-builder": "^12.7"
     },
     "require-dev": {

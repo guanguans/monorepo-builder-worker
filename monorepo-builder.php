@@ -13,12 +13,12 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\BuildLaravelZeroAppReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CheckEnvironmentReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaNodeReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaPhpReleaseWorker;
-use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -49,11 +49,12 @@ return static function (MBConfig $mbConfig): void {
      *
      * @see https://github.com/symplify/monorepo-builder#6-release-flow
      */
-    $mbConfig->workers($workers = [
+    $mbConfig->workers([
         CheckEnvironmentReleaseWorker::class,
         // UpdateReplaceReleaseWorker::class,
         // SetCurrentMutualDependenciesReleaseWorker::class,
         // AddTagToChangelogReleaseWorker::class,
+        BuildLaravelZeroAppReleaseWorker::class,
         TagVersionReleaseWorker::class,
         PushTagReleaseWorker::class,
         UpdateChangelogViaGoReleaseWorker::class,
@@ -75,6 +76,7 @@ return static function (MBConfig $mbConfig): void {
     //         });
     // }
 
+    BuildLaravelZeroAppReleaseWorker::configure($mbConfig, 'app-name');
     CheckEnvironmentReleaseWorker::configure($mbConfig);
-    // EnvironmentChecker::checks($workers);
+    UpdateChangelogViaPhpReleaseWorker::configure($mbConfig);
 };

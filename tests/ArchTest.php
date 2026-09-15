@@ -18,8 +18,6 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
-use Guanguans\MonorepoBuilderWorker\Support\EnvironmentChecker;
-
 arch()
     ->group(__DIR__, __FILE__)
     // ->skip()
@@ -62,6 +60,4 @@ arch('will not use debugging functions')
     ])
     // ->each
     ->not->toBeUsed()
-    ->ignoring([
-        EnvironmentChecker::class,
-    ]);
+    ->ignoring([]);

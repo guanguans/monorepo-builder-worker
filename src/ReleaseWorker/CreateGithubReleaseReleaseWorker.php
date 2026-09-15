@@ -1,7 +1,5 @@
 <?php
 
-/** @noinspection PhpUnusedAliasInspection */
-
 declare(strict_types=1);
 
 /**
@@ -26,6 +24,7 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 
     public function check(): void
     {
+        $this->processRunner->run('gh --version');
         $this->processRunner->run('gh auth status');
         $this->processRunner->run('gh release list --limit 1');
     }

@@ -42,6 +42,9 @@ class UpdateChangelogViaGoReleaseWorker extends AbstractReleaseWorker
         CreateGithubReleaseReleaseWorker::setChangelog($this->sanitizeChangelog($changelog, $version));
     }
 
+    /**
+     * @noinspection HtmlDeprecatedAttribute
+     */
     private function sanitizeChangelog(string $changelog, Version $version): string
     {
         $tagPos = strpos($changelog, \sprintf('<a name="%s"></a>', $version->getOriginalString()));

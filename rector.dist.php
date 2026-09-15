@@ -26,6 +26,8 @@ use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\Config\RectorConfig;
+use Rector\DowngradePhp84\Rector\Expression\DowngradeArrayFindKeyRector;
+use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
 use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\ValueObject\PhpVersion;
@@ -98,6 +100,10 @@ return RectorConfig::configure()
         'namespacePrefixes' => [
             // 'Guanguans\\MonorepoBuilderWorker',
         ],
+    ])
+    ->withSkip([
+        DowngradeArrayFindKeyRector::class,
+        DowngradeArrayFirstLastRector::class,
     ])
     ->withSkip([
         LogicalToBooleanRector::class,

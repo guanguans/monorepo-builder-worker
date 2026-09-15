@@ -28,6 +28,7 @@ return (new Configuration)
             /** @see vendor/symplify/monorepo-builder/composer.json */
             'phar-io/version',
             'symfony/console',
+            'symfony/dependency-injection',
             'symfony/process',
             'webmozart/assert',
         ],

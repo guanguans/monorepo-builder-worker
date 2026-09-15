@@ -45,7 +45,6 @@
       <!--<directory>src/Support/Rectors/</directory>-->
       <file>src/Support/ComposerScripts.php</file>
       <directory>src/ProcessRunner/</directory>
-      <file>src/ReleaseWorker/BuildLaravelZeroAppReleaseWorker.php</file>
     </exclude>
   </source>
 </phpunit>

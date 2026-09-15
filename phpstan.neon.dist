@@ -175,6 +175,7 @@ parameters:
 #        - message: '#^Unused Guanguans\\Notify\\Rector\\.*\\.*\:\:__construct$#'
 
         - identifier: ergebnis.final
+        - identifier: ergebnis.noConstructorParameterWithDefaultValue
         - identifier: ergebnis.noExtends
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue

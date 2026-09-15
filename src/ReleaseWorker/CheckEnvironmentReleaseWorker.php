@@ -16,12 +16,13 @@ namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentContract;
 use PharIo\Version\Version;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Contract\ReleaseWorker\ReleaseWorkerInterface;
 use Webmozart\Assert\Assert;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
-class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
+readonly class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
 {
     /**
      * @see \Symplify\MonorepoBuilder\Release\ReleaseWorkerProvider
@@ -29,8 +30,8 @@ class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
      * @param list<CheckEnvironmentContract&ReleaseWorkerInterface> $releaseWorkers
      */
     public function __construct(
-        private readonly array $releaseWorkers,
-        private readonly SymfonyStyle $symfonyStyle
+        private array $releaseWorkers,
+        private SymfonyStyle $symfonyStyle
     ) {}
 
     /**
@@ -40,24 +41,25 @@ class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
      */
     public static function configure(MBConfig $mbConfig): void
     {
-        /** @var non-empty-list<class-string<ReleaseWorkerInterface>> $workerClasses */
-        $workerClasses = MBConfig::getUserWorkerClasses();
-
         Assert::eq(
-            $workerClasses[array_key_first($workerClasses)],
+            array_first(MBConfig::getUserWorkerClasses()),
             self::class,
             \sprintf('The first release worker must be "%s".', self::class)
         );
 
-        $releaseWorkers = [];
-
-        foreach ($workerClasses as $index => $workerClass) {
-            if (is_subclass_of($workerClass, CheckEnvironmentContract::class)) {
-                $releaseWorkers[] = service("user_release_worker.$index");
-            }
-        }
-
-        $mbConfig->services()->get('user_release_worker.0')->arg('$releaseWorkers', $releaseWorkers);
+        $mbConfig->services()->get('user_release_worker.0')->arg(
+            '$releaseWorkers',
+            array_map(
+                static fn (int $index): ReferenceConfigurator => service("user_release_worker.$index"),
+                array_keys(array_filter(
+                    MBConfig::getUserWorkerClasses(),
+                    static fn (string $workerClass): bool => is_subclass_of(
+                        $workerClass,
+                        CheckEnvironmentContract::class
+                    )
+                ))
+            )
+        );
     }
 
     public function getDescription(Version $version): string
@@ -70,10 +72,6 @@ class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
      */
     public function work(Version $version): void
     {
-        // Assert::notEmpty(
-        //     $this->releaseWorkers,
-        //     \sprintf('The property "%s::$releaseWorkers" must be set by calling the method "configure".', self::class)
-        // );
         foreach ($this->releaseWorkers as $releaseWorker) {
             $this->symfonyStyle->comment(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
             $releaseWorker->check();

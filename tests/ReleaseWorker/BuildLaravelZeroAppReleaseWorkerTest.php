@@ -19,12 +19,12 @@ declare(strict_types=1);
  */
 
 use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
-use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaPhpReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\BuildLaravelZeroAppReleaseWorker;
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
 use PharIo\Version\Version;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ServiceConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ServicesConfigurator;
 use Symplify\MonorepoBuilder\Config\MBConfig;
-use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 it('can configure', function (): void {
     $mockService = Mockery::mock(ServiceConfigurator::class);
@@ -32,56 +32,42 @@ it('can configure', function (): void {
 
     $mockServices = Mockery::mock(ServicesConfigurator::class);
     $mockServices->allows('set')->andReturns($mockService);
+    $mockServices->allows('get')->andReturns($mockService);
 
     $mockMBConfig = Mockery::mock(MBConfig::class);
     $mockMBConfig->allows('services')->andReturns($mockServices);
 
-    expect(UpdateChangelogViaPhpReleaseWorker::configure($mockMBConfig))->toBeNull();
+    (static fn (): array => self::$userWorkerClasses = [
+        BuildLaravelZeroAppReleaseWorker::class,
+        CreateGithubReleaseReleaseWorker::class,
+    ])->bindTo(null, MBConfig::class)();
+
+    expect(BuildLaravelZeroAppReleaseWorker::configure($mockMBConfig, 'app-name', 'user-composer'))->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can check', function (): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-    $mockProcessRunner->allows('run')->andReturns('');
-
     $mockPhpSubprocessRunner = Mockery::mock(PhpSubprocessRunner::class);
     $mockPhpSubprocessRunner->allows('run')->andReturns('output');
 
-    expect(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner, $mockPhpSubprocessRunner))
+    expect(new BuildLaravelZeroAppReleaseWorker($mockPhpSubprocessRunner, 'app-name', 'user-composer'))
         ->check()->toBeNull();
 })->group(__DIR__, __FILE__);
 
-it('can work', function (string $changelog): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-    $mockProcessRunner->allows('run')->andReturns($changelog);
-
+it('can work', function (): void {
     $mockPhpSubprocessRunner = Mockery::mock(PhpSubprocessRunner::class);
-    $mockPhpSubprocessRunner->allows('run')->andReturns($changelog);
+    $mockPhpSubprocessRunner->allows('run')->andReturns('output-1.0.0');
 
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner, $mockPhpSubprocessRunner))
+    expect(new BuildLaravelZeroAppReleaseWorker($mockPhpSubprocessRunner, 'app-name', 'user-composer'))
         ->work($mockVersion)->toBeNull();
-})->group(__DIR__, __FILE__)->with([
-    'invalid changelog' => [
-        <<<'changelog'
-            +### Feat
-            changelog,
-    ],
-    'valid changelog' => [
-        <<<'changelog'
-            +### Feat
-            +* **Contract:** Add ChangelogInterface
-            changelog,
-    ],
-]);
+})->group(__DIR__, __FILE__);
 
 it('can get description', function (): void {
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new UpdateChangelogViaPhpReleaseWorker(
-        Mockery::mock(ProcessRunner::class),
-        Mockery::mock(PhpSubprocessRunner::class)
-    ))->getDescription($mockVersion)->toBeString();
+    expect(new BuildLaravelZeroAppReleaseWorker(Mockery::mock(PhpSubprocessRunner::class), 'app-name', 'user-composer'))
+        ->getDescription($mockVersion)->toBeString();
 })->group(__DIR__, __FILE__);

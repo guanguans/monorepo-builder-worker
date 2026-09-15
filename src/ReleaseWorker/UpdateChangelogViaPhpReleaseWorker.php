@@ -13,21 +13,38 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
+use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
 use PharIo\Version\Version;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 use Webmozart\Assert\Assert;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 /**
  * @see https://github.com/marcocesarato/php-conventional-changelog
  */
 class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker
 {
-    public function __construct(private readonly ProcessRunner $processRunner) {}
+    public function __construct(
+        private readonly ProcessRunner $processRunner,
+        private readonly PhpSubprocessRunner $phpSubprocessRunner,
+    ) {}
+
+    /**
+     * @see \Symplify\MonorepoBuilder\Config\MBConfig::workers()
+     *
+     * @api
+     */
+    public static function configure(MBConfig $mbConfig): void
+    {
+        $mbConfig->services()->set(PhpSubprocessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
+    }
 
     public function check(): void
     {
         Assert::isEmpty($this->processRunner->run('git status --short'));
-        $this->processRunner->run('vendor/bin/conventional-changelog -V');
+        $this->phpSubprocessRunner->run(['vendor/bin/conventional-changelog', '-V']);
     }
 
     final public function getDescription(Version $version): string
@@ -40,10 +57,14 @@ class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker
         $originalString = $version->getOriginalString();
         $previousTag = $this->toPreviousTag($originalString);
 
-        $this->processRunner->run(\sprintf(
-            "vendor/bin/conventional-changelog %s --to-tag=$originalString --ver=$originalString --ansi -v",
-            $previousTag ? "--from-tag=$previousTag" : '--first-release'
-        ));
+        $this->phpSubprocessRunner->run([
+            'vendor/bin/conventional-changelog',
+            $previousTag ? "--from-tag=$previousTag" : '--first-release',
+            "--to-tag=$originalString",
+            "--ver=$originalString",
+            '--ansi',
+            '-v',
+        ]);
         $this->processRunner->run("git checkout -- *.json && git add CHANGELOG.md && git commit -m \"chore(release): $originalString\" --no-verify && git push");
 
         $changelog = $this->processRunner->run('git show');
