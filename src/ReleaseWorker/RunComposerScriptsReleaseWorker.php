@@ -17,6 +17,7 @@ use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
 use Guanguans\MonorepoBuilderWorker\Support\Utils;
 use PharIo\Version\Version;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Process\PhpSubprocess;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
@@ -35,6 +36,7 @@ final class RunComposerScriptsReleaseWorker extends AbstractReleaseWorker
      */
     public function __construct(
         private readonly PhpSubprocessRunner $phpSubprocessRunner,
+        private readonly SymfonyStyle $symfonyStyle,
         private readonly array $scripts,
         ?string $composer = null,
     ) {
@@ -71,6 +73,15 @@ final class RunComposerScriptsReleaseWorker extends AbstractReleaseWorker
 
     public function work(Version $version): void
     {
+        $this
+            ->phpSubprocessRunner
+            ->withTap(static function (PhpSubprocess $phpSubprocess): void {
+                $phpSubprocess->setEnv(['COMPOSER_MEMORY_LIMIT' => -1])->setTimeout(600);
+            })
+            ->withCallback(function (string $_, string $buffer): void {
+                $this->symfonyStyle->write($buffer);
+            });
+
         foreach ($this->scripts as $script) {
             $this->phpSubprocessRunner->run([$this->composer, 'run', $script, '--ansi']);
         }

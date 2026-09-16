@@ -1,5 +1,6 @@
 <?php
 
+/** @noinspection ContractViolationInspection */
 declare(strict_types=1);
 
 /**
@@ -20,12 +21,14 @@ use Symfony\Component\Process\PhpProcess;
 /**
  * @see \Symplify\MonorepoBuilder\Release\Process\ProcessRunner
  */
-final readonly class PhpProcessRunner
+final class PhpProcessRunner
 {
+    use WithProperties;
+
     /** Reasonable timeout to report hang off: 10 minutes. */
     private const TIMEOUT = 600;
 
-    public function __construct(private SymfonyStyle $symfonyStyle) {}
+    public function __construct(private readonly SymfonyStyle $symfonyStyle) {}
 
     /**
      * @api
@@ -38,7 +41,7 @@ final readonly class PhpProcessRunner
             $this->symfonyStyle->note("Running phpProcess: {$phpProcess->getCommandLine()}");
         }
 
-        $phpProcess->run();
+        $phpProcess->run($this->callback);
 
         $this->reportResult($phpProcess);
 
@@ -47,7 +50,7 @@ final readonly class PhpProcessRunner
 
     private function createPhpProcess(string $script, ?string $cwd): PhpProcess
     {
-        return new PhpProcess($script, $cwd, null, self::TIMEOUT);
+        return $this->pipeProcess($this->tapProcess(new PhpProcess($script, $cwd, null, self::TIMEOUT)));
     }
 
     private function reportResult(PhpProcess $phpProcess): void

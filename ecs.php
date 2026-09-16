@@ -22,6 +22,7 @@ use Ergebnis\License\Year;
 use Guanguans\PhpCsFixerCustomFixers\Set\SetList;
 use PhpCsFixer\Finder as PhpCsFixerFinder;
 use PhpCsFixer\Fixer\Comment\HeaderCommentFixer;
+use PhpCsFixer\Fixer\FunctionNotation\StaticLambdaFixer;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
@@ -51,7 +52,13 @@ return ECSConfig::configure()
                     ))
             )
     )))
-    ->withSkip([])
+    ->withSkip([
+        // StaticLambdaFixer::class => [
+        //     __DIR__.'/src/ReleaseWorker/RunComposerScriptsReleaseWorker.php',
+        //     __DIR__.'/tests/*Test.php',
+        //     __DIR__.'/tests/Pest.php',
+        // ],
+    ])
     ->withSets([SetList::GUANGUANS])
     ->withConfiguredRule(HeaderCommentFixer::class, [
         'comment_type' => 'PHPDoc',
