@@ -8,6 +8,27 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.3.0"></a>
+## [3.3.0] - 2026-09-17
+### ✨ Features
+- **release-worker:** Add RunComposerScriptsReleaseWorker class ([837b4ff](https://github.com/guanguans/monorepo-builder-worker/commit/837b4ff))
+- **release-worker:** Add CheckEnvironmentReleaseWorker class ([9cc5e5d](https://github.com/guanguans/monorepo-builder-worker/commit/9cc5e5d))
+
+### 💅 Code Refactorings
+- **cleanup:** Remove EnvironmentChecker class and related tests ([25cc6e2](https://github.com/guanguans/monorepo-builder-worker/commit/25cc6e2))
+- **factory:** Remove ConcreteFactory class ([299ec97](https://github.com/guanguans/monorepo-builder-worker/commit/299ec97))
+- **process-runner:** Enhance WithProperty trait with new methods ([f8df35a](https://github.com/guanguans/monorepo-builder-worker/commit/f8df35a))
+- **release-worker:** Rename method to improve clarity ([3db27bc](https://github.com/guanguans/monorepo-builder-worker/commit/3db27bc))
+- **release-worker:** Improve BuildLaravelZeroAppReleaseWorker structure ([cdc7a17](https://github.com/guanguans/monorepo-builder-worker/commit/cdc7a17))
+- **release-worker:** Inject SymfonyStyle into CheckEnvironmentReleaseWorker ([15b3829](https://github.com/guanguans/monorepo-builder-worker/commit/15b3829))
+
+### 📦 Builds
+- **coding-standards:** Add ECS check to CI workflow ([f28dcc2](https://github.com/guanguans/monorepo-builder-worker/commit/f28dcc2))
+
+### Pull Requests
+- Merge pull request [#87](https://github.com/guanguans/monorepo-builder-worker/issues/87) from guanguans/dependabot/github_actions/github/codeql-action-4.38.0
+
+
 <a name="3.2.1"></a>
 ## [3.2.1] - 2026-09-10
 ### 📦 Builds
@@ -669,7 +690,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...HEAD
+[3.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...3.3.0
 [3.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...3.2.0
 [3.1.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.1...3.1.2
