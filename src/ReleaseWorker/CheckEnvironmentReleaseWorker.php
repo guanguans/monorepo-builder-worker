@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
 use Guanguans\MonorepoBuilderWorker\Contract\CheckEnvironmentContract;
+use Guanguans\MonorepoBuilderWorker\Support\Utils;
 use PharIo\Version\Version;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ReferenceConfigurator;
@@ -35,9 +36,9 @@ readonly class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
     ) {}
 
     /**
-     * @see \Symplify\MonorepoBuilder\Config\MBConfig::workers()
-     *
      * @api
+     *
+     * @noinspection NullableArgumentPassedInspection
      */
     public static function configure(MBConfig $mbConfig): void
     {
@@ -47,10 +48,10 @@ readonly class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
             \sprintf('The first release worker must be "%s".', self::class)
         );
 
-        $mbConfig->services()->get('user_release_worker.0')->arg(
+        $mbConfig->services()->get(Utils::idOfReleaseWorkerFor(0))->arg(
             '$releaseWorkers',
             array_map(
-                static fn (int $index): ReferenceConfigurator => service("user_release_worker.$index"),
+                static fn (int $index): ReferenceConfigurator => service(Utils::idOfReleaseWorkerFor($index)),
                 array_keys(array_filter(
                     MBConfig::getUserWorkerClasses(),
                     static fn (string $workerClass): bool => is_subclass_of(
@@ -73,7 +74,8 @@ readonly class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
     public function work(Version $version): void
     {
         foreach ($this->releaseWorkers as $releaseWorker) {
-            $this->symfonyStyle->comment(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
+            // $this->symfonyStyle->comment(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
+            $this->symfonyStyle->section(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
             $releaseWorker->check();
         }
     }

@@ -15,22 +15,26 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\ProcessRunner;
 
 use Guanguans\MonorepoBuilderWorker\ProcessRunner\Concerns\WithProperties;
-use Symfony\Component\Process\PhpProcess;
+use Symfony\Component\Process\Process;
 
-final class PhpProcessRunner
+final class ProcessRunner
 {
     /**
-     * @use WithProperties<PhpProcess>
+     * @use WithProperties<Process>
      */
     use WithProperties;
 
     /**
      * @api
      *
-     * @param null|list<string> $php
+     * @param list<string>|string $command
      */
-    public function run(string $script, ?string $cwd = null, ?array $php = null): string
+    public function run(array|string $command, ?string $cwd = null, mixed $input = null): string
     {
-        return $this->runProcess(new PhpProcess($script, $cwd, null, self::TIMEOUT, $php));
+        return $this->runProcess(
+            \is_string($command)
+            ? Process::fromShellCommandline($command, $cwd, null, $input, self::TIMEOUT)
+            : new Process($command, $cwd, null, $input, self::TIMEOUT)
+        );
     }
 }

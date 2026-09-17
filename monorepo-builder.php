@@ -20,11 +20,6 @@ use Guanguans\MonorepoBuilderWorker\ReleaseWorker\RunComposerScriptsReleaseWorke
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaNodeReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaPhpReleaseWorker;
-use Symfony\Component\Console\Input\ArgvInput;
-use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Process\ExecutableFinder;
-use Symfony\Component\Process\PhpSubprocess;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Contract\Git\TagResolverInterface;
 use Symplify\MonorepoBuilder\Git\BranchAwareTagResolver;
@@ -67,16 +62,6 @@ return static function (MBConfig $mbConfig): void {
         // UpdateBranchAliasReleaseWorker::class,
         // PushNextDevReleaseWorker::class,
     ]);
-
-    // if (!(new ArgvInput)->hasParameterOption('--dry-run', true)) {
-    //     (new PhpSubprocess([(new ExecutableFinder)->find('composer'), 'run', 'checks:required', '--ansi']))
-    //         ->setEnv(['COMPOSER_MEMORY_LIMIT' => -1])
-    //         ->setTimeout(600)
-    //         ->mustRun(static function (string $_, string $buffer): void {
-    //             $symfonyStyle ??= new SymfonyStyle(new ArgvInput, new ConsoleOutput);
-    //             $symfonyStyle->write($buffer);
-    //         });
-    // }
 
     // BuildLaravelZeroAppReleaseWorker::configure($mbConfig, 'app-name');
     CheckEnvironmentReleaseWorker::configure($mbConfig);

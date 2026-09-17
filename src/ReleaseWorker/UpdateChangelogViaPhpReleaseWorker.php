@@ -14,12 +14,11 @@ declare(strict_types=1);
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
 use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
+use Guanguans\MonorepoBuilderWorker\Support\Utils;
 use PharIo\Version\Version;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 use Webmozart\Assert\Assert;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 /**
  * @see https://github.com/marcocesarato/php-conventional-changelog
@@ -32,13 +31,11 @@ class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker
     ) {}
 
     /**
-     * @see \Symplify\MonorepoBuilder\Config\MBConfig::workers()
-     *
      * @api
      */
     public static function configure(MBConfig $mbConfig): void
     {
-        $mbConfig->services()->set(PhpSubprocessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
+        Utils::configureCommon($mbConfig);
     }
 
     public function check(): void

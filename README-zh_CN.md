@@ -37,15 +37,20 @@ use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CheckEnvironmentReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\UpdateChangelogViaGoReleaseWorker;
 use Symplify\MonorepoBuilder\Config\MBConfig;
+use Symplify\MonorepoBuilder\Release\ReleaseWorker\PushTagReleaseWorker;
+use Symplify\MonorepoBuilder\Release\ReleaseWorker\TagVersionReleaseWorker;
 
 return static function (MBConfig $mbConfig): void {
-    $mbConfig->workers($workers = [
+    $mbConfig->workers([
+        CheckEnvironmentReleaseWorker::class,
+        TagVersionReleaseWorker::class,
+        PushTagReleaseWorker::class,
         UpdateChangelogViaGoReleaseWorker::class,
         CreateGithubReleaseReleaseWorker::class,
         // Other release workers...
     ]);
 
-    //CheckEnvironmentReleaseWorker::configure($mbConfig);
+    CheckEnvironmentReleaseWorker::configure($mbConfig);
 };
 ```
 

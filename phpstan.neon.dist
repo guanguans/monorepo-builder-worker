@@ -179,14 +179,20 @@ parameters:
         - identifier: ergebnis.noExtends
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue
+        - identifier: shipmonk.checkedExceptionInCallable
         - identifier: shipmonk.forbiddenCast
         - identifier: shipmonk.variableTypeOverwritten
         - identifier: symplify.explicitInterfaceSuffixName
+        - identifier: symplify.explicitTraitSuffixName
         - identifier: symplify.forbiddenNode
 
         - identifier: argument.type
         - message: '#^Unused Guanguans\\MonorepoBuilderWorker\\.*\:\:__construct$#'
-
+        -
+            identifier: shipmonk.deadMethod
+            paths:
+                - src/ProcessRunner/Concerns/WithProperties.php
         -
             identifier: symplify.forbiddenStaticClassConstFetch
-            path: src/ReleaseWorker/AbstractReleaseWorker.php
+            paths:
+                - src/ReleaseWorker/AbstractReleaseWorker.php

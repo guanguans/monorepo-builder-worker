@@ -7,6 +7,7 @@
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
 /** @noinspection StaticClosureCanBeUsedInspection */
+/** @noinspection PhpExpressionAlwaysNullInspection */
 declare(strict_types=1);
 
 /**
@@ -50,7 +51,8 @@ it('can work', function (): void {
     $mockProcessRunner->allows('run')->andReturns('output');
 
     $mockSymfonyStyle = Mockery::mock(SymfonyStyle::class);
-    $mockSymfonyStyle->allows('comment')->andReturnNull();
+    // $mockSymfonyStyle->allows('comment')->andReturnNull();
+    $mockSymfonyStyle->allows('section')->andReturnNull();
 
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');

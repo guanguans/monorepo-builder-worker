@@ -16,27 +16,19 @@ namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
 use Guanguans\MonorepoBuilderWorker\Support\Utils;
 use PharIo\Version\Version;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\PhpSubprocess;
 use Symplify\MonorepoBuilder\Config\MBConfig;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 final class RunComposerScriptsReleaseWorker extends AbstractReleaseWorker
 {
     private readonly string $composer;
 
     /**
-     * @see \Illuminate\Console\Application::artisanBinary()
-     * @see \Illuminate\Console\Application::phpBinary()
-     * @see \Illuminate\Support\Composer::findComposer()
-     *
      * @param non-empty-list<non-empty-string> $scripts
-     *
-     * @noinspection PhpUndefinedNamespaceInspection
      */
     public function __construct(
         private readonly PhpSubprocessRunner $phpSubprocessRunner,
-        private readonly SymfonyStyle $symfonyStyle,
+        // private readonly SymfonyStyle $symfonyStyle,
         private readonly array $scripts,
         ?string $composer = null,
     ) {
@@ -44,8 +36,6 @@ final class RunComposerScriptsReleaseWorker extends AbstractReleaseWorker
     }
 
     /**
-     * @see \Symplify\MonorepoBuilder\Config\MBConfig::workers()
-     *
      * @api
      *
      * @param non-empty-list<non-empty-string>|non-empty-string $scripts
@@ -53,11 +43,8 @@ final class RunComposerScriptsReleaseWorker extends AbstractReleaseWorker
      */
     public static function configure(MBConfig $mbConfig, array|string $scripts, ?string $composer = null): void
     {
-        $services = $mbConfig->services();
-        $services->set(PhpSubprocessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
-
-        $index = self::getIndexOfReleaseWorker();
-        $services->get("user_release_worker.$index")->arg('$scripts', (array) $scripts)->arg('$composer', $composer);
+        Utils::configureCommon($mbConfig);
+        self::getServiceConfiguratorOfReleaseWorker($mbConfig)->arg('$scripts', (array) $scripts)->arg('$composer', $composer);
     }
 
     public function check(): void
@@ -75,15 +62,15 @@ final class RunComposerScriptsReleaseWorker extends AbstractReleaseWorker
     {
         $this
             ->phpSubprocessRunner
+            // ->withCallback(function (string $_, string $buffer): void {
+            //     $this->symfonyStyle->write($buffer);
+            // })
             ->withTap(static function (PhpSubprocess $phpSubprocess): void {
                 $phpSubprocess->setEnv(['COMPOSER_MEMORY_LIMIT' => -1])->setTimeout(600);
-            })
-            ->withCallback(function (string $_, string $buffer): void {
-                $this->symfonyStyle->write($buffer);
             });
 
         foreach ($this->scripts as $script) {
-            $this->phpSubprocessRunner->run([$this->composer, 'run', $script, '--ansi']);
+            $this->phpSubprocessRunner->run([$this->composer, 'run-script', $script, '--ansi']);
         }
     }
 }

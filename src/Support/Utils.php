@@ -15,12 +15,18 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\Support;
 
+use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpProcessRunner;
+use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
+use Guanguans\MonorepoBuilderWorker\ProcessRunner\ProcessRunner;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\ExecutableFinder;
+use Symplify\MonorepoBuilder\Config\MBConfig;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 /**
  * @api
  */
-class Utils
+final class Utils
 {
     /**
      * @see \Illuminate\Console\Application::artisanBinary()
@@ -34,5 +40,22 @@ class Utils
     public static function findComposer(string $name = 'composer', string $default = 'composer', array $extraDirs = []): string
     {
         return (new ExecutableFinder)->find($name, $default, $extraDirs) ?? $default;
+    }
+
+    /**
+     * @see \Symplify\MonorepoBuilder\Config\MBConfig::workers()
+     */
+    public static function idOfReleaseWorkerFor(int $index): string
+    {
+        return "user_release_worker.$index";
+    }
+
+    public static function configureCommon(MBConfig $mbConfig): void
+    {
+        // $mbConfig->parameters()->set('$symfonyStyle', service(SymfonyStyle::class));
+        $services = $mbConfig->services();
+        $services->set(PhpProcessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
+        $services->set(PhpSubprocessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
+        $services->set(ProcessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
     }
 }

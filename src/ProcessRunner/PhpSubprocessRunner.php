@@ -14,56 +14,24 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\ProcessRunner;
 
-use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Process\Exception\ProcessFailedException;
+use Guanguans\MonorepoBuilderWorker\ProcessRunner\Concerns\WithProperties;
 use Symfony\Component\Process\PhpSubprocess;
 
-/**
- * @see \Symplify\MonorepoBuilder\Release\Process\ProcessRunner
- */
 final class PhpSubprocessRunner
 {
+    /**
+     * @use WithProperties<PhpSubprocess>
+     */
     use WithProperties;
-
-    /** Reasonable timeout to report hang off: 10 minutes. */
-    private const TIMEOUT = 600;
-
-    public function __construct(private readonly SymfonyStyle $symfonyStyle) {}
 
     /**
      * @api
      *
-     * @param list<string> $commandLine
+     * @param list<string> $command
+     * @param null|list<string> $php
      */
-    public function run(array $commandLine, ?string $cwd = null): string
+    public function run(array $command, ?string $cwd = null, ?array $php = null): string
     {
-        $phpSubprocess = $this->createPhpSubprocess($commandLine, $cwd);
-
-        if ($this->symfonyStyle->isVerbose()) {
-            $this->symfonyStyle->note("Running phpSubprocess: {$phpSubprocess->getCommandLine()}");
-        }
-
-        $phpSubprocess->run($this->callback);
-
-        $this->reportResult($phpSubprocess);
-
-        return $phpSubprocess->getOutput();
-    }
-
-    /**
-     * @param list<string> $commandLine
-     */
-    private function createPhpSubprocess(array $commandLine, ?string $cwd): PhpSubprocess
-    {
-        return $this->pipeProcess($this->tapProcess(new PhpSubprocess($commandLine, $cwd, null, self::TIMEOUT)));
-    }
-
-    private function reportResult(PhpSubprocess $phpSubprocess): void
-    {
-        if ($phpSubprocess->isSuccessful()) {
-            return;
-        }
-
-        throw new ProcessFailedException($phpSubprocess);
+        return $this->runProcess(new PhpSubprocess($command, $cwd, null, self::TIMEOUT, $php));
     }
 }

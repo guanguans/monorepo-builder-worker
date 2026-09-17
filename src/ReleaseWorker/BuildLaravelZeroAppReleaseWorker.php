@@ -16,23 +16,15 @@ namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
 use Guanguans\MonorepoBuilderWorker\Support\Utils;
 use PharIo\Version\Version;
-use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Webmozart\Assert\Assert;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
 {
     private readonly string $composer;
 
     /**
-     * @see \Illuminate\Console\Application::artisanBinary()
-     * @see \Illuminate\Console\Application::phpBinary()
-     * @see \Illuminate\Support\Composer::findComposer()
-     *
      * @param non-empty-string $appName
-     *
-     * @noinspection PhpUndefinedNamespaceInspection
      */
     public function __construct(
         private readonly PhpSubprocessRunner $phpSubprocessRunner,
@@ -43,8 +35,6 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
     }
 
     /**
-     * @see \Symplify\MonorepoBuilder\Config\MBConfig::workers()
-     *
      * @api
      *
      * @param non-empty-string $appName
@@ -52,11 +42,8 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
      */
     public static function configure(MBConfig $mbConfig, string $appName, ?string $composer = null): void
     {
-        $services = $mbConfig->services();
-        $services->set(PhpSubprocessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
-
-        $index = self::getIndexOfReleaseWorker();
-        $services->get("user_release_worker.$index")->arg('$appName', $appName)->arg('$composer', $composer);
+        Utils::configureCommon($mbConfig);
+        self::getServiceConfiguratorOfReleaseWorker($mbConfig)->arg('$appName', $appName)->arg('$composer', $composer);
     }
 
     public function check(): void
