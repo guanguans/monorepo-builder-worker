@@ -1,9 +1,7 @@
 <?php
 
 /** @noinspection PhpInternalEntityUsedInspection */
-/** @noinspection PhpMultipleClassDeclarationsInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
-/** @noinspection PhpUnusedAliasInspection */
 declare(strict_types=1);
 
 /**
@@ -16,8 +14,6 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
-use Ergebnis\Rector\Rules\Faker\GeneratorPropertyFetchToMethodCallRector;
-use Ergebnis\Rector\Rules\Files\ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector;
 use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
@@ -50,7 +46,7 @@ return RectorConfig::configure()
     ->withParallel()
     ->withImportNames(importDocBlockNames: false, importShortClasses: false, removeUnusedImports: false)
     // ->withImportNames(true, false, false, false)
-    // ->withEditorUrl()
+    ->reportUnusedSkips()
     ->withFluentCallNewLine()
     ->withTreatClassesAsFinal()
     ->withTypeGuardedClasses([])
@@ -79,10 +75,7 @@ return RectorConfig::configure()
         PestLevelSetList::UP_TO_PEST_30,
         PestSetList::PEST_CODE_QUALITY,
     ])
-    ->withRules([
-        GeneratorPropertyFetchToMethodCallRector::class,
-        SortAssociativeArrayByKeyRector::class,
-    ])
+    ->withRules([])
     ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/tests/*' => [
             'AnonymousFunctionStaticInspection',
@@ -96,11 +89,6 @@ return RectorConfig::configure()
     ])
     ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
     ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT'])
-    ->withConfiguredRule(ReferenceNamespacedSymbolsRelativeToNamespacePrefixRector::class, [
-        'namespacePrefixes' => [
-            // 'Guanguans\\MonorepoBuilderWorker',
-        ],
-    ])
     ->withSkip([
         DowngradeArrayFindKeyRector::class,
         DowngradeArrayFirstLastRector::class,
@@ -116,7 +104,7 @@ return RectorConfig::configure()
             __DIR__.'/tests/Pest.php',
         ],
         SortAssociativeArrayByKeyRector::class => [
-            __DIR__.'/src/',
-            __DIR__.'/tests/',
+            // __DIR__.'/src/',
+            // __DIR__.'/tests/',
         ],
     ]);
