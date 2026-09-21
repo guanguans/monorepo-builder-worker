@@ -51,7 +51,6 @@ it('can work', function (): void {
     $mockProcessRunner->allows('run')->andReturns('output');
 
     $mockSymfonyStyle = Mockery::mock(SymfonyStyle::class);
-    // $mockSymfonyStyle->allows('comment')->andReturnNull();
     $mockSymfonyStyle->allows('section')->andReturnNull();
 
     $mockVersion = Mockery::mock(Version::class);

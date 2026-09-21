@@ -74,7 +74,6 @@ readonly class CheckEnvironmentReleaseWorker implements ReleaseWorkerInterface
     public function work(Version $version): void
     {
         foreach ($this->releaseWorkers as $releaseWorker) {
-            // $this->symfonyStyle->comment(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
             $this->symfonyStyle->section(\sprintf('Checking environment for "%s"...', $releaseWorker::class));
             $releaseWorker->check();
         }

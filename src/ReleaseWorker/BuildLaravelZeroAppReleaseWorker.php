@@ -16,6 +16,7 @@ namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ProcessRunner\PhpSubprocessRunner;
 use Guanguans\MonorepoBuilderWorker\Support\Utils;
 use PharIo\Version\Version;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Webmozart\Assert\Assert;
 
@@ -28,6 +29,7 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
      */
     public function __construct(
         private readonly PhpSubprocessRunner $phpSubprocessRunner,
+        private readonly SymfonyStyle $symfonyStyle,
         private readonly string $appName,
         ?string $composer = null,
     ) {
@@ -61,6 +63,7 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
     public function work(Version $version): void
     {
         register_shutdown_function(function (): void {
+            $this->symfonyStyle->section('Restoring dependencies...'); // @codeCoverageIgnore
             $this->phpSubprocessRunner->run([$this->composer, 'install', '--ansi', '-v']); // @codeCoverageIgnore
             $this->phpSubprocessRunner->run([$this->appName, '--version', '--ansi', '-v']); // @codeCoverageIgnore
         });
