@@ -31,6 +31,7 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
         private readonly PhpSubprocessRunner $phpSubprocessRunner,
         private readonly SymfonyStyle $symfonyStyle,
         private readonly string $appName,
+        private readonly array $installOptions,
         ?string $composer = null,
     ) {
         $this->composer = $composer ?? Utils::findComposer();
@@ -42,10 +43,13 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
      * @param non-empty-string $appName
      * @param null|non-empty-string $composer
      */
-    public static function configure(MBConfig $mbConfig, string $appName, ?string $composer = null): void
+    public static function configure(MBConfig $mbConfig, string $appName, array $installOptions = [], ?string $composer = null): void
     {
         Utils::configureCommon($mbConfig);
-        self::getServiceConfiguratorOfReleaseWorker($mbConfig)->arg('$appName', $appName)->arg('$composer', $composer);
+        self::getServiceConfiguratorOfReleaseWorker($mbConfig)
+            ->arg('$appName', $appName)
+            ->arg('$installOptions', $installOptions)
+            ->arg('$composer', $composer);
     }
 
     public function check(): void
@@ -68,7 +72,7 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
             $this->phpSubprocessRunner->run([$this->appName, '--version', '--ansi', '-v']); // @codeCoverageIgnore
         });
 
-        $this->phpSubprocessRunner->run([$this->composer, 'install', '--no-dev', '--no-scripts', '--ansi', '-v']);
+        $this->phpSubprocessRunner->run([$this->composer, 'install', '--no-dev', '--no-scripts', '--ansi', '-v', ...$this->installOptions]);
         $this->phpSubprocessRunner->run([$this->appName, 'app:build', $this->appName, '--build-version', $version->getOriginalString(), '--ansi']);
 
         Assert::contains(
