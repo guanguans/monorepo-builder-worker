@@ -8,6 +8,14 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.3.1"></a>
+## [3.3.1] - 2026-09-21
+### 💅 Code Refactorings
+- **release-worker:** Enhance file handling in GitHub release process ([46a0cd9](https://github.com/guanguans/monorepo-builder-worker/commit/46a0cd9))
+- **release-worker:** Add install options to the release worker ([48a8f52](https://github.com/guanguans/monorepo-builder-worker/commit/48a8f52))
+- **release-worker:** Improve SymfonyStyle usage for better output ([2c5b12f](https://github.com/guanguans/monorepo-builder-worker/commit/2c5b12f))
+
+
 <a name="3.3.0"></a>
 ## [3.3.0] - 2026-09-17
 ### ✨ Features
@@ -690,7 +698,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...HEAD
+[3.3.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...3.3.0
 [3.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.1.2...3.2.0
