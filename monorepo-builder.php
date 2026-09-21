@@ -50,7 +50,7 @@ return static function (MBConfig $mbConfig): void {
         // UpdateReplaceReleaseWorker::class,
         // SetCurrentMutualDependenciesReleaseWorker::class,
         // AddTagToChangelogReleaseWorker::class,
-        BuildLaravelZeroAppReleaseWorker::class,
+        // BuildLaravelZeroAppReleaseWorker::class,
         TagVersionReleaseWorker::class,
         PushTagReleaseWorker::class,
         UpdateChangelogViaGoReleaseWorker::class,
@@ -62,8 +62,9 @@ return static function (MBConfig $mbConfig): void {
         // PushNextDevReleaseWorker::class,
     ]);
 
-    BuildLaravelZeroAppReleaseWorker::configure($mbConfig, 'app-name');
     CheckEnvironmentReleaseWorker::configure($mbConfig);
     RunComposerScriptsReleaseWorker::configure($mbConfig, 'checks:required');
+    // BuildLaravelZeroAppReleaseWorker::configure($mbConfig, 'app-name');
     UpdateChangelogViaPhpReleaseWorker::configure($mbConfig);
+    CreateGithubReleaseReleaseWorker::configure($mbConfig);
 };

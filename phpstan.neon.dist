@@ -179,6 +179,7 @@ parameters:
         - identifier: ergebnis.noExtends
         - identifier: ergebnis.noParameterWithNullableTypeDeclaration
         - identifier: ergebnis.noParameterWithNullDefaultValue
+        - identifier: shipmonk.binaryOperationWithNull
         - identifier: shipmonk.checkedExceptionInCallable
         - identifier: shipmonk.forbiddenCast
         - identifier: shipmonk.variableTypeOverwritten
@@ -196,3 +197,7 @@ parameters:
             identifier: symplify.forbiddenStaticClassConstFetch
             paths:
                 - src/ReleaseWorker/AbstractReleaseWorker.php
+        -
+            identifier: guanguans.forbiddenSideEffects
+            paths:
+                - src/ReleaseWorker/CreateGithubReleaseReleaseWorker.php

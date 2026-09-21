@@ -26,12 +26,13 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
 
     /**
      * @param non-empty-string $appName
+     * @param list<non-empty-string> $installOptions
      */
     public function __construct(
         private readonly PhpSubprocessRunner $phpSubprocessRunner,
         private readonly SymfonyStyle $symfonyStyle,
         private readonly string $appName,
-        private readonly array $installOptions,
+        private readonly array $installOptions = [],
         ?string $composer = null,
     ) {
         $this->composer = $composer ?? Utils::findComposer();
@@ -41,6 +42,7 @@ final class BuildLaravelZeroAppReleaseWorker extends AbstractReleaseWorker
      * @api
      *
      * @param non-empty-string $appName
+     * @param list<non-empty-string> $installOptions
      * @param null|non-empty-string $composer
      */
     public static function configure(MBConfig $mbConfig, string $appName, array $installOptions = [], ?string $composer = null): void

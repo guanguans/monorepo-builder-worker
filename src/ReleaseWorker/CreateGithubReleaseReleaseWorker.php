@@ -13,14 +13,32 @@ declare(strict_types=1);
 
 namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
+use Nette\Utils\FileSystem;
 use PharIo\Version\Version;
+use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 {
     private static ?string $changelog = null;
 
-    public function __construct(private readonly ProcessRunner $processRunner) {}
+    /**
+     * @param array<int|non-empty-string, string> $files
+     */
+    public function __construct(
+        private readonly ProcessRunner $processRunner,
+        private readonly array $files = [],
+    ) {}
+
+    /**
+     * @api
+     *
+     * @param array<int|non-empty-string, string> $files
+     */
+    public static function configure(MBConfig $mbConfig, array $files = []): void
+    {
+        self::getServiceConfiguratorOfReleaseWorker($mbConfig)->arg('$files', $files);
+    }
 
     public function check(): void
     {
@@ -42,6 +60,11 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
             '--verify-tag',
             ...(self::$changelog ? ['--notes', self::$changelog] : ['--generate-notes']),
         ]);
+
+        foreach ($this->files as $originalFile => $file) {
+            \is_string($originalFile) and FileSystem::copy($originalFile, $file);
+            $this->processRunner->run(['gh', 'release', 'upload', $version->getOriginalString(), $file]);
+        }
     }
 
     /**

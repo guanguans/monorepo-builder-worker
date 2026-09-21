@@ -18,9 +18,34 @@ declare(strict_types=1);
  * @see https://github.com/guanguans/monorepo-builder-worker
  */
 
+use Guanguans\MonorepoBuilderWorker\ReleaseWorker\BuildLaravelZeroAppReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
 use PharIo\Version\Version;
+use Symfony\Component\DependencyInjection\Loader\Configurator\AliasConfigurator;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ServiceConfigurator;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ServicesConfigurator;
+use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
+
+it('can configure', function (): void {
+    $mockService = Mockery::mock(ServiceConfigurator::class);
+    $mockService->allows('arg')->andReturns($mockService);
+
+    $mockServices = Mockery::mock(ServicesConfigurator::class);
+    $mockServices->allows('alias')->andReturns(Mockery::mock(AliasConfigurator::class));
+    $mockServices->allows('set')->andReturns($mockService);
+    $mockServices->allows('get')->andReturns($mockService);
+
+    $mockMBConfig = Mockery::mock(MBConfig::class);
+    $mockMBConfig->allows('services')->andReturns($mockServices);
+
+    (static fn (): array => self::$userWorkerClasses = [
+        BuildLaravelZeroAppReleaseWorker::class,
+        CreateGithubReleaseReleaseWorker::class,
+    ])->bindTo(null, MBConfig::class)();
+
+    expect(CreateGithubReleaseReleaseWorker::configure($mockMBConfig, [__FILE__]))->toBeNull();
+})->group(__DIR__, __FILE__);
 
 it('can check', function (): void {
     $mockProcessRunner = Mockery::mock(ProcessRunner::class);
@@ -37,7 +62,7 @@ it('can work', function (): void {
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner))
+    expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner, [__FILE__]))
         ->work($mockVersion)->toBeNull();
 })->group(__DIR__, __FILE__);
 

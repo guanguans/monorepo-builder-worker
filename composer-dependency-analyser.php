@@ -33,4 +33,10 @@ return (new Configuration)
             'webmozart/assert',
         ],
         [ErrorType::SHADOW_DEPENDENCY],
+    )
+    ->ignoreErrorsOnPackages(
+        [
+            'nette/utils',
+        ],
+        [ErrorType::DEV_DEPENDENCY_IN_PROD],
     );
