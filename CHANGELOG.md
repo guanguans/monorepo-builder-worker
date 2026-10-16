@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.4.0"></a>
+## [3.4.0] - 2026-10-16
+### 💅 Code Refactorings
+- **composer:** Update Composer scripts and commands ([3e5f6df](https://github.com/guanguans/monorepo-builder-worker/commit/3e5f6df))
+- **release-worker:** Add user switch command for GitHub CLI ([1ea375d](https://github.com/guanguans/monorepo-builder-worker/commit/1ea375d))
+
+
 <a name="3.3.1"></a>
 ## [3.3.1] - 2026-09-21
 ### 💅 Code Refactorings
@@ -698,7 +705,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...HEAD
+[3.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...3.4.0
 [3.3.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...3.3.0
 [3.2.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.0...3.2.1
