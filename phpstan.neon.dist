@@ -11,25 +11,17 @@ includes:
 #    - vendor-bin/larastan/vendor/larastan/larastan/extension.neon
 #    - vendor/ekino/phpstan-banned-code/extension.neon
 #    - vendor/ergebnis/phpstan-rules/rules.neon
+#    - vendor/canvural/larastan-strict-rules/rules.neon
+#    - vendor/larastan/vendor/larastan/larastan/extension.neon
 #    - vendor/phpstan/phpstan-strict-rules/rules.neon
 #    - vendor/roave/no-floaters/rules.neon
 #    - vendor/shipmonk/dead-code-detector/rules.neon
 #    - vendor/staabm/phpstan-todo-by/extension.neon
 
-#    - vendor/symplify/phpstan-rules/config/code-complexity-rules.neon
-#    - vendor/symplify/phpstan-rules/config/configurable-rules.neon
-#    - vendor/symplify/phpstan-rules/config/naming-rules.neon
-#    - vendor/symplify/phpstan-rules/config/static-rules.neon
-    - vendor/symplify/phpstan-rules/config/symplify-rules.neon
-
-#    - vendor/symplify/phpstan-rules/config/doctrine-rules.neon
-    - vendor/symplify/phpstan-rules/config/phpunit-rules.neon
 #    - vendor/symplify/phpstan-rules/config/rector-rules.neon
-#    - vendor/symplify/phpstan-rules/config/symfony-rules.neon
-#    - vendor/symplify/phpstan-rules/config/symfony-config-rules.neon
 
 services:
-    # https://github.com/guanguans/notify/security/code-scanning
+    # https://github.com/guanguans/monorepo-builder-worker/security/code-scanning
     # https://github.com/jbelien/phpstan-sarif-formatter
     errorFormatter.sarif:
         class: PHPStanSarifErrorFormatter\SarifErrorFormatter
@@ -57,6 +49,7 @@ parameters:
     phpVersion: 80200
     level: max
     editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+#    errorFormat: symplify
     errorFormat: friendly
     friendly:
         lineBefore: 3
@@ -72,45 +65,52 @@ parameters:
     guanguans:
 #        exceptionMustImplementNativeThrowable:
 #            nativeThrowable: Guanguans\MonorepoBuilderWorker\Contract\ThrowableContract
-#    sidzIgnoreNumericStrings: true
+    sidzIgnoreNumericStrings: true
     sidzIgnoreMagicNumbers: [0.9, 1, 2, 3, 5, 100, 600, 512, 1024, 1000, 0o755]
-#    ctor: true
     cognitive_complexity:
         class: 42
         function: 8
-        dependency_tree: 150
-        dependency_tree_types:
+#        dependency_tree: 150
+#        dependency_tree_types:
 #            # only these explicit types are checked, nothing else
 #            - Rector\Contract\Rector\RectorInterface
+    symplify:
+        complexity: true
+        configurable: true
+        doctrine: true
+        naming: true
+        phpunit: true
+        static: true
+        symfony: true
+        symfonyConfig: true
+
+        ctor: true
+        mocks: true
+
+        laravelReturnType: true
+        pathStrings: true
+        symfonyReturnType: true
     type_coverage:
-        declare: 100
         param: 100
         return: 100
         constant: 100
         property: 100
-#    type_perfect:
-#        narrow_param: true
-#        narrow_return: true
-#        null_over_false: true
-#        no_mixed: false
-#        no_mixed_property: true
-#        no_mixed_caller: false
-#        no_param_type_removal: true
-#        no_isset_on_object: true
-#        no_empty_on_object: true
-    unused_public:
-        constants: true
-        properties: true
-        methods: true
-        local_methods: true
-        template_paths:
-#            - resources/views/
+    type_perfect:
+        narrow_param: true
+        narrow_return: true
+        null_over_false: true
+        no_mixed: false
+        no_mixed_property: true
+        no_mixed_caller: false
+        no_param_type_removal: true
+        no_isset_on_object: true
+        no_empty_on_object: true
     disallowedFunctionCalls:
         -
-            function: 'env()'
+            function: 'env_explode()'
             message: 'use config() instead'
         -
-            function: 'env_explode()'
+            function: 'env_json_decode()'
             message: 'use config() instead'
     ignoreErrors:
 #        - identifier: argument.templateType
@@ -185,7 +185,7 @@ parameters:
         - identifier: shipmonk.variableTypeOverwritten
         - identifier: symplify.explicitInterfaceSuffixName
         - identifier: symplify.explicitTraitSuffixName
-        - identifier: symplify.forbiddenNode
+        - identifier: symplify.forbiddenTrait
 
         - identifier: argument.type
         - message: '#^Unused Guanguans\\MonorepoBuilderWorker\\.*\:\:__construct$#'
@@ -193,10 +193,6 @@ parameters:
             identifier: shipmonk.deadMethod
             paths:
                 - src/ProcessRunner/Concerns/WithProperties.php
-        -
-            identifier: symplify.forbiddenStaticClassConstFetch
-            paths:
-                - src/ReleaseWorker/AbstractReleaseWorker.php
         -
             identifier: guanguans.forbiddenSideEffects
             paths:

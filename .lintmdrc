@@ -1,14 +1,23 @@
 {
     "excludeFiles": [
-        ".build/",
-        "baselines/",
-        "config/",
-        "src/",
-        "tests/",
-        "vendor/",
-        "vendor-bin/",
+        ".build/**",
+        "app/**",
+        "baselines/**",
+        "config/**",
+        "node_modules/**",
+        "resources/**",
+        "routes/**",
+        "src/**",
+        "tests/**",
+        "vendor-bin/**",
+        "vendor/**",
         "CHANGELOG.md",
         "zhlint-*.md"
+    ],
+    "extensions": [
+        ".markdown",
+        ".md",
+        ".mdx"
     ],
     "rules": {
         "space-around-alphabet": 2,

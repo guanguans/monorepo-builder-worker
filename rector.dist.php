@@ -14,7 +14,8 @@ declare(strict_types=1);
  */
 
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
-use Guanguans\RectorRules\NodeVisitor\ParentConnectingVisitor;
+use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
+use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
 use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
 use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
 use Guanguans\RectorRules\Set\SetList;
@@ -33,14 +34,31 @@ use RectorPest\Set\PestSetList;
 error_reporting(\E_ALL & ~\E_DEPRECATED & ~\E_USER_DEPRECATED);
 
 return RectorConfig::configure()
-    ->withPaths([
-        __DIR__.'/src/',
-        __DIR__.'/tests/',
-        __DIR__.'/.changelog',
-        __DIR__.'/composer-bump',
+    ->withPaths([...Utils::defaultRootDirectories(), ...Utils::defaultRootFiles()])
+    ->withSkip(['*/Fixtures/*'])
+    ->withSkip([
+        DowngradeArrayFindKeyRector::class,
+        DowngradeArrayFirstLastRector::class,
     ])
-    ->withRootFiles()
-    ->withSkip(['*/Fixtures/*', __DIR__.'/tests.php'])
+    ->withSkip([
+        LogicalToBooleanRector::class,
+        NewlineBetweenClassLikeStmtsRector::class,
+        PreferPHPUnitThisCallRector::class,
+        SplitDoubleAssignRector::class,
+    ])
+    ->withSkip([
+        RenameParamToMatchTypeRector::class => [
+            __DIR__.'/tests/Pest.php',
+        ],
+        SortAssociativeArrayByKeyRector::class => [
+            // __DIR__.'/src/',
+            // __DIR__.'/tests/',
+        ],
+        SortListItemOfSameScalarTypeRector::class => [
+            __DIR__.'/src/ReleaseWorker/',
+            __DIR__.'/tests/ReleaseWorker/',
+        ],
+    ])
     ->withCache(__DIR__.'/.build/rector/')
     // ->withoutParallel()
     ->withParallel()
@@ -71,15 +89,16 @@ return RectorConfig::configure()
         phpunitMockToStub: true,
     )
     ->withSets([
-        SetList::ALL,
         PestLevelSetList::UP_TO_PEST_30,
         PestSetList::PEST_CODE_QUALITY,
+        SetList::ALL,
     ])
     ->withRules([])
     ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
         '*/tests/*' => [
             'AnonymousFunctionStaticInspection',
             'NullPointerExceptionInspection',
+            'PhpFieldAssignmentTypeMismatchInspection',
             'PhpPossiblePolymorphicInvocationInspection',
             'PhpUndefinedClassInspection',
             'PhpUnhandledExceptionInspection',
@@ -87,24 +106,4 @@ return RectorConfig::configure()
             'StaticClosureCanBeUsedInspection',
         ],
     ])
-    ->registerDecoratingNodeVisitor(ParentConnectingVisitor::class)
-    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT'])
-    ->withSkip([
-        DowngradeArrayFindKeyRector::class,
-        DowngradeArrayFirstLastRector::class,
-    ])
-    ->withSkip([
-        LogicalToBooleanRector::class,
-        NewlineBetweenClassLikeStmtsRector::class,
-        PreferPHPUnitThisCallRector::class,
-        SplitDoubleAssignRector::class,
-    ])
-    ->withSkip([
-        RenameParamToMatchTypeRector::class => [
-            __DIR__.'/tests/Pest.php',
-        ],
-        SortAssociativeArrayByKeyRector::class => [
-            // __DIR__.'/src/',
-            // __DIR__.'/tests/',
-        ],
-    ]);
+    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT']);

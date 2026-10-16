@@ -53,8 +53,11 @@ final class Utils
     {
         // $mbConfig->parameters()->set('$symfonyStyle', service(SymfonyStyle::class));
         $services = $mbConfig->services();
-        $services->set(PhpProcessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
-        $services->set(PhpSubprocessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
-        $services->set(ProcessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
+        // $services->set(PhpProcessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
+        // $services->set(PhpSubprocessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
+        // $services->set(ProcessRunner::class)->arg('$symfonyStyle', service(SymfonyStyle::class));
+        $services->set(PhpProcessRunner::class)->autowire();
+        $services->set(PhpSubprocessRunner::class)->autowire();
+        $services->set(ProcessRunner::class)->autowire();
     }
 }

@@ -2,6 +2,7 @@
 
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
@@ -27,13 +28,10 @@ use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 it('can configure', function (): void {
-    $mockService = Mockery::mock(ServiceConfigurator::class);
-    $mockService->allows('arg')->andReturns($mockService);
+    $mockServices = Mockery::spy(ServicesConfigurator::class);
+    $mockServices->allows('set')->andReturns(Mockery::spy(ServiceConfigurator::class));
 
-    $mockServices = Mockery::mock(ServicesConfigurator::class);
-    $mockServices->allows('set')->andReturns($mockService);
-
-    $mockMBConfig = Mockery::mock(MBConfig::class);
+    $mockMBConfig = Mockery::spy(MBConfig::class);
     $mockMBConfig->allows('services')->andReturns($mockServices);
 
     expect(UpdateChangelogViaPhpReleaseWorker::configure($mockMBConfig))->toBeNull();

@@ -2,6 +2,7 @@
 
 /** @noinspection AnonymousFunctionStaticInspection */
 /** @noinspection NullPointerExceptionInspection */
+/** @noinspection PhpFieldAssignmentTypeMismatchInspection */
 /** @noinspection PhpPossiblePolymorphicInvocationInspection */
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
@@ -24,21 +25,18 @@ use Guanguans\MonorepoBuilderWorker\ReleaseWorker\BuildLaravelZeroAppReleaseWork
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
 use PharIo\Version\Version;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\Loader\Configurator\AliasConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ServiceConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ServicesConfigurator;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 
 it('can configure', function (): void {
-    $mockService = Mockery::mock(ServiceConfigurator::class);
-    $mockService->allows('arg')->andReturns($mockService);
+    $mockService = Mockery::spy(ServiceConfigurator::class);
 
-    $mockServices = Mockery::mock(ServicesConfigurator::class);
-    $mockServices->allows('alias')->andReturns(Mockery::mock(AliasConfigurator::class));
+    $mockServices = Mockery::spy(ServicesConfigurator::class);
     $mockServices->allows('set')->andReturns($mockService);
     $mockServices->allows('get')->andReturns($mockService);
 
-    $mockMBConfig = Mockery::mock(MBConfig::class);
+    $mockMBConfig = Mockery::spy(MBConfig::class);
     $mockMBConfig->allows('services')->andReturns($mockServices);
 
     (static fn (): array => self::$userWorkerClasses = [
