@@ -71,6 +71,6 @@ it('can get description', function (): void {
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new CreateGithubReleaseReleaseWorker(Mockery::mock(ProcessRunner::class)))
+    expect(new CreateGithubReleaseReleaseWorker(Mockery::spy(ProcessRunner::class)))
         ->getDescription($mockVersion)->toBeString();
 })->group(__DIR__, __FILE__);

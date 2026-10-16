@@ -21,6 +21,7 @@ use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 {
     private static ?string $changelog = null;
+    private readonly string $user;
 
     /**
      * @param array<int|non-empty-string, string> $files
@@ -28,21 +29,40 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
     public function __construct(
         private readonly ProcessRunner $processRunner,
         private readonly array $files = [],
-    ) {}
+        ?string $user = null,
+        private readonly string $hostname = 'github.com',
+    ) {
+        /**
+         * @see git@github.com:guanguans/monorepo-builder-worker.git
+         * @see https://github.com/guanguans/monorepo-builder-worker.git
+         * @see ssh://git@ssh.github.com:443/guanguans/monorepo-builder-worker.git
+         */
+        $this->user = $user ?? array_last(explode(
+            ':',
+            array_last(explode(
+                '/',
+                pathinfo($this->processRunner->run('git remote get-url origin'), \PATHINFO_DIRNAME)
+            ))
+        ));
+    }
 
     /**
      * @api
      *
      * @param array<int|non-empty-string, string> $files
      */
-    public static function configure(MBConfig $mbConfig, array $files = []): void
+    public static function configure(MBConfig $mbConfig, array $files = [], ?string $user = null, string $hostname = 'github.com'): void
     {
-        self::getServiceConfiguratorOfReleaseWorker($mbConfig)->arg('$files', $files);
+        self::getServiceConfiguratorOfReleaseWorker($mbConfig)
+            ->arg('$files', $files)
+            ->arg('$user', $user)
+            ->arg('$hostname', $hostname);
     }
 
     public function check(): void
     {
         $this->processRunner->run('gh --version');
+        $this->processRunner->run(['gh', 'auth', 'switch', '--hostname', $this->hostname, '--user', $this->user]);
         $this->processRunner->run('gh auth status');
         $this->processRunner->run('gh release list --limit 1');
     }
