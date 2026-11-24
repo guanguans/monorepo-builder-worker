@@ -85,6 +85,9 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
             \is_string($originalFile) and FileSystem::copy($originalFile, $file);
             $this->processRunner->run(['gh', 'release', 'upload', $version->getOriginalString(), $file]);
         }
+
+        $this->processRunner->run(['gh', 'release', 'view', $version->getOriginalString()/* , '--web' */]);
+        $this->processRunner->run([/** @see SortListItemOfSameScalarTypeRector */ 'gh', 'browse', '--releases', '--no-browser']);
     }
 
     /**

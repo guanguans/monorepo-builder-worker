@@ -72,7 +72,7 @@ return RectorConfig::configure()
         typeDeclarations: true,
         typeDeclarationDocblocks: true,
         privatization: true,
-        naming: true,
+        // naming: true,
         // namedArgs: true,
         // carbon: true,
         rectorPreset: true,
