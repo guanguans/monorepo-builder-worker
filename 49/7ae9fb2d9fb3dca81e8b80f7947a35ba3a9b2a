@@ -1,0 +1,60 @@
+vendor-bin/common/composer.json
+  h_f374ed0b3ee0f5 4
+ecs.php
+  h_f374ed0b3ee0f5 32-35
+composer.json
+  h_f374ed0b3ee0f5 47,55-59,63-64,90,203-204,257-262,333-339
+rector.dist.php
+  h_f374ed0b3ee0f5 19,21,99
+  s_519bb1e2816e35::t_bb35e1afb0f817 44,98
+  h_f374ed0b3ee0f5 100-101
+tests/ArchTest.php
+  h_f374ed0b3ee0f5 10
+tests/Datasets/Movies.php
+  h_f374ed0b3ee0f5 10
+tests/Pest.php
+  h_f374ed0b3ee0f5 10
+tests/ReleaseWorker/BuildLaravelZeroAppReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 10
+tests/ReleaseWorker/CheckEnvironmentReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 10
+tests/ReleaseWorker/CreateGithubReleaseReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 10
+tests/ReleaseWorker/RunComposerScriptsReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 10
+tests/ReleaseWorker/UpdateChangelogViaGoReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 10
+tests/ReleaseWorker/UpdateChangelogViaNodeReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 10
+tests/ReleaseWorker/UpdateChangelogViaPhpReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 10
+tests/Support/HelpersTest.php
+  h_f374ed0b3ee0f5 10
+tests/Support/UtilsTest.php
+  h_f374ed0b3ee0f5 10
+tests/TestCase.php
+  h_f374ed0b3ee0f5 10
+tests/bootstrap.php
+  h_f374ed0b3ee0f5 10
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "497ae9fb2d9fb3dca81e8b80f7947a35ba3a9b2a",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_519bb1e2816e35": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795548201396",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}
