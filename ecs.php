@@ -29,8 +29,7 @@ return ECSConfig::configure()
         // ],
     ])
     ->withSets([SetList::GUANGUANS])
-    ->withConfiguredRule(HeaderCommentFixer::class, Utils::configurationOfHeaderCommentFixer(
-        'guanguans/monorepo-builder-worker',
-        '2023',
-        __DIR__.'/LICENSE'
-    ));
+    ->withConfiguredRule(
+        HeaderCommentFixer::class,
+        Utils::configurationOfHeaderCommentFixer('guanguans/monorepo-builder-worker', '2023', __DIR__.'/LICENSE')
+    );

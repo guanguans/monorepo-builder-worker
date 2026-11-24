@@ -41,7 +41,7 @@ class UpdateChangelogViaPhpReleaseWorker extends AbstractReleaseWorker
     public function check(): void
     {
         Assert::isEmpty($this->processRunner->run('git status --short'));
-        $this->phpSubprocessRunner->run(['vendor/bin/conventional-changelog', '-V']);
+        $this->phpSubprocessRunner->run([/** @see SortListItemOfSameScalarTypeRector */ 'vendor/bin/conventional-changelog', '-V']);
     }
 
     final public function getDescription(Version $version): string

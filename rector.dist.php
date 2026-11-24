@@ -16,16 +16,15 @@ declare(strict_types=1);
 use Ergebnis\Rector\Rules\Expressions\Arrays\SortAssociativeArrayByKeyRector;
 use Guanguans\PhpCsFixerCustomFixers\Support\Utils;
 use Guanguans\RectorRules\Rector\Array_\SortListItemOfSameScalarTypeRector;
-use Guanguans\RectorRules\Rector\File\AddNoinspectionDocblockToFileFirstStmtRector;
-use Guanguans\RectorRules\Rector\Name\RenameToConventionalCaseNameRector;
+use Guanguans\RectorRules\Rector\Scalar\ScalarValueToConstFetchRector;
 use Guanguans\RectorRules\Set\SetList;
+use Guanguans\RectorRules\Support\Utils as RectorRulesUtils;
 use Rector\CodeQuality\Rector\LogicalAnd\LogicalToBooleanRector;
 use Rector\CodingStyle\Rector\Assign\SplitDoubleAssignRector;
 use Rector\CodingStyle\Rector\ClassLike\NewlineBetweenClassLikeStmtsRector;
 use Rector\Config\RectorConfig;
 use Rector\DowngradePhp84\Rector\Expression\DowngradeArrayFindKeyRector;
 use Rector\DowngradePhp85\Rector\FuncCall\DowngradeArrayFirstLastRector;
-use Rector\Naming\Rector\ClassMethod\RenameParamToMatchTypeRector;
 use Rector\PHPUnit\CodeQuality\Rector\Class_\PreferPHPUnitThisCallRector;
 use Rector\ValueObject\PhpVersion;
 use RectorPest\Set\PestLevelSetList;
@@ -41,22 +40,15 @@ return RectorConfig::configure()
         DowngradeArrayFirstLastRector::class,
     ])
     ->withSkip([
+        /** @see SortListItemOfSameScalarTypeRector */
         LogicalToBooleanRector::class,
         NewlineBetweenClassLikeStmtsRector::class,
         PreferPHPUnitThisCallRector::class,
         SplitDoubleAssignRector::class,
     ])
     ->withSkip([
-        RenameParamToMatchTypeRector::class => [
-            __DIR__.'/tests/Pest.php',
-        ],
         SortAssociativeArrayByKeyRector::class => [
             // __DIR__.'/src/',
-            // __DIR__.'/tests/',
-        ],
-        SortListItemOfSameScalarTypeRector::class => [
-            __DIR__.'/src/ReleaseWorker/',
-            __DIR__.'/tests/ReleaseWorker/',
         ],
     ])
     ->withCache(__DIR__.'/.build/rector/')
@@ -94,16 +86,7 @@ return RectorConfig::configure()
         SetList::ALL,
     ])
     ->withRules([])
-    ->withConfiguredRule(AddNoinspectionDocblockToFileFirstStmtRector::class, [
-        '*/tests/*' => [
-            'AnonymousFunctionStaticInspection',
-            'NullPointerExceptionInspection',
-            'PhpFieldAssignmentTypeMismatchInspection',
-            'PhpPossiblePolymorphicInvocationInspection',
-            'PhpUndefinedClassInspection',
-            'PhpUnhandledExceptionInspection',
-            'PhpVoidFunctionResultUsedInspection',
-            'StaticClosureCanBeUsedInspection',
-        ],
-    ])
-    ->withConfiguredRule(RenameToConventionalCaseNameRector::class, ['MIT']);
+    ->withConfiguredRule(
+        ScalarValueToConstFetchRector::class,
+        RectorRulesUtils::configurationOfScalarValueToConstFetchRector()
+    );

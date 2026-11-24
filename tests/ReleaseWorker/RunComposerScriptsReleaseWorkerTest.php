@@ -7,6 +7,7 @@
 /** @noinspection PhpUndefinedClassInspection */
 /** @noinspection PhpUnhandledExceptionInspection */
 /** @noinspection PhpVoidFunctionResultUsedInspection */
+/** @noinspection SqlResolve */
 /** @noinspection StaticClosureCanBeUsedInspection */
 /** @noinspection PhpExpressionAlwaysNullInspection */
 /** @noinspection PhpParamsInspection */
@@ -60,7 +61,7 @@ it('can work', function (): void {
     $mockPhpSubprocessRunner
         ->allows()
         ->withTap(Mockery::on(function (Closure $tap): bool {
-            $tap($phpSubprocess = new PhpSubprocess(['composer', '--version']));
+            $tap($phpSubprocess = new PhpSubprocess([/** @see SortListItemOfSameScalarTypeRector */ 'composer', '--version']));
             expect($phpSubprocess)
                 ->getEnv()->toHaveKey('COMPOSER_MEMORY_LIMIT', -1)
                 ->getTimeout()->toBe(600.0);
