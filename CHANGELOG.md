@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.4.2"></a>
+## [3.4.2] - 2026-11-25
+### 💅 Code Refactorings
+- **release:** inject SymfonyStyle and display gh output as note ([b512488](https://github.com/guanguans/monorepo-builder-worker/commit/b512488))
+
+
 <a name="3.4.1"></a>
 ## [3.4.1] - 2026-11-25
 ### ✨ Features
@@ -711,7 +717,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.1...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.2...HEAD
+[3.4.2]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.1...3.4.2
 [3.4.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...3.4.0
 [3.3.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...3.3.1
