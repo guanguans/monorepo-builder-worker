@@ -8,6 +8,12 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 
+<a name="3.4.1"></a>
+## [3.4.1] - 2026-11-25
+### ✨ Features
+- **release-worker:** view and browse GitHub release after upload ([8268b36](https://github.com/guanguans/monorepo-builder-worker/commit/8268b36))
+
+
 <a name="3.4.0"></a>
 ## [3.4.0] - 2026-10-16
 ### 💅 Code Refactorings
@@ -705,7 +711,8 @@ All notable changes to this project will be documented in this file.
 - **release:** improve code readability ([6c8c916](https://github.com/guanguans/monorepo-builder-worker/commit/6c8c916))
 
 
-[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...HEAD
+[Unreleased]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.1...HEAD
+[3.4.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.4.0...3.4.1
 [3.4.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.1...3.4.0
 [3.3.1]: https://github.com/guanguans/monorepo-builder-worker/compare/3.3.0...3.3.1
 [3.3.0]: https://github.com/guanguans/monorepo-builder-worker/compare/3.2.1...3.3.0
