@@ -90,7 +90,10 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
 
         $this->symfonyStyle->note([
             $this->processRunner->run(['gh', 'release', 'view', $version->getOriginalString()/* , '--web' */]),
-            $this->processRunner->run([/** @see SortListItemOfSameScalarTypeRector */ 'gh', 'browse', '--releases', '--no-browser']),
+            $this->processRunner->run([
+                /** @see SortListItemOfSameScalarTypeRector */
+                'gh', 'browse', '--releases', '--no-browser',
+            ]),
         ]);
     }
 
