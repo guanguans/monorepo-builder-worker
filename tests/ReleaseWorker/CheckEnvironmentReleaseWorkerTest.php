@@ -59,7 +59,7 @@ it('can work', function (): void {
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
     expect(new CheckEnvironmentReleaseWorker(
-        [new CreateGithubReleaseReleaseWorker($mockProcessRunner)],
+        [new CreateGithubReleaseReleaseWorker($mockProcessRunner, Mockery::spy(SymfonyStyle::class))],
         $mockSymfonyStyle
     ))->work($mockVersion)->toBeNull();
 })->group(__DIR__, __FILE__);

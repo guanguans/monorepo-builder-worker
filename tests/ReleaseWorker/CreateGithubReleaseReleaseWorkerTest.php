@@ -23,6 +23,7 @@ declare(strict_types=1);
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\BuildLaravelZeroAppReleaseWorker;
 use Guanguans\MonorepoBuilderWorker\ReleaseWorker\CreateGithubReleaseReleaseWorker;
 use PharIo\Version\Version;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Loader\Configurator\AliasConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ServiceConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ServicesConfigurator;
@@ -53,7 +54,7 @@ it('can check', function (): void {
     $mockProcessRunner = Mockery::mock(ProcessRunner::class);
     $mockProcessRunner->allows('run')->andReturns('output');
 
-    expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner))
+    expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner, Mockery::spy(SymfonyStyle::class)))
         ->check()->toBeNull();
 })->group(__DIR__, __FILE__);
 
@@ -64,7 +65,7 @@ it('can work', function (): void {
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner, [__FILE__]))
+    expect(new CreateGithubReleaseReleaseWorker($mockProcessRunner, Mockery::spy(SymfonyStyle::class), [__FILE__]))
         ->work($mockVersion)->toBeNull();
 })->group(__DIR__, __FILE__);
 
@@ -72,6 +73,6 @@ it('can get description', function (): void {
     $mockVersion = Mockery::mock(Version::class);
     $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
 
-    expect(new CreateGithubReleaseReleaseWorker(Mockery::spy(ProcessRunner::class)))
+    expect(new CreateGithubReleaseReleaseWorker(Mockery::spy(ProcessRunner::class), Mockery::spy(SymfonyStyle::class)))
         ->getDescription($mockVersion)->toBeString();
 })->group(__DIR__, __FILE__);

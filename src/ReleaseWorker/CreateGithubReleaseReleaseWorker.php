@@ -15,6 +15,7 @@ namespace Guanguans\MonorepoBuilderWorker\ReleaseWorker;
 
 use Nette\Utils\FileSystem;
 use PharIo\Version\Version;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
@@ -28,6 +29,7 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
      */
     public function __construct(
         private readonly ProcessRunner $processRunner,
+        private readonly SymfonyStyle $symfonyStyle,
         private readonly array $files = [],
         ?string $user = null,
         private readonly string $hostname = 'github.com',
@@ -86,8 +88,10 @@ class CreateGithubReleaseReleaseWorker extends AbstractReleaseWorker
             $this->processRunner->run(['gh', 'release', 'upload', $version->getOriginalString(), $file]);
         }
 
-        $this->processRunner->run(['gh', 'release', 'view', $version->getOriginalString()/* , '--web' */]);
-        $this->processRunner->run([/** @see SortListItemOfSameScalarTypeRector */ 'gh', 'browse', '--releases', '--no-browser']);
+        $this->symfonyStyle->note([
+            $this->processRunner->run(['gh', 'release', 'view', $version->getOriginalString()/* , '--web' */]),
+            $this->processRunner->run([/** @see SortListItemOfSameScalarTypeRector */ 'gh', 'browse', '--releases', '--no-browser']),
+        ]);
     }
 
     /**
