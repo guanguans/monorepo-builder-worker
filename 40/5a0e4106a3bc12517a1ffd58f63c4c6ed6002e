@@ -1,0 +1,44 @@
+tests/ReleaseWorker/RunComposerScriptsReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 35-36,49,54,68,75-76
+tests/ReleaseWorker/CheckEnvironmentReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 37,56-57
+  s_6ca775e3597b10::t_1b25a8be7a7f49 35
+  s_6ca775e3597b10::t_16c64fa1b42af2 34
+  s_bbf4ba6453c2d6::t_9412d82f4d0fb1 51-52
+  s_bbf4ba6453c2d6::t_5850133403006a 50
+tests/ReleaseWorker/BuildLaravelZeroAppReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 35-36,46-51,55,60,68,71-78,83-84,88
+tests/ReleaseWorker/CreateGithubReleaseReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 33-34,36,48,53-54,59
+tests/ReleaseWorker/UpdateChangelogViaGoReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 28,36,40,56-57
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "405a0e4106a3bc12517a1ffd58f63c4c6ed6002e",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_6ca775e3597b10": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795598495683",
+        "model": "unknown"
+      },
+      "human_author": null
+    },
+    "s_bbf4ba6453c2d6": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795551602048",
+        "model": "unknown"
+      },
+      "human_author": "guanguans <ityaozm@gmail.com>"
+    }
+  }
+}
