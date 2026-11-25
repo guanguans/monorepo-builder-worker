@@ -1,0 +1,58 @@
+tests/ReleaseWorker/CheckEnvironmentReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 37,56-57
+  s_bbf4ba6453c2d6::t_5850133403006a 50
+  s_6ca775e3597b10::t_1b25a8be7a7f49 35
+  s_bbf4ba6453c2d6::t_9412d82f4d0fb1 51-52
+  s_6ca775e3597b10::t_16c64fa1b42af2 34
+tests/ReleaseWorker/CreateGithubReleaseReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 33-34,36,48,53-54,59
+tests/ReleaseWorker/UpdateChangelogViaNodeReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 28,33,37,62-63
+tests/ReleaseWorker/UpdateChangelogViaPhpReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 42-45,49,52-55,72-74
+tests/ReleaseWorker/UpdateChangelogViaGoReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 28,33,37,53-54
+tests/ReleaseWorker/BuildLaravelZeroAppReleaseWorkerTest.php
+  h_f374ed0b3ee0f5 35-36,51-52,60-66,71-72,76
+tests/ReleaseWorker/RunComposerScriptsReleaseWorkerTest.php
+  s_d876f8c1cf6ee5::t_9ca1965f97b096 76
+  h_f374ed0b3ee0f5 35-36,49-53,62-63,79,83-87
+  s_d876f8c1cf6ee5::t_9624da2d593922 57-61,75,77-78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.6",
+  "base_commit_sha": "7b4f6630a7285ce0cf69c312d4eabe2c41a62b68",
+  "prompts": {},
+  "humans": {
+    "h_f374ed0b3ee0f5": {
+      "author": "guanguans <ityaozm@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_6ca775e3597b10": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795598495683",
+        "model": "unknown"
+      },
+      "human_author": null
+    },
+    "s_bbf4ba6453c2d6": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795551602048",
+        "model": "unknown"
+      },
+      "human_author": "guanguans <ityaozm@gmail.com>"
+    },
+    "s_d876f8c1cf6ee5": {
+      "agent_id": {
+        "tool": "github-copilot-jetbrains",
+        "id": "1795600999888",
+        "model": "unknown"
+      },
+      "human_author": null
+    }
+  }
+}
