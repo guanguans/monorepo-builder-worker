@@ -31,11 +31,9 @@ use Symfony\Component\Process\PhpSubprocess;
 use Symplify\MonorepoBuilder\Config\MBConfig;
 
 it('can configure', function (): void {
-    $mockService = Mockery::spy(ServiceConfigurator::class);
-
     $mockServices = Mockery::spy(ServicesConfigurator::class);
-    $mockServices->allows('set')->andReturns($mockService);
-    $mockServices->allows('get')->andReturns($mockService);
+    $mockServices->allows('set')->andReturns(Mockery::spy(ServiceConfigurator::class));
+    $mockServices->allows('get')->andReturns(Mockery::spy(ServiceConfigurator::class));
 
     $mockMBConfig = Mockery::spy(MBConfig::class);
     $mockMBConfig->allows('services')->andReturns($mockServices);
@@ -43,21 +41,25 @@ it('can configure', function (): void {
     (static fn (): array => self::$userWorkerClasses = [
         RunComposerScriptsReleaseWorker::class,
     ])->bindTo(null, MBConfig::class)();
-
     expect(RunComposerScriptsReleaseWorker::configure($mockMBConfig, 'composer-script', 'user-composer'))->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can check', function (): void {
-    $mockPhpSubprocessRunner = Mockery::mock(PhpSubprocessRunner::class);
-    $mockPhpSubprocessRunner->allows('run')->andReturns('output');
-
-    expect(new RunComposerScriptsReleaseWorker($mockPhpSubprocessRunner, ['composer-script'], 'user-composer'))
-        ->check()->toBeNull();
+    expect(new RunComposerScriptsReleaseWorker(
+        Mockery::spy(PhpSubprocessRunner::class),
+        ['composer-script'],
+        'user-composer'
+    ))->check()->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
-    $mockPhpSubprocessRunner = Mockery::mock(PhpSubprocessRunner::class);
-    // $mockPhpSubprocessRunner->allows('withTap')->andReturnSelf();
+    expect(new RunComposerScriptsReleaseWorker(
+        Mockery::spy(PhpSubprocessRunner::class),
+        ['composer-script'],
+        'user-composer'
+    ))->work(Mockery::spy(Version::class))->toBeNull();
+
+    $mockPhpSubprocessRunner = Mockery::spy(PhpSubprocessRunner::class);
     $mockPhpSubprocessRunner
         ->allows()
         ->withTap(Mockery::on(function (Closure $tap): bool {
@@ -69,22 +71,17 @@ it('can work', function (): void {
             return true;
         }))
         ->andReturnSelf();
-    $mockPhpSubprocessRunner->allows('run')->andReturns('output');
-
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
-    expect(new RunComposerScriptsReleaseWorker($mockPhpSubprocessRunner, ['composer-script'], 'user-composer'))
-        ->work($mockVersion)->toBeNull();
-
-    expect(new RunComposerScriptsReleaseWorker(Mockery::spy(PhpSubprocessRunner::class), ['composer-script'], 'user-composer'))
-        ->work(Mockery::spy(Version::class))->toBeNull();
+    expect(new RunComposerScriptsReleaseWorker(
+        $mockPhpSubprocessRunner,
+        ['composer-script'],
+        'user-composer'
+    ))->work(Mockery::spy(Version::class))->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can get description', function (): void {
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
-    expect(new RunComposerScriptsReleaseWorker(Mockery::mock(PhpSubprocessRunner::class), ['composer-script'], 'user-composer'))
-        ->getDescription($mockVersion)->toBeString();
+    expect(new RunComposerScriptsReleaseWorker(
+        Mockery::spy(PhpSubprocessRunner::class),
+        ['composer-script'],
+        'user-composer'
+    ))->getDescription(Mockery::spy(Version::class))->toBeString();
 })->group(__DIR__, __FILE__);

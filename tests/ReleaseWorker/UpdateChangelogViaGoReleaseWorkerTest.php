@@ -25,22 +25,16 @@ use PharIo\Version\Version;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 it('can check', function (): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-    $mockProcessRunner->allows('run')->andReturns('output');
-
-    expect(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner))
+    expect(new UpdateChangelogViaGoReleaseWorker(Mockery::spy(ProcessRunner::class)))
         ->check()->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (string $changelog): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
+    $mockProcessRunner = Mockery::spy(ProcessRunner::class);
     $mockProcessRunner->allows('run')->andReturns($changelog);
 
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
     expect(new UpdateChangelogViaGoReleaseWorker($mockProcessRunner))
-        ->work($mockVersion)->toBeNull();
+        ->work(Mockery::spy(Version::class))->toBeNull();
 })->group(__DIR__, __FILE__)->with([
     'invalid changelog' => [
         <<<'changelog'
@@ -56,9 +50,6 @@ it('can work', function (string $changelog): void {
 ]);
 
 it('can get description', function (): void {
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
-    expect(new UpdateChangelogViaGoReleaseWorker(Mockery::mock(ProcessRunner::class)))
-        ->getDescription($mockVersion)->toBeTruthy();
+    expect(new UpdateChangelogViaGoReleaseWorker(Mockery::spy(ProcessRunner::class)))
+        ->getDescription(Mockery::spy(Version::class))->toBeTruthy();
 })->group(__DIR__, __FILE__);

@@ -39,28 +39,20 @@ it('can configure', function (): void {
 })->group(__DIR__, __FILE__);
 
 it('can check', function (): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-    $mockProcessRunner->allows('run')->andReturns('');
-
-    $mockPhpSubprocessRunner = Mockery::mock(PhpSubprocessRunner::class);
-    $mockPhpSubprocessRunner->allows('run')->andReturns('output');
-
-    expect(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner, $mockPhpSubprocessRunner))
-        ->check()->toBeNull();
+    expect(new UpdateChangelogViaPhpReleaseWorker(
+        Mockery::spy(ProcessRunner::class),
+        Mockery::spy(PhpSubprocessRunner::class)
+    ))->check()->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (string $changelog): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
+    $mockProcessRunner = Mockery::spy(ProcessRunner::class);
     $mockProcessRunner->allows('run')->andReturns($changelog);
 
-    $mockPhpSubprocessRunner = Mockery::mock(PhpSubprocessRunner::class);
-    $mockPhpSubprocessRunner->allows('run')->andReturns($changelog);
-
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
-    expect(new UpdateChangelogViaPhpReleaseWorker($mockProcessRunner, $mockPhpSubprocessRunner))
-        ->work($mockVersion)->toBeNull();
+    expect(new UpdateChangelogViaPhpReleaseWorker(
+        $mockProcessRunner,
+        Mockery::spy(PhpSubprocessRunner::class)
+    ))->work(Mockery::spy(Version::class))->toBeNull();
 })->group(__DIR__, __FILE__)->with([
     'invalid changelog' => [
         <<<'changelog'
@@ -76,11 +68,8 @@ it('can work', function (string $changelog): void {
 ]);
 
 it('can get description', function (): void {
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
     expect(new UpdateChangelogViaPhpReleaseWorker(
-        Mockery::mock(ProcessRunner::class),
-        Mockery::mock(PhpSubprocessRunner::class)
-    ))->getDescription($mockVersion)->toBeString();
+        Mockery::spy(ProcessRunner::class),
+        Mockery::spy(PhpSubprocessRunner::class)
+    ))->getDescription(Mockery::spy(Version::class))->toBeString();
 })->group(__DIR__, __FILE__);

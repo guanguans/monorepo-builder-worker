@@ -31,43 +31,27 @@ use Symplify\MonorepoBuilder\Config\MBConfig;
 use Symplify\MonorepoBuilder\Release\Process\ProcessRunner;
 
 it('can configure', function (): void {
-    $mockService = Mockery::mock(ServiceConfigurator::class);
-    $mockService->allows('arg')->andReturns($mockService);
+    $mockServices = Mockery::spy(ServicesConfigurator::class);
+    $mockServices->allows('get')->andReturns(Mockery::spy(ServiceConfigurator::class));
 
-    $mockServices = Mockery::mock(ServicesConfigurator::class);
-    $mockServices->allows('get')->andReturns($mockService);
-
-    $mockMBConfig = Mockery::mock(MBConfig::class);
+    $mockMBConfig = Mockery::spy(MBConfig::class);
     $mockMBConfig->allows('services')->andReturns($mockServices);
 
     (static fn (): array => self::$userWorkerClasses = [
         CheckEnvironmentReleaseWorker::class,
         CreateGithubReleaseReleaseWorker::class,
     ])->bindTo(null, MBConfig::class)();
-
     expect(CheckEnvironmentReleaseWorker::configure($mockMBConfig))->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
-    $mockProcessRunner = Mockery::mock(ProcessRunner::class);
-    $mockProcessRunner->allows('run')->andReturns('output');
-
-    $mockSymfonyStyle = Mockery::mock(SymfonyStyle::class);
-    $mockSymfonyStyle->allows('section')->andReturnNull();
-
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
     expect(new CheckEnvironmentReleaseWorker(
-        [new CreateGithubReleaseReleaseWorker($mockProcessRunner, Mockery::spy(SymfonyStyle::class))],
-        $mockSymfonyStyle
-    ))->work($mockVersion)->toBeNull();
+        [new CreateGithubReleaseReleaseWorker(Mockery::spy(ProcessRunner::class), Mockery::spy(SymfonyStyle::class))],
+        Mockery::spy(SymfonyStyle::class)
+    ))->work(Mockery::spy(Version::class))->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can get description', function (): void {
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
-    expect(new CheckEnvironmentReleaseWorker([], Mockery::mock(SymfonyStyle::class)))
-        ->getDescription($mockVersion)->toBeString();
+    expect(new CheckEnvironmentReleaseWorker([], Mockery::spy(SymfonyStyle::class)))
+        ->getDescription(Mockery::spy(Version::class))->toBeString();
 })->group(__DIR__, __FILE__);

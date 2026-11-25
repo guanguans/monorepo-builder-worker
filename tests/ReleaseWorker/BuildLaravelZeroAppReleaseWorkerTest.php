@@ -31,11 +31,9 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ServicesConfigurat
 use Symplify\MonorepoBuilder\Config\MBConfig;
 
 it('can configure', function (): void {
-    $mockService = Mockery::spy(ServiceConfigurator::class);
-
     $mockServices = Mockery::spy(ServicesConfigurator::class);
-    $mockServices->allows('set')->andReturns($mockService);
-    $mockServices->allows('get')->andReturns($mockService);
+    $mockServices->allows('set')->andReturns(Mockery::spy(ServiceConfigurator::class));
+    $mockServices->allows('get')->andReturns(Mockery::spy(ServiceConfigurator::class));
 
     $mockMBConfig = Mockery::spy(MBConfig::class);
     $mockMBConfig->allows('services')->andReturns($mockServices);
@@ -44,17 +42,13 @@ it('can configure', function (): void {
         BuildLaravelZeroAppReleaseWorker::class,
         CreateGithubReleaseReleaseWorker::class,
     ])->bindTo(null, MBConfig::class)();
-
     expect(BuildLaravelZeroAppReleaseWorker::configure($mockMBConfig, 'app-name', [], 'user-composer'))->toBeNull();
 })->group(__DIR__, __FILE__);
 
 it('can check', function (): void {
-    $mockPhpSubprocessRunner = Mockery::mock(PhpSubprocessRunner::class);
-    $mockPhpSubprocessRunner->allows('run')->andReturns('output');
-
     expect(new BuildLaravelZeroAppReleaseWorker(
-        $mockPhpSubprocessRunner,
-        Mockery::mock(SymfonyStyle::class),
+        Mockery::spy(PhpSubprocessRunner::class),
+        Mockery::spy(SymfonyStyle::class),
         'app-name',
         [],
         'user-composer'
@@ -62,28 +56,21 @@ it('can check', function (): void {
 })->group(__DIR__, __FILE__);
 
 it('can work', function (): void {
-    $mockPhpSubprocessRunner = Mockery::mock(PhpSubprocessRunner::class);
-    $mockPhpSubprocessRunner->allows('run')->andReturns('output-1.0.0');
-
-    $mockSymfonyStyle = Mockery::mock(SymfonyStyle::class);
-    $mockSymfonyStyle->allows('section')->andReturnNull();
-
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
-    expect(new BuildLaravelZeroAppReleaseWorker($mockPhpSubprocessRunner, $mockSymfonyStyle, 'app-name', [], 'user-composer'))
-        ->work($mockVersion)->toBeNull();
-})->group(__DIR__, __FILE__);
-
-it('can get description', function (): void {
-    $mockVersion = Mockery::mock(Version::class);
-    $mockVersion->allows('getOriginalString')->andReturns('1.0.0');
-
     expect(new BuildLaravelZeroAppReleaseWorker(
-        Mockery::mock(PhpSubprocessRunner::class),
-        Mockery::mock(SymfonyStyle::class),
+        Mockery::spy(PhpSubprocessRunner::class),
+        Mockery::spy(SymfonyStyle::class),
         'app-name',
         [],
         'user-composer'
-    ))->getDescription($mockVersion)->toBeString();
+    ))->work(Mockery::spy(Version::class))->toBeNull();
+})->group(__DIR__, __FILE__);
+
+it('can get description', function (): void {
+    expect(new BuildLaravelZeroAppReleaseWorker(
+        Mockery::spy(PhpSubprocessRunner::class),
+        Mockery::spy(SymfonyStyle::class),
+        'app-name',
+        [],
+        'user-composer'
+    ))->getDescription(Mockery::spy(Version::class))->toBeString();
 })->group(__DIR__, __FILE__);
